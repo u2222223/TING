@@ -1,1 +1,547 @@
-<p>666</p>
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TING</title>
+    <style>
+        :root {
+            --primary-color: #6e48aa;
+            --secondary-color: #9d50bb;
+            --accent-color: #4776e6;
+            --text-color: #333;
+            --light-text: #666;
+            --lighter-text: #999;
+            --bg-color: #f9f9ff;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e8;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif !important;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 1000px;
+            margin: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .fileContentDisplay {
+            font-size: 16px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.3rem;
+        }
+
+        .subtitle {
+            color: var(--light-text);
+            font-size: 0.8rem;
+            font-weight: 400;
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .answer-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            overflow-y: auto;
+            height: 66vh;
+        }
+
+        .upload-container {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .input-container {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 0.8rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .upload-area {
+            flex: 1;
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: rgba(249, 249, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            min-height: 40px;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(110, 72, 170, 0.03);
+        }
+
+        .upload-area.active {
+            border-color: var(--primary-color);
+            background-color: rgba(110, 72, 170, 0.05);
+        }
+
+        .upload-icon {
+            color: var(--primary-color);
+            font-size: 1rem;
+        }
+
+        .upload-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(110, 72, 170, 0.2);
+            white-space: nowrap;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 12px rgba(110, 72, 170, 0.3);
+        }
+
+        .file-info {
+            font-size: 0.75rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.3rem 0;
+        }
+
+        .file-info i {
+            font-size: 0.8rem;
+        }
+
+        .question-container {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .question-input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .question-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(110, 72, 170, 0.2);
+        }
+
+        .ask-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 0 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(110, 72, 170, 0.2);
+            align-self: flex-end;
+            height: 40px;
+            width: 200px;
+            margin: 0 auto;
+        }
+
+        .ask-btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 12px rgba(110, 72, 170, 0.3);
+        }
+
+        .ask-btn:disabled {
+            background: #e0e0e8;
+            color: var(--lighter-text);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .status {
+            font-size: 16px;
+            color: var(--light-text);
+            text-align: center;
+            font-style: italic;
+            margin-top: 8px;
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 6px;
+            height: 14px;
+            background-color: var(--primary-color);
+            animation: blink 1s infinite;
+            vertical-align: middle;
+            margin-left: 2px;
+            border-radius: 2px;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        .answer-content {
+            line-height: 1.7;
+        }
+
+        .answer-content p {
+            margin-bottom: 0.8rem;
+        }
+
+        .question-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .question-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .user-question {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .ai-answer {
+            color: var(--text-color);
+        }
+
+        /* 客服二维码悬浮模块 */
+        .floating-qrcode {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        .floating-qrcode .qrcode-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+        }
+
+        .floating-qrcode .qrcode-icon i {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .floating-qrcode .qrcode-tooltip {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: 60px;
+            right: 0;
+            width: 200px;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            text-align: center;
+        }
+
+        .floating-qrcode:hover .qrcode-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- 添加 Vue 2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <header>
+                <div class="logo">TING</div>
+            </header>
+
+            <div class="chat-container">
+                <div class="answer-card" id="answerCard">
+                    <div style="overflow-y: auto; height: calc(100% - 36px);">
+                        <div class="answer-content" id="answerContent">
+                            <p v-if="!fileContentData" style="color: var(--light-text); text-align: center;">
+                                上传题目后，答案将显示在此处
+                            </p>
+
+                            <div style="white-space: pre-wrap; word-wrap: break-word;" class="fileContentDisplay"
+                                ref="fileContentDisplay"></div>
+                        </div>
+                    </div>
+                    <div class="status" id="status">{{ status }}</div>
+                </div>
+
+                <div class="input-container">
+                    <div class="upload-container">
+                        <div class="upload-area" @click="triggerFileInput">
+                            <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                            <span class="upload-text">{{ uploadText }}</span>
+                        </div>
+                    </div>
+                    <div class="file-info" id="fileInfo">
+                        <span v-if="selectedFile" style="color: green">已选择: {{ selectedFile.name }} ({{
+                            formatFileSize(selectedFile.size) }})</span>
+                        <span v-else style="color: red">请先选择题目</span>
+                    </div>
+
+                    <!-- 隐藏的题目输入 -->
+                    <input type="file" id="fileInput" accept=".html" style="display: none;" @change="handleFileChange"
+                        ref="fileInput" />
+
+                    <button class="ask-btn" id="askBtn" @click="analyzeFile"
+                        :disabled="isLoading || !selectedFile">分析题目</button>
+                </div>
+            </div>
+            <!-- 客服二维码悬浮模块 -->
+            <div class="floating-qrcode">
+                <div class="qrcode-tooltip">
+                    <img src="https://www.bing.com/th/id/OIP.fV28uA3HHHULS6EfCoolFAHaHa?w=178&h=180&c=7&r=0&o=7&pid=1.7&rm=3"
+                        alt="客服二维码">
+                    <p style="margin-top: 8px; font-size: 0.75rem; color: var(--light-text); text-align: center;">扫码联系客服
+                    </p>
+                </div>
+                <div class="qrcode-icon">
+                    <i class="fas fa-comment-dots"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                selectedFile: null,      // 存储用户选择的题目
+                fileContent: '',         // 存储题目内容(用于直接显示)
+                fileContentData: '',     // 存储题目原始数据
+                status: '',              // 显示当前状态信息
+                isLoading: false,        // 标记是否正在加载/分析中
+                uploadText: '点击选择题目', // 上传区域显示的文字
+                typingSpeed: 50,          // 打字效果的速度(毫秒)
+                isAnalyzing: false,      // 标记是否正在分析题目
+                isTyping: false          // 标记是否正在显示打字效果
+            },
+            methods: {
+                processUserAnsMapStr(htmlContent) {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(htmlContent, 'text/html');
+
+                    // 提取目标元素
+                    const element = doc.getElementById('userAnsMapStr');
+                    if (!element) throw new Error('题目格式异常，请联系管理员');
+
+                    // 解析 JSON 字符串
+                    let jsonObj;
+                    try {
+                        jsonObj = JSON.parse(element.textContent.trim());
+                    } catch (e) {
+                        throw new Error('JSON 格式错误');
+                    }
+
+                    // 转成数组并排序
+                    const jsonArray = Object.values(jsonObj);
+                    return jsonArray.sort((a, b) => a.showSerialNum - b.showSerialNum);
+                },
+                async handleFileChange(event) {
+                    const file = event.target.files?.[0];
+                    if (!file) return;
+
+                    this.selectedFile = file;
+                    this.uploadText = `已选择: ${file.name}`;
+
+                    this.status = '正在读取题目内容...';
+
+                    try {
+                        let text = await this.readFileContent(file);
+                        // 读取题目内容
+                        this.fileContentData = this.processUserAnsMapStr(text).map((item, index) => `第${item.showSerialNum}题：${item.rightAnswer}`).join('\n');
+                        this.status = ' 题目读取完成，您可以点击分析题目按钮';
+                    } catch (error) {
+                        this.status = `读取题目出错: ${error.message}`;
+                        this.selectedFile = null;
+                        console.error('题目读取错误:', error);
+                    }
+                },
+                async analyzeFile() {
+                    if (!this.selectedFile || !this.fileContentData) {
+                        alert('请先上传有效的html题目');
+                        return;
+                    }
+
+                    this.isLoading = true;
+                    this.isAnalyzing = true;
+                    this.status = '正在分析题目...';
+
+                    try {
+                        // 清空显示区域
+                        this.$refs.fileContentDisplay.innerHTML = '';
+
+                        // 模拟分析过程
+                        await new Promise(resolve => setTimeout(resolve, 500));
+
+                        // 开始打字效果
+                        this.isTyping = true;
+                        await this.typeFileContent(this.fileContentData);
+
+                        this.status = '题目分析完成';
+                    } catch (error) {
+                        this.status = `分析出错: ${error.message}`;
+                        console.log(error);
+
+                    } finally {
+                        this.isLoading = false;
+                        this.isTyping = false;
+                    }
+                },
+
+                // 打字效果显示内容
+                typeFileContent(content) {
+                    return new Promise(resolve => {
+                        const element = this.$refs.fileContentDisplay;
+                        let i = 0;
+                        const typingInterval = setInterval(() => {
+                            if (i < content.length) {
+                                // 处理HTML特殊字符
+                                const char = content.charAt(i);
+                                if (char === '<') {
+                                    // 处理HTML标签
+                                    const tagEnd = content.indexOf('>', i);
+                                    if (tagEnd !== -1) {
+                                        element.innerHTML += content.substring(i, tagEnd + 1);
+                                        i = tagEnd + 1;
+                                    } else {
+                                        element.innerHTML += char;
+                                        i++;
+                                    }
+                                } else {
+                                    element.innerHTML += char;
+                                    i++;
+                                }
+
+                                // 自动滚动到底部
+                                element.scrollTop = element.scrollHeight;
+                            } else {
+                                clearInterval(typingInterval);
+                                resolve();
+                            }
+                        }, this.typingSpeed);
+                    });
+                },
+                readFileContent(file) {
+                    return new Promise((resolve, reject) => {
+                        if (!file) {
+                            reject(new Error('没有选择题目'));
+                            return;
+                        }
+
+                        const reader = new FileReader();
+
+                        reader.onload = (e) => {
+                            resolve(e.target.result);
+                        };
+
+                        reader.onerror = (e) => {
+                            reject(new Error('题目读取失败'));
+                        };
+
+                        // 根据题目类型选择读取方式
+                        reader.readAsText(file);
+                    });
+                },
+                formatFileSize(bytes) {
+                    if (bytes === 0) return '0 Bytes';
+                    const k = 1024;
+                    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                    const i = Math.floor(Math.log(bytes) / Math.log(k));
+                    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+                },
+                triggerFileInput() {
+                    this.$refs.fileInput.click();
+                },
+            }
+        });
+    </script>
+</body>
+
+</html>
