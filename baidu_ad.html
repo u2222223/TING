@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <script>
+    window.isAdContent = true; // 标记当前页面为广告内容
+  </script>
+  <head>
+    <title>B网页</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ad">广告1</div>
+    <div class="content">
+      <h1>内容区</h1>
+      <p>这里是B网页的内容。</p>
+    </div>
+    <div class="ad">广告2</div>
+  </body>
+  <script>
+    // content.js
+    document.addEventListener("DOMContentLoaded", () => {
+      // 等待页面加载完成后发送消息
+
+      console.log(`发送了消息1`, chrome);
+      chrome.runtime.sendMessage({
+        message: "getCookies",
+      });
+      console.log(`发送了消息`);
+    });
+  </script>
+</html>
