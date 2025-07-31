@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>安装必看</title>
+    <style>
+      body {
+        font-family: "Microsoft YaHei", Arial, sans-serif;
+        line-height: 1.6;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+      }
+      .container {
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .download-btn:hover {
+        background: #1565c0;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+        border-bottom: 2px solid #4caf50;
+        padding-bottom: 10px;
+      }
+      img {
+        width: 100%;
+      }
+      h2 {
+        color: #2196f3;
+        margin-top: 30px;
+      }
+      h3 {
+        color: #ff9800;
+      }
+      ol {
+        padding-left: 20px;
+      }
+      li {
+        margin-bottom: 10px;
+      }
+      .step {
+        background-color: #e3f2fd;
+        padding: 15px;
+        border-left: 4px solid #2196f3;
+        margin: 15px 0;
+      }
+      .note {
+        background-color: #fff3e0;
+        padding: 15px;
+        border-left: 4px solid #ff9800;
+        margin: 15px 0;
+      }
+      .browser-section {
+        margin: 20px 0;
+        padding: 15px;
+        border: 1px dashed #ccc;
+      }
+      code {
+        background-color: #f5f5f5;
+        padding: 2px 4px;
+        border-radius: 3px;
+        font-family: monospace;
+      }
+      .image-placeholder {
+        text-align: center;
+        padding: 20px;
+        background-color: #f0f0f0;
+        border: 2px dashed #ccc;
+        margin: 15px 0;
+        color: #777;
+      }
+      .image-placeholder p {
+        margin: 0;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>下载地址</h1>
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 32px;
+          padding: 18px 24px;
+          background: #e3f2fd;
+          box-shadow: 0 2px 8px rgba(33, 150, 243, 0.08);
+        "
+      >
+        <div style="font-size: 1.15rem; color: #1976d2; font-weight: 600">
+          <i class="fas fa-download" style="margin-right: 8px"></i>
+          下载安装压缩包
+        </div>
+        <a
+          href="./static/extension.zip"
+          download
+          class="download-btn"
+          style="
+            background: #1976d2;
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(33, 150, 243, 0.1);
+            transition: background 0.2s;
+          "
+        >
+          <i class="fas fa-arrow-down"></i> 立即下载
+        </a>
+      </div>
+
+      <h1>操作步骤</h1>
+      <div class="step">
+        <h2>一、下载安装压缩包</h2>
+      </div>
+
+      <div class="step">
+        <h2>二、解压下载下来的extension压缩包</h2>
+        <p>
+          解压出来的extension文件夹下一级是background.js，不要嵌套多余的文件夹。
+        </p>
+        <!-- 可在此处插入解压后文件结构的截图 -->
+        <div class="image-placeholder">
+          <a href="./static/2.png" target="_blank">
+            <img src="./static/2.png" />
+          </a>
+        </div>
+      </div>
+
+      <div class="step">
+        <h2>三、浏览器安装该插件</h2>
+
+        <div class="browser-section">
+          <h3>（1）Chrome浏览器安装说明（推荐使用chrome）</h3>
+          <ol>
+            <li>浏览器打开 <code>chrome://extensions/</code> 这个网址</li>
+            <li>把右上角的开发者模式打开</li>
+            <li>将下载下来的文件夹，直接拖放到浏览器的扩展列表中即可</li>
+          </ol>
+          <!-- 可在此处插入Chrome浏览器安装步骤的截图 -->
+          <div class="image-placeholder">
+            <a href="./static/3.png" target="_blank">
+              <img src="./static/3.png" />
+            </a>
+          </div>
+        </div>
+
+        <div class="browser-section">
+          <h3>（2）Edge浏览器安装说明（推荐使用Edge）</h3>
+          <ol>
+            <li>浏览器打开 <code>edge://extensions/</code> 这个网址</li>
+            <li>把左边的开发人员模式开启</li>
+            <li>将下载下来的文件夹，直接拖放到浏览器的扩展列表中即可</li>
+          </ol>
+          <!-- 可在此处插入Edge浏览器安装步骤的截图 -->
+          <div class="image-placeholder">
+            <a href="./static/4.png" target="_blank">
+              <img src="./static/4.png" />
+            </a>
+          </div>
+        </div>
+
+        <div class="browser-section">
+          <h3>（3）360浏览器安装说明</h3>
+          <ol>
+            <li>浏览器打开 <code>chrome://extensions/</code> 这个网址</li>
+            <li>把右上角的开发者模式打开</li>
+            <li>将下载下来的文件夹，直接拖放到浏览器的扩展列表中即可</li>
+          </ol>
+        </div>
+
+        <div class="browser-section">
+          <h3>（4）其它浏览器安装说明</h3>
+          <p>百度搜索"xx浏览器 安装未打包的扩展程序"</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <h2>四、登录百x网盘网页版</h2>
+      </div>
+
+      <div class="step">
+        <h2>五、鼠标右键进入领卷页面</h2>
+        <!-- 可在此处插入右键操作的截图 -->
+        <div class="image-placeholder">
+          <a href="./static/5.png" target="_blank">
+            <img src="./static/5.png" />
+          </a>
+        </div>
+      </div>
+      <div class="step">
+        <h2>六、领卷成功</h2>
+        <!-- 可在此处插入右键操作的截图 -->
+        <div class="image-placeholder">
+          <a href="./static/6.png" target="_blank">
+            <img src="./static/6.png" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
