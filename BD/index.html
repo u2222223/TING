@@ -330,6 +330,13 @@
       methods: {
         init() {
           window.postMessage({ type: "init", config: this.config }, "*");
+          let timeid = setTimeout(() => {
+            if (this.loading) {
+              alert("浏览器扩展安装异常");
+              this.loading = false;
+            }
+            clearTimeout(timeid);
+          }, 8000);
           window.addEventListener("message", (event) => {
             let eventData = event.data;
             if (event.source !== window) return;
