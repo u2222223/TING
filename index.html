@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <title>TING 官网</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Segoe UI", "PingFang SC", Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background: linear-gradient(120deg, #e3ebf7 0%, #f5f7fa 100%);
+        color: #23395d;
+      }
+      .nav {
+        background: linear-gradient(90deg, #23395d 60%, #4267b2 100%);
+        color: #fff;
+        padding: 32px 0 24px 0;
+        text-align: center;
+        box-shadow: 0 2px 12px rgba(66, 103, 178, 0.1);
+        border-bottom: 1px solid #e3e6ef;
+      }
+      .nav h2 {
+        margin: 0;
+        font-size: 2.2rem;
+        letter-spacing: 2px;
+        font-weight: 700;
+      }
+      .container {
+        max-width: 60vw;
+        margin: 40px auto;
+        padding: 32px;
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 4px 32px rgba(66, 103, 178, 0.08);
+        border: 1px solid #e3e6ef;
+      }
+      .product-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 32px;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+      }
+      .product-card {
+        background: linear-gradient(120deg, #f7faff 60%, #e3ebf7 100%);
+        border-radius: 14px;
+        box-shadow: 0 2px 12px rgba(66, 103, 178, 0.07);
+        padding: 28px 24px;
+        width: 360px;
+        transition: box-shadow 0.2s, background 0.2s;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        border: 1px solid #e3e6ef;
+        position: relative;
+        transition: transform 0.2s;
+      }
+      .product-card:hover {
+        transform: scale(1.03);
+      }
+      .product-icon {
+        font-size: 2.2rem;
+        color: #4267b2;
+        margin-bottom: 12px;
+      }
+      .product-card strong {
+        font-size: 1.15rem;
+        color: #23395d;
+        margin-bottom: 8px;
+        font-weight: 600;
+        letter-spacing: 1px;
+      }
+      .product-card p {
+        margin: 0 0 18px 0;
+        color: #4267b2;
+        font-size: 1rem;
+      }
+      .btn {
+        background: linear-gradient(90deg, #4267b2 60%, #23395d 100%);
+        color: #fff;
+        border: none;
+        padding: 8px 18px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        margin-right: 10px;
+        margin-bottom: 8px;
+        transition: background 0.2s, box-shadow 0.2s;
+        box-shadow: 0 2px 8px rgba(66, 103, 178, 0.1);
+        font-weight: 500;
+        letter-spacing: 1px;
+      }
+      .btn:active,
+      .btn:hover {
+        background: linear-gradient(90deg, #23395d 60%, #4267b2 100%);
+        box-shadow: 0 4px 16px rgba(66, 103, 178, 0.18);
+      }
+      .back {
+        margin-bottom: 24px;
+        display: inline-block;
+      }
+      .detail-title {
+        font-size: 1.3rem;
+        color: #23395d;
+        margin-bottom: 12px;
+        font-weight: 700;
+      }
+      .product-icon-wrapper {
+        height: 200px;
+      }
+      .buttonBox {
+        display: flex;
+        height: 50px;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 12px;
+        }
+        .product-list {
+          gap: 16px;
+        }
+        .product-card {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="nav">
+        <h2>
+          <i class="fas fa-robot" style="margin-right: 12px"></i>TING 官网
+        </h2>
+      </div>
+      <div class="container">
+        <!-- 首页：产品列表 -->
+        <div>
+          <h3
+            style="
+              color: #42a5f5;
+              letter-spacing: 1px;
+              font-weight: 500;
+              margin-bottom: 28px;
+            "
+          >
+            <i class="fas fa-cubes"></i> 我们的产品
+          </h3>
+          <div class="product-list">
+            <div
+              class="product-card"
+              v-for="product in products"
+              :key="product.id"
+            >
+              <div class="product-icon-wrapper">
+                <div class="product-icon">
+                  <i :class="product.icon"></i>
+                </div>
+                <strong>{{ product.name }}</strong>
+                <p>{{ product.desc }}</p>
+              </div>
+              <div class="buttonBox">
+                <button class="btn" @click="viewProduct(product)">
+                  <i class="fas fa-info-circle"></i> 查看产品
+                </button>
+                <button
+                  class="btn"
+                  :href="product.download"
+                  download
+                  v-if="product.download"
+                >
+                  <i class="fas fa-download"></i> 下载软件
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          products: [
+            {
+              id: 1,
+              name: "TING 产品A",
+              desc: "高效的企业管理工具，助力数字化转型。",
+              icon: "fas fa-chart-line",
+              url: "/AI",
+            },
+            {
+              id: 2,
+              name: "TING 产品B",
+              desc: "智能数据分析平台，洞察业务趋势。",
+              download: "./assets/productB.pdf",
+              icon: "fas fa-brain",
+            },
+          ],
+        },
+        methods: {
+          viewProduct(index) {
+            let product = this.products[index];
+            window.open(product.url);
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
