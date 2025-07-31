@@ -234,7 +234,7 @@
 
         <div v-if="loading" class="loading">
           <div class="loading-spinner"></div>
-          <p>正在加载任务列表...</p>
+          <p>正在加载可用下载卷...</p>
         </div>
 
         <div v-else-if="tasks.length === 0" class="empty-state">
@@ -296,7 +296,9 @@
               <span v-else-if="task.status === 'processing'"
                 >领取中... {{ task.progress }}%</span
               >
-              <span v-else-if="task.status === 'completed'">✅ 已领取</span>
+              <span v-else-if="task.status === 'completed'"
+                >✅ 已领取，明天再来吧~</span
+              >
               <span v-else-if="task.status === 'error'"
                 >❌ 错误: {{ task.errorMessage }}</span
               >
