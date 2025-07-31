@@ -255,7 +255,7 @@
             }"
           >
             <div class="task-title">
-              <span>任务 #{{ index + 1 }}</span>
+              <span>极速下载卷 #{{ index + 1 }}</span>
               <span class="task-module"
                 >{{ task.taskModule || '未知模块' }}</span
               >
@@ -292,11 +292,11 @@
                 'status-error': task.status === 'error'
               }"
             >
-              <span v-if="task.status === 'pending'">等待处理</span>
+              <span v-if="task.status === 'pending'">等待领取</span>
               <span v-else-if="task.status === 'processing'"
-                >获取中... {{ task.progress }}%</span
+                >获取领取... {{ task.progress }}%</span
               >
-              <span v-else-if="task.status === 'completed'">✅ 已完成</span>
+              <span v-else-if="task.status === 'completed'">✅ 已领取</span>
               <span v-else-if="task.status === 'error'"
                 >❌ 错误: {{ task.errorMessage }}</span
               >
