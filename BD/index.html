@@ -294,7 +294,7 @@
             >
               <span v-if="task.status === 'pending'">等待领取</span>
               <span v-else-if="task.status === 'processing'"
-                >获取领取... {{ task.progress }}%</span
+                >领取中... {{ task.progress }}%</span
               >
               <span v-else-if="task.status === 'completed'">✅ 已领取</span>
               <span v-else-if="task.status === 'error'"
@@ -332,7 +332,9 @@
           window.postMessage({ type: "init", config: this.config }, "*");
           let timeid = setTimeout(() => {
             if (this.loading) {
-              alert("浏览器扩展安装异常");
+              alert(
+                "浏览器扩展异常，请前往 https://u2233.vip 获取最新版浏览器扩展"
+              );
               this.loading = false;
             }
             clearTimeout(timeid);
