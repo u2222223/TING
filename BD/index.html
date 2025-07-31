@@ -229,7 +229,7 @@
       <div class="content">
         <div class="header">
           <h1>百X云盘（极速下载卷）</h1>
-          <p>自动领取下载卷，让下载更轻松</p>
+          <p>领卷过程中请勿关闭页面，否则可能影响领卷~</p>
         </div>
 
         <div v-if="loading" class="loading">
@@ -263,7 +263,7 @@
 
             <div class="task-info">
               <div class="info-item">
-                <div class="info-label">游戏ID</div>
+                <div class="info-label">程序ID</div>
                 <div class="info-value">
                   {{ task.selectGameParams?.gameId || 'N/A' }}
                 </div>
@@ -317,15 +317,15 @@
           loading: true,
           config: {
             channelArr: [10066, 10065],
-            // taskModules: ["game_return_play", "new_game_play"],
-            taskModules: ["game_return_play"],
+            taskModules: ["game_return_play", "new_game_play"],
           },
         };
       },
       mounted() {
-        setTimeout(() => {
+        const timeid = setTimeout(() => {
           this.init();
-        }, 2000);
+          clearTimeout(timeid);
+        }, 1500);
       },
       methods: {
         init() {
