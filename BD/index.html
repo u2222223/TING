@@ -327,28 +327,25 @@
         };
       },
       mounted() {
-        const timeid = setTimeout(() => {
-          this.init();
-          clearTimeout(timeid);
-        }, 1500);
+        this.check();
+        this.init();
       },
       methods: {
         init() {
-          window.postMessage({ type: "init", config: this.config }, "*");
-          let timeid = setTimeout(() => {
-            if (this.loading) {
-              this.loading = false;
-              if (confirm(`未检测到浏览器扩展，是否前往安装？`) == true) {
-                window.location.href = "/BD/word.html";
-                this.codeChuLi[110008] = true;
-              }
-            }
-            clearTimeout(timeid);
-          }, 8000);
+          // 插件返回的事件
           window.addEventListener("message", (event) => {
             let eventData = event.data;
             if (event.source !== window) return;
 
+            // 插件已启动
+            if (eventData.type === "ready") {
+              console.log(`插件已启动`);
+              this.loading = false;
+              // 开始做任务
+              // window.postMessage({ type: "start", config: this.config }, "*");
+            }
+
+            // 获取下载卷任务列表
             if (eventData.type === "task_result") {
               this.tasks = eventData.data.taskReal.map((task) => ({
                 ...task,
@@ -358,6 +355,7 @@
               this.tasks = this.tasks;
               this.loading = false;
             }
+
             // 监听任务状态更新
             if (event.data.type === "task_status_update") {
               const taskIndex = this.tasks.findIndex((task) => {
@@ -382,9 +380,9 @@
                 console.log(`找不到：${taskIndex}`);
               }
             }
-            console.log(eventData, this.tasks);
           });
 
+          // 页面销毁
           window.addEventListener("beforeunload", function (event) {
             if (this.codeChuLi[110008]) {
               // 如果是未登录， 就不阻止关闭
@@ -394,6 +392,20 @@
               return "关闭页面将无法领取下载卷？";
             }
           });
+        },
+
+        // 检查是否和插件通信成功
+        check() {
+          let timeid = setTimeout(() => {
+            if (this.loading) {
+              this.loading = false;
+              if (confirm(`未检测到浏览器扩展，是否前往安装？`) == true) {
+                window.location.href = "/BD/word.html";
+                this.codeChuLi[110008] = true;
+              }
+            }
+            clearTimeout(timeid);
+          }, 8000);
         },
       },
     });
