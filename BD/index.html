@@ -352,7 +352,6 @@
               this.tasks = this.tasks;
               this.loading = false;
             }
-
             // 监听任务状态更新
             if (event.data.type === "task_status_update") {
               const taskIndex = this.tasks.findIndex((task) => {
@@ -364,8 +363,8 @@
                   ...eventData.data,
                 });
 
-                // 处理错误码
-                if (eventData.data.errorNo) {
+                // 处理一个任务的错误码
+                if (taskIndex === 0 && eventData.data.errorNo) {
                   switch (eventData.data.errorNo) {
                     case 110008:
                       if (confirm(`您未登录，是否前往登录？`) == true) {
