@@ -319,7 +319,9 @@
           tasks: [],
           loading: true,
           config: {
+            // 根据频道Id获取任务数组
             channelArr: [10066, 10065],
+            // 过滤出免费任务
             taskModules: ["game_return_play", "new_game_play"],
           },
           // 状态码是否处理
@@ -340,6 +342,9 @@
             // 插件已启动
             if (eventData.type === "ready") {
               console.log(eventData);
+              if (eventData.version === "1.6") {
+                alert("请升级插件至最新版本！");
+              }
               this.loading = false;
               // 开始做任务
               window.postMessage({ type: "start", config: this.config }, "*");
