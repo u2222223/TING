@@ -2,7 +2,7 @@
 <html lang="zh-cn">
   <head>
     <meta charset="UTF-8" />
-    <title>TING</title>
+    <title>TING 软件科技</title>
     <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/vue/2.6.14/vue.min.js"></script>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <!-- <link
@@ -36,7 +36,7 @@
         font-weight: 700;
       }
       .container {
-        max-width: 60vw;
+        max-width: 1200px;
         margin: 40px auto;
         padding: 32px;
         background: #fff;
@@ -57,7 +57,8 @@
         border-radius: 14px;
         box-shadow: 0 2px 12px rgba(66, 103, 178, 0.07);
         padding: 28px 24px;
-        width: 360px;
+        min-width: 400px;
+        max-width: 450px;
         transition: box-shadow 0.2s, background 0.2s;
         display: flex;
         flex-direction: column;
@@ -75,7 +76,7 @@
         margin-bottom: 12px;
       }
       .product-card strong {
-        font-size: 1.15rem;
+        font-size: 1.55rem;
         color: #23395d;
         margin-bottom: 8px;
         font-weight: 600;
@@ -117,7 +118,7 @@
         font-weight: 700;
       }
       .product-icon-wrapper {
-        height: 200px;
+        height: 100px;
       }
       .buttonBox {
         display: flex;
@@ -144,17 +145,20 @@
   <body>
     <div id="app">
       <div class="nav">
-        <h2><i class="fas fa-robot" style="margin-right: 12px"></i>TING</h2>
+        <h2>
+          <i class="fas fa-robot" style="margin-right: 12px"></i>TING 软件科技
+        </h2>
       </div>
       <div class="container">
         <!-- 首页：产品列表 -->
         <div>
           <h3
             style="
-              color: #42a5f5;
+              color: #23395d;
               letter-spacing: 1px;
-              font-weight: 500;
+              font-weight: bolder;
               margin-bottom: 28px;
+              font-size: 24px;
             "
           >
             <i class="fas fa-cubes"></i> 我们的产品
@@ -170,7 +174,7 @@
                   <i :class="product.icon"></i>
                 </div>
                 <strong>{{ product.name }}</strong>
-                <p>{{ product.desc }}</p>
+                <p style="margin-top: 10px">{{ product.desc }}</p>
               </div>
               <div class="buttonBox">
                 <button
