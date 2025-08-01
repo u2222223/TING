@@ -382,8 +382,13 @@
           });
 
           window.addEventListener("beforeunload", function (event) {
-            event.returnValue = "关闭页面将无法领取下载卷？";
-            return "关闭页面将无法领取下载卷？";
+            if (this.codeChuLi[110008]) {
+              // 如果是未登录， 就不阻止关闭
+              return false;
+            } else {
+              event.returnValue = "关闭页面将无法领取下载卷？";
+              return "关闭页面将无法领取下载卷？";
+            }
           });
         },
       },
