@@ -2,7 +2,57 @@
 <html lang="zh-cn">
   <head>
     <meta charset="UTF-8" />
-    <title>TING 软件科技</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TING 软件科技 | 智能自考答题助手、百DU云盘下载卷</title>
+    <meta
+      name="keywords"
+      content="TING,软件科技,自考答题助手,百DU云盘,下载卷,AI,工具,企业软件,插件,百度网盘,极速下载"
+    />
+    <meta
+      name="description"
+      content="TING 软件科技，专注于智能自考答题助手、百DU云盘下载卷等高效工具开发，助力企业与个人提升效率，安全可靠，支持多平台。"
+    />
+    <meta name="author" content="TING 软件科技" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="canonical" href="https://u2233.vip/" />
+    <!-- Open Graph -->
+    <meta
+      property="og:title"
+      content="TING 软件科技 | 智能自考答题助手、百DU云盘下载卷"
+    />
+    <meta
+      property="og:description"
+      content="TING 软件科技，专注于智能自考答题助手、百DU云盘下载卷等高效工具开发，助力企业与个人提升效率，安全可靠，支持多平台。"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://u2233.vip/" />
+    <meta property="og:image" content="https://u2233.vip/BD/static/cover.png" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="TING 软件科技 | 智能自考答题助手、百DU云盘下载卷"
+    />
+    <meta
+      name="twitter:description"
+      content="TING 软件科技，专注于智能自考答题助手、百DU云盘下载卷等高效工具开发，助力企业与个人提升效率，安全可靠，支持多平台。"
+    />
+    <meta
+      name="twitter:image"
+      content="https://u2233.vip/BD/static/cover.png"
+    />
+    <!-- 结构化数据（JSON-LD） -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "TING 软件科技",
+        "url": "https://u2233.vip/",
+        "logo": "https://u2233.vip/favicon.ico",
+        "description": "TING 软件科技，专注于智能自考答题助手、百DU云盘下载卷等高效工具开发，助力企业与个人提升效率，安全可靠，支持多平台。",
+        "sameAs": ["https://u2233.vip/"]
+      }
+    </script>
     <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/vue/2.6.14/vue.min.js"></script>
     <script
       charset="UTF-8"
@@ -12,7 +62,6 @@
     <script>
       LA.init({ id: "3MzDr7Ougg6eqZJG", ck: "3MzDr7Ougg6eqZJG" });
     </script>
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <style>
       body {
         font-family: "Segoe UI", "PingFang SC", Arial, sans-serif;
@@ -33,14 +82,24 @@
       a {
         text-decoration: none;
       }
-      .nav h2 {
+      .nav h1 {
         margin: 0;
         font-size: 2.2rem;
         letter-spacing: 2px;
         font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+      }
+      .nav p {
+        margin: 8px 0 0 0;
+        font-size: 1.1rem;
+        color: #e3ebf7;
+        letter-spacing: 1px;
       }
       .container {
-        width: 1200px;
+        max-width: 1200px;
         margin: 40px auto;
         padding: 32px;
         background: #fff;
@@ -63,17 +122,24 @@
         padding: 28px 24px;
         width: 550px;
         box-sizing: border-box;
-        transition: box-shadow 0.2s, background 0.2s;
+        transition: box-shadow 0.2s, background 0.2s, transform 0.2s;
         display: flex;
         flex-direction: column;
         flex-wrap: nowrap;
         align-items: flex-start;
         border: 1px solid #e3e6ef;
         position: relative;
-        transition: transform 0.2s;
       }
       .product-card:hover {
         transform: scale(1.03);
+        box-shadow: 0 8px 32px rgba(66, 103, 178, 0.18);
+        background: linear-gradient(120deg, #e3ebf7 60%, #f7faff 100%);
+      }
+      .product-icon-wrapper {
+        height: 100px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
       }
       .product-icon {
         font-size: 2.2rem;
@@ -112,36 +178,26 @@
         background: linear-gradient(90deg, #23395d 60%, #4267b2 100%);
         box-shadow: 0 4px 16px rgba(66, 103, 178, 0.18);
       }
-      .back {
-        margin-bottom: 24px;
-        display: inline-block;
-      }
-      .detail-title {
-        font-size: 1.3rem;
-        color: #23395d;
-        margin-bottom: 12px;
-        font-weight: 700;
-      }
-      .product-icon-wrapper {
-        height: 100px;
-      }
       .buttonBox {
         display: flex;
         height: 50px;
+        align-items: center;
       }
     </style>
   </head>
   <body>
     <div id="app">
-      <div class="nav">
-        <h2>
-          <i class="fas fa-robot" style="margin-right: 12px"></i>TING 软件科技
-        </h2>
-      </div>
-      <div class="container">
-        <!-- 首页：产品列表 -->
-        <div>
-          <h3
+      <header class="nav" role="banner">
+        <h1>
+          <i class="fas fa-robot" aria-label="TING Logo"></i>
+          TING 软件科技
+        </h1>
+        <p>智能工具 · 高效办公 · 安全可靠</p>
+      </header>
+      <main class="container" role="main">
+        <section aria-labelledby="products-title">
+          <h2
+            id="products-title"
             style="
               color: #23395d;
               letter-spacing: 1px;
@@ -151,26 +207,31 @@
               font-size: 24px;
             "
           >
-            <i class="fas fa-cubes"></i> 我们的产品
-          </h3>
+            <i class="fas fa-cubes" aria-hidden="true"></i> 我们的产品
+          </h2>
           <div class="product-list">
-            <div
+            <article
               class="product-card"
               v-for="product in products"
               :key="product.id"
+              itemscope
+              itemtype="https://schema.org/SoftwareApplication"
             >
               <div class="product-icon-wrapper">
                 <div class="product-icon">
-                  <i :class="product.icon"></i>
+                  <i :class="product.icon" aria-hidden="true"></i>
                 </div>
-                <strong>{{ product.name }}</strong>
-                <p style="margin-top: 10px">{{ product.desc }}</p>
+                <strong itemprop="name">{{ product.name }}</strong>
               </div>
+              <p style="margin-top: 10px" itemprop="description">
+                {{ product.desc }}
+              </p>
               <div class="buttonBox">
                 <button
                   class="btn"
                   v-if="product.url"
                   @click="viewProduct(product)"
+                  :aria-label="'查看' + product.name"
                 >
                   查看产品
                 </button>
@@ -179,13 +240,15 @@
                   :href="product.download"
                   download
                   v-if="product.download"
+                  :aria-label="'下载' + product.name"
+                  itemprop="downloadUrl"
                   >下载软件
                 </a>
               </div>
-            </div>
+            </article>
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
     <script>
       new Vue({
@@ -195,16 +258,18 @@
             {
               id: 1,
               name: "TING-自考答题助手",
-              desc: "专注于自考答题的AI系统",
+              desc: "专注于自考答题的AI系统，智能识别试题，自动生成答案，提升自考效率。",
               icon: "fas fa-brain",
               url: "/AI/index.html",
+              download: "",
             },
             {
               id: 2,
               name: "百DU云盘-每天领下载卷",
-              desc: "每天领取百DU云盘极速下载卷，让下载更轻松",
-              url: "/BD/word.html",
+              desc: "每天领取百DU云盘极速下载卷，让下载更轻松，支持主流浏览器扩展。",
               icon: "fas fa-chart-line",
+              url: "/BD/word.html",
+              download: "",
             },
           ],
         },
