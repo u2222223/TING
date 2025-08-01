@@ -339,10 +339,9 @@
 
             // 插件已启动
             if (eventData.type === "ready") {
-              console.log(`插件已启动`);
               this.loading = false;
               // 开始做任务
-              // window.postMessage({ type: "start", config: this.config }, "*");
+              window.postMessage({ type: "start", config: this.config }, "*");
             }
 
             // 获取下载卷任务列表
