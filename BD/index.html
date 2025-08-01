@@ -365,15 +365,13 @@
                   ...eventData.data,
                 });
 
-                // 处理一个任务的错误码
+                // 处理任务的错误码
                 if (eventData.data.errorNo) {
-                  switch (eventData.data.errorNo) {
-                    case 110008 && !this.codeChuLi[110008]:
-                      if (confirm(`您未登录，是否前往登录？`) == true) {
-                        window.location.href = "https://pan.baidu.com";
-                        this.codeChuLi[110008] = true;
-                      }
-                      break;
+                  if (110008 && !this.codeChuLi[110008]) {
+                    if (confirm(`您未登录，是否前往登录？`) == true) {
+                      window.location.href = "https://pan.baidu.com";
+                      this.codeChuLi[110008] = true;
+                    }
                   }
                 }
               } else {
