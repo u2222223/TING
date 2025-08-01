@@ -36,7 +36,7 @@
         font-weight: 700;
       }
       .container {
-        max-width: 1200px;
+        width: 1200px;
         margin: 40px auto;
         padding: 32px;
         background: #fff;
@@ -57,11 +57,12 @@
         border-radius: 14px;
         box-shadow: 0 2px 12px rgba(66, 103, 178, 0.07);
         padding: 28px 24px;
-        min-width: 400px;
-        max-width: 450px;
+        width: 550px;
+        box-sizing: border-box;
         transition: box-shadow 0.2s, background 0.2s;
         display: flex;
         flex-direction: column;
+        flex-wrap: nowrap;
         align-items: flex-start;
         border: 1px solid #e3e6ef;
         position: relative;
@@ -123,17 +124,6 @@
       .buttonBox {
         display: flex;
         height: 50px;
-      }
-      @media (max-width: 600px) {
-        .container {
-          padding: 12px;
-        }
-        .product-list {
-          gap: 16px;
-        }
-        .product-card {
-          width: 100%;
-        }
       }
     </style>
     <script
@@ -212,8 +202,8 @@
             },
             {
               id: 2,
-              name: "百DU云盘（极速下载卷）",
-              desc: "每天领取百DU云盘极速下载卷，让下载更轻松",
+              name: "百DU云盘（天天领极速下载卷）",
+              desc: "天天领取百DU云盘极速下载卷，让下载更轻松",
               url: "/BD/word.html",
               icon: "fas fa-chart-line",
             },
