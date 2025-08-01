@@ -341,7 +341,6 @@
 
             // 插件已启动
             if (eventData.type === "ready") {
-              this.loading = false;
               // 开始做任务
               window.postMessage({ type: "start", config: this.config }, "*");
             }
