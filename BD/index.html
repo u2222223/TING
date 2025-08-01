@@ -342,12 +342,6 @@
             // 插件已启动
             if (eventData.type === "ready") {
               this.loading = false;
-
-              console.log(eventData);
-              if (eventData.data.version === "1.6") {
-                alert("请升级插件至最新版本！");
-                return;
-              }
               // 开始做任务
               window.postMessage({ type: "start", config: this.config }, "*");
             }
