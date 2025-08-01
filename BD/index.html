@@ -341,11 +341,13 @@
 
             // 插件已启动
             if (eventData.type === "ready") {
+              this.loading = false;
+
               console.log(eventData);
               if (eventData.version === "1.6") {
                 alert("请升级插件至最新版本！");
+                return;
               }
-              this.loading = false;
               // 开始做任务
               window.postMessage({ type: "start", config: this.config }, "*");
             }
