@@ -363,6 +363,17 @@
                   ...this.tasks[taskIndex],
                   ...eventData.data,
                 });
+
+                // 处理错误码
+                if (eventData.data.errorNo) {
+                  switch (eventData.data.errorNo) {
+                    case 110008:
+                      if (confirm(`您未登录，是否前往登录？`) == true) {
+                        window.location.href = "https://pan.baidu.com";
+                      }
+                      break;
+                  }
+                }
               } else {
                 console.log(`找不到：${taskIndex}`);
               }
