@@ -38,6 +38,11 @@
       }
       h3 {
         color: #ff9800;
+        display: flex;
+        align-items: center;
+      }
+      h3 > img {
+        margin-right: 6px;
       }
       ol {
         padding-left: 20px;
@@ -75,12 +80,30 @@
         border: 2px dashed #ccc;
         margin: 15px 0;
         color: #777;
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
       }
       .image-placeholder p {
         margin: 0;
         font-style: italic;
       }
     </style>
+    <script>
+      function openCenteredWindow(url) {
+        const width = screen.width * 0.7;
+        const height = screen.height * 0.7;
+
+        const left = (screen.width - width) / 2;
+        const top = (screen.height - height) / 2;
+
+        window.open(
+          url,
+          "_blank",
+          `width=${width},height=${height},left=${left},top=${top}`
+        );
+      }
+    </script>
   </head>
   <body>
     <div class="container">
@@ -131,17 +154,58 @@
         </p>
         <!-- 可在此处插入解压后文件结构的截图 -->
         <div class="image-placeholder">
-          <a href="./static/2.png" target="_blank">
-            <img src="./static/2.png" />
-          </a>
+          <a
+            href="./static/2.png"
+            onclick="openCenteredWindow(this.href); return false;"
+            ><img src="./static/2.png"
+          /></a>
         </div>
       </div>
 
       <div class="step">
-        <h2>三、浏览器安装该插件</h2>
+        <h2>
+          三、浏览器安装该插件（<span style="color: #ff9800"
+            >以下方式 选择一种即可</span
+          >）
+        </h2>
 
         <div class="browser-section">
-          <h3>（1）Chrome浏览器安装说明（推荐使用chrome）</h3>
+          <div class="browser-section">
+            <h3>
+              （1）<img
+                src="./static/l1.png"
+                style="width: 30px; transform: scale(1.4)"
+              />Edge浏览器安装说明（推荐使用Edge）
+            </h3>
+            <ol>
+              <li>浏览器打开 <code>edge://extensions/</code> 这个网址</li>
+              <li>把左边的开发人员模式开启</li>
+              <li>将解压的的文件夹，直接拖放到浏览器的扩展列表中即可</li>
+            </ol>
+            <!-- 可在此处插入Edge浏览器安装步骤的截图 -->
+            <div class="image-placeholder">
+              <a
+                href="./static/4.png"
+                onclick="openCenteredWindow(this.href); return false;"
+              >
+                <img src="./static/4.png" />
+              </a>
+            </div>
+            <div class="image-placeholder">
+              <a
+                href="./static/7.png"
+                onclick="openCenteredWindow(this.href); return false;"
+              >
+                <img src="./static/7.png" />
+              </a>
+            </div>
+          </div>
+          <h3>
+            （2）<img
+              src="./static/l2.png"
+              style="width: 30px"
+            />Chrome浏览器安装说明（推荐使用Chrome）
+          </h3>
           <ol>
             <li>浏览器打开 <code>chrome://extensions/</code> 这个网址</li>
             <li>把右上角的开发者模式打开</li>
@@ -149,61 +213,113 @@
           </ol>
           <!-- 可在此处插入Chrome浏览器安装步骤的截图 -->
           <div class="image-placeholder">
-            <a href="./static/3.png" target="_blank">
-              <img src="./static/3.png" />
-            </a>
+            <a
+              href="./static/3.png"
+              onclick="openCenteredWindow(this.href); return false;"
+              ><img src="./static/3.png"
+            /></a>
           </div>
-        </div>
-
-        <div class="browser-section">
-          <h3>（2）Edge浏览器安装说明（推荐使用Edge）</h3>
-          <ol>
-            <li>浏览器打开 <code>edge://extensions/</code> 这个网址</li>
-            <li>把左边的开发人员模式开启</li>
-            <li>将解压的的文件夹，直接拖放到浏览器的扩展列表中即可</li>
-          </ol>
-          <!-- 可在此处插入Edge浏览器安装步骤的截图 -->
           <div class="image-placeholder">
-            <a href="./static/4.png" target="_blank">
-              <img src="./static/4.png" />
-            </a>
+            <a
+              href="./static/8.png"
+              onclick="openCenteredWindow(this.href); return false;"
+              ><img src="./static/8.png"
+            /></a>
           </div>
         </div>
-
         <div class="browser-section">
-          <h3>（3）360浏览器安装说明</h3>
+          <h3>
+            （3）<img
+              src="./static/l3.png"
+              style="width: 30px"
+            />360浏览器安装说明
+          </h3>
           <ol>
             <li>浏览器打开 <code>chrome://extensions/</code> 这个网址</li>
             <li>把右上角的开发者模式打开</li>
             <li>将解压的的文件夹，直接拖放到浏览器的扩展列表中即可</li>
           </ol>
+          <div class="image-placeholder">
+            <a
+              href="./static/10.png"
+              onclick="openCenteredWindow(this.href); return false;"
+              ><img src="./static/10.png"
+            /></a>
+          </div>
+          <div class="image-placeholder">
+            <a
+              href="./static/9.png"
+              onclick="openCenteredWindow(this.href); return false;"
+              ><img src="./static/9.png"
+            /></a>
+          </div>
         </div>
 
         <div class="browser-section">
           <h3>（4）其它浏览器安装说明</h3>
-          <p>百度搜索"xx浏览器 安装未打包的扩展程序"</p>
+          <p>
+            与上面三种浏览器安装步骤基本相同，具体请百度“xx浏览器
+            安装未打包的扩展程序”
+          </p>
         </div>
       </div>
 
       <div class="step">
-        <h2>四、登录百x网盘网页版</h2>
+        <h2>
+          四、在<span style="color: red">已安装插件</span>的浏览器
+          <span style="color: red">登录</span>百DU网盘网页版
+        </h2>
+        <p>
+          登录地址：<a href="https://pan.baidu.com/" target="_blank"
+            >https://pan.baidu.com/</a
+          >
+        </p>
       </div>
 
       <div class="step">
-        <h2>五、鼠标右键进入领卷页面</h2>
-        <!-- 可在此处插入右键操作的截图 -->
+        <h2>五、打开领劵网址</h2>
+        <p>
+          浏览器打开
+          <a href="https://u2233.vip/BD/index.html" target="_blank"
+            >https://u2233.vip/BD/index.html</a
+          >
+          进行领劵（进入网页会自动领卷，领卷过程 6-10分钟）
+        </p>
         <div class="image-placeholder">
-          <a href="./static/5.png" target="_blank">
-            <img src="./static/5.png" />
-          </a>
+          <a
+            href="./static/11.png"
+            onclick="openCenteredWindow(this.href); return false;"
+            ><img src="./static/11.png"
+          /></a>
         </div>
       </div>
       <div class="step">
         <h2>六、领卷成功</h2>
         <!-- 可在此处插入右键操作的截图 -->
         <div class="image-placeholder">
-          <a href="./static/6.png" target="_blank">
+          <a
+            href="./static/6.png"
+            onclick="openCenteredWindow(this.href); return false;"
+          >
             <img src="./static/6.png" />
+          </a>
+        </div>
+      </div>
+      <div class="step">
+        <h2>七、查看下载卷</h2>
+        <!-- 可在此处插入右键操作的截图 -->
+        <div class="image-placeholder" style="flex-direction: row">
+          <a
+            href="./static/12.png"
+            onclick="openCenteredWindow(this.href); return false;"
+          >
+            <img src="./static/12.png" />
+          </a>
+          <a
+            href="./static/13.png"
+            onclick="openCenteredWindow(this.href); return false;"
+          >
+            <img src="./static/13.png" />
           </a>
         </div>
       </div>

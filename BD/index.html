@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>百X云盘（极速下载卷）</title>
+    <title>百DU云盘（极速下载卷）</title>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <script
@@ -228,7 +228,7 @@
       <div class="ad"></div>
       <div class="content">
         <div class="header">
-          <h1>百X云盘（极速下载卷）</h1>
+          <h1>百DU云盘（极速下载卷）</h1>
           <p>自动领卷过程中请勿关闭页面，否则可能影响领卷~</p>
         </div>
 
@@ -334,10 +334,11 @@
           window.postMessage({ type: "init", config: this.config }, "*");
           let timeid = setTimeout(() => {
             if (this.loading) {
-              alert(
-                "浏览器扩展异常，请前往 https://u2233.vip 获取最新版浏览器扩展"
-              );
               this.loading = false;
+              if (confirm(`未检测到浏览器扩展，是否前往安装？`) == true) {
+                window.location.href = "/BD/word.html";
+                this.codeChuLi[110008] = true;
+              }
             }
             clearTimeout(timeid);
           }, 8000);
