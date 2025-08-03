@@ -1,1 +1,3 @@
-console.log($, 66);
+window.$test = function (content) {
+  console.log(content, "test");
+};
