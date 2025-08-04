@@ -1,8 +1,3 @@
-window.$test = function (newWindow) {
-  console.log(newWindow, "test");
-};
-
-// test.js
 (function (global, factory) {
   if (typeof exports === "object" && typeof module !== "undefined") {
     // CommonJS/Node 环境 (模块化加载)
