@@ -1,27 +1,234 @@
-(function (global, factory) {
-  if (typeof exports === "object" && typeof module !== "undefined") {
-    // CommonJS/Node 环境 (模块化加载)
-    factory(global, true);
-  } else {
-    // 浏览器环境 (直接加载)
-    factory(global, false);
-  }
-})(typeof window !== "undefined" ? window : this, function (global, isModule) {
+// test.js - 这个文件部署在你的服务器上
+// 注意：这个文件不要使用 import 语句，直接使用 GM_* API
+
+(function () {
+  "use strict";
+
+  const config = {
+    // 根据频道Id获取任务数组
+    channelArr: [10066, 10065],
+    // 过滤出免费任务
+    taskModules: ["game_return_play", "new_game_play"],
+  };
+
+  // 初始化函数
   async function start() {
-    console.log("start function executed", GM_xmlhttpRequest);
-    // 你的逻辑
+    console.log("test.js 中的 start 函数被调用");
+    const cookie = get_cookies();
+    const tasks = await getAllTask({ cookieStr: cookie });
+    Promise.all(
+      tasks.map((item) => getOneDownload(item.selectGameParams, item))
+    ).then();
   }
 
-  // 暴露接口
-  const lib = { start };
+  // 获取cookie
+  function get_cookies() {
+    return document.cookie;
+  }
 
-  if (isModule) {
-    // 模块化环境导出
-    if (typeof module !== "undefined" && module.exports) {
-      module.exports = lib;
+  // 获取所有游戏任务
+  async function getAllTask({ cookieStr }) {
+    console.log("开始获取任务列表");
+    const channelArr = config.channelArr;
+    const promises = channelArr.map(
+      (channel) =>
+        new Promise((resolve) => {
+          console.log(`发送请求到 channel: ${channel}`);
+          GM_xmlhttpRequest({
+            method: "GET",
+            url: `https://wan.baidu.com/gameapi?action=bonus_pan_task_list&channel=${channel}`,
+            headers: {
+              "Content-Type": "application/json",
+              Cookie: cookieStr,
+            },
+            onload: function (response) {
+              console.log(`收到 channel ${channel} 响应:`, response.status);
+              resolve(JSON.parse(response.responseText));
+            },
+            onerror: function (error) {
+              console.error(`channel ${channel} 请求失败:`, error);
+            },
+          });
+        })
+    );
+
+    const task_result = await Promise.all(promises);
+    console.log("所有任务请求完成:", task_result);
+
+    // 转成平铺数组，所有游戏任务
+    const taskOneWei = [];
+    task_result.forEach((item) => {
+      if (item.errorNo === 0 && item.result && item.result.data) {
+        item.result.data.forEach((task) => {
+          if (Array.isArray(task.data)) {
+            taskOneWei.push(...task.data);
+          }
+        });
+      }
+    });
+
+    // 免费的游戏任务
+    const taskMianFei = taskOneWei.filter((item) =>
+      config.taskModules.includes(item.taskModule)
+    );
+
+    const taskReal = taskMianFei.map((item) => {
+      let selectGame = getRandomItem(item.taskGames);
+      return {
+        ...item,
+        selectGame,
+        selectGameParams: {
+          ...url2obj(selectGame.gameUrl),
+          cookieStr,
+        },
+      };
+    });
+
+    send_message({ type: "task_result", taskReal });
+    return taskReal;
+  }
+
+  // 获取下载卷
+  async function getOneDownload(
+    { cookieStr, gameId, taskId, activityId },
+    task
+  ) {
+    const sendApi = (params) => {
+      GM_xmlhttpRequest({
+        method: "GET",
+        url: `https://wan.baidu.com/gameapi?${obj2url(params)}`,
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieStr,
+        },
+        onload: async function (response) {
+          const data = JSON.parse(response.responseText);
+
+          // 剩余时间为0 或 任务完成状态码
+          if (
+            data.errorNo === 110503 ||
+            (data.result &&
+              data.result.data &&
+              data.result.data.remainingTaskTime === 0)
+          ) {
+            await setStorage(getId(taskId), 0);
+            return send_message({
+              type: "task_status_update",
+              taskId: params.taskId,
+              status: `completed`,
+              progress: 100,
+            });
+          }
+
+          // 接口报错了
+          if (data.errorNo !== 0) {
+            return send_message({
+              type: "task_status_update",
+              taskId: params.taskId,
+              errorNo: data.errorNo,
+              status: `error`,
+              progress: 40,
+              errorMessage: `${data.message}（请刷新页面 或 重新登录 ）`,
+            });
+          }
+
+          // 更新剩余时间
+          if (
+            data.result &&
+            data.result.data &&
+            data.result.data.remainingTaskTime
+          ) {
+            let finiTime =
+              task.eachTaskNeedPlayTimeSecs -
+              data.result.data.remainingTaskTime;
+
+            send_message({
+              type: "task_status_update",
+              taskId: params.taskId,
+              status: `processing`,
+              progress: parseInt(
+                (finiTime / task.eachTaskNeedPlayTimeSecs) * 100
+              ),
+            });
+            await setStorage(getId(taskId), data.result.data.remainingTaskTime);
+          }
+
+          // 准备下一次循环
+          if (
+            data.result &&
+            data.result.data &&
+            data.result.data.nextReportInterval
+          ) {
+            // 如果有下次上报间隔，则设置定时器
+            setTimeout(() => {
+              sendApi({ ...params, isFirstReport: 0 });
+            }, 10 * 1000);
+          }
+        },
+      });
+    };
+
+    sendApi({
+      gameId,
+      isFirstReport: (await getStorage(getId(taskId))) ? 0 : 1,
+      taskId,
+      activityId,
+      action: "bonus_task_game_play_report",
+    });
+  }
+
+  // 随机获取数组中一项
+  function getRandomItem(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  // url参数转对象
+  function url2obj(url) {
+    var obj = {};
+    var arr = url.split("?")[1].split("&");
+    for (var i = 0; i < arr.length; i++) {
+      var item = arr[i].split("=");
+      if (item[0].trim()) {
+        obj[item[0]] = item[1];
+      }
     }
-  } else {
-    // 浏览器环境挂载到全局
-    global.$lib = lib;
+    return obj;
   }
-});
+
+  // 对象转url参数
+  function obj2url(obj) {
+    var url = "";
+    for (var key in obj) {
+      url += key + "=" + obj[key] + "&";
+    }
+    return url.substring(0, url.length - 1);
+  }
+
+  function setStorage(key, value) {
+    return new Promise((resolve) => {
+      GM_setValue(key, value);
+      resolve();
+    });
+  }
+
+  function getStorage(key) {
+    return new Promise((resolve) => {
+      resolve(GM_getValue(key, null));
+    });
+  }
+
+  function send_message(data) {
+    console.log("发送消息:", data);
+  }
+
+  function getId(taskId) {
+    return `task_${taskId}`;
+  }
+
+  // 暴露到全局
+  window.$lib = {
+    start: start,
+  };
+
+  console.log("test.js 执行完成，$lib 已设置");
+})();
