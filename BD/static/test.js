@@ -1,4 +1,4 @@
-const gm = null;
+let gm = null;
 const config = {
   // 根据频道Id获取任务数组
   channelArr: [10066, 10065],
