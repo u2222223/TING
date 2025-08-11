@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文档下载工具</title>
+    <!-- Vue2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <!-- 可选：若不需要可移除 -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <!-- 可选：若不需要导出 PDF 可移除 -->
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+    <style>
+        html,
+        body,
+        div,
+        ul,
+        li,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        dl,
+        dt,
+        dd,
+        ol,
+        form,
+        input,
+        textarea,
+        th,
+        td,
+        select {
+            margin: 0;
+            padding: 0
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            height: 100%
+        }
+
+        body {
+            font-family: Noto Sans SC, PingFang SC, HarmonyOS_Regular, Helvetica Neue, Microsoft YaHei, sans-serif !important;
+            font-size: 14px;
+            font-weight: 300;
+            color: #333;
+            background-color: #f6f6f6;
+            height: 100%
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-weight: 400
+        }
+
+        ul,
+        ol {
+            list-style: none
+        }
+
+        img {
+            border: none;
+            vertical-align: middle;
+            width: 100%
+        }
+
+        a {
+            text-decoration: none;
+            color: #232323
+        }
+
+        table {
+            border-collapse: collapse;
+            table-layout: auto
+        }
+
+        input,
+        textarea {
+            outline: none;
+            border: none
+        }
+
+        textarea {
+            resize: none;
+            overflow: auto
+        }
+
+        button {
+            margin: 0;
+            padding: 0;
+            outline: none;
+            border-radius: 0;
+            background-color: transparent;
+            line-height: inherit;
+            width: max-content;
+            border: none
+        }
+
+        button:after {
+            border: none
+        }
+
+        button:focus {
+            border: none;
+            outline: none
+        }
+
+        iframe {
+            border: none
+        }
+
+        .clearfix {
+            zoom: 1
+        }
+
+        .clearfix:after {
+            content: ".";
+            width: 0;
+            height: 0;
+            visibility: hidden;
+            display: block;
+            clear: both;
+            overflow: hidden
+        }
+
+        .fl {
+            float: left
+        }
+
+        .fr {
+            float: right
+        }
+
+        .tl {
+            text-align: left
+        }
+
+        .tc {
+            text-align: center
+        }
+
+        .tr {
+            text-align: right
+        }
+
+        .clr {
+            clear: both
+        }
+
+        .flex {
+            display: flex
+        }
+
+        .ellipse {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+
+        .inline {
+            display: inline-block;
+        }
+
+        .left {
+            float: left
+        }
+
+        .right {
+            float: right
+        }
+
+        .mr {
+            margin-right: 20px
+        }
+
+        .ml {
+            margin-left: 20px
+        }
+
+        :root {
+            --primary-color: #6464fd;
+            --secondary-color: #fe2e2e;
+            --background-color: #ffe8e7;
+            --general-text: #252525;
+            --white: #ffffff;
+            --soft-white: #fafafa;
+            --section-border: #f4f4f4
+        }
+
+        .header-inner {
+            height: 60px;
+            margin: 0 auto 20px;
+            background: #fff;
+            line-height: 60px
+        }
+
+        .header-inner .header {
+            display: flex;
+            justify-content: space-between;
+            width: 1140px;
+            margin: 0 auto
+        }
+
+        .header-inner .logo img {
+            width: 100px;
+            margin-right: 10px
+        }
+
+        .header-inner .logo span {
+            font-size: 18px;
+            padding: 0 10px;
+            border-left: 1px solid #333;
+            color: #000
+        }
+
+        section .card-main {
+            width: 1140px;
+            height: auto;
+            margin: 0 auto 20px;
+            padding: 1rem 1.75rem;
+            border-radius: 20px;
+            background: #fff
+        }
+
+        .card-main .card-head {
+            height: 48px;
+            line-height: 48px;
+            border-bottom: 1px solid #f6f6f6;
+            margin-bottom: 20px
+        }
+
+        .card-head .card-head-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333
+        }
+
+        .card-head .card-head-desc {
+            font-size: 14px;
+            margin-left: 10px;
+            color: #666
+        }
+
+        .search-main {
+            text-align: center;
+            width: 600px;
+            margin: 50px auto
+        }
+
+        .search-select {
+            text-align: left;
+            margin-left: 5px
+        }
+
+        .search-select span {
+            display: inline-block;
+            font-size: 14px;
+            padding: 6px 10px;
+            border-radius: 5px 5px 0 0;
+            color: #333
+        }
+
+        .search-select span.active {
+            background: var(--primary-color);
+            color: #fff
+        }
+
+        .search-box {
+            height: 42px;
+            line-height: 42px;
+            background: #fff;
+            border-radius: 19px
+        }
+
+        .search-input {
+            width: calc(100% - 120px);
+            float: left;
+            display: inline-block;
+            vertical-align: middle;
+            height: 42px;
+            border: 1px solid var(--primary-color);
+            border-radius: 5px 0 0 5px;
+            padding: 10px 15px
+        }
+
+        .search-btn {
+            width: 120px;
+            display: inline-block;
+            float: left;
+            vertical-align: middle;
+            background: var(--primary-color);
+            color: var(--white);
+            border-radius: 0 5px 5px 0;
+            font-size: 16px;
+            letter-spacing: 3px;
+            text-align: center
+        }
+
+        .card-head .sort {
+            display: inline-block;
+            width: 60px;
+            font-size: 14px;
+            color: #000;
+            text-align: center;
+            padding: 0 10px
+        }
+
+        .card-head .sort:hover {
+            border-bottom: 1px solid var(--primary-color)
+        }
+
+        .card-head .sort.active {
+            border-bottom: 1px solid var(--primary-color);
+            color: var(--primary-color)
+        }
+
+        .prod-list {
+            width: 100%
+        }
+
+        .prod-list .goods-card {
+            width: 23%;
+            float: left;
+            margin: 0 1%
+        }
+
+        .goods-card .goods-item {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #f6f6f6;
+            border-radius: 5px
+        }
+
+        .goods-card .goods-item:hover {
+            box-shadow: 0 0 14px 14px #d1d1d138
+        }
+
+        .goods-item .main-img {
+            width: 100%;
+            margin-bottom: 10px;
+            height: 207px
+        }
+
+        .goods-item .goods-card-title {
+            font-size: 14px;
+            color: #000;
+            height: 44px;
+            line-height: 22px;
+            margin-bottom: 10px;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            -webkit-box-orient: vertical;
+            display: -webkit-box
+        }
+
+        .goods-card-title img {
+            width: 14px;
+            font-size: 14px;
+            vertical-align: middle
+        }
+
+        .goods-card-title span {
+            vertical-align: middle;
+            padding-left: 3px
+        }
+
+        .goods-item .goods-card-tags {
+            min-height: 16px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 9px
+        }
+
+        .goods-card-tags .tag {
+            height: 20px;
+            background: #ffe8e7;
+            border-radius: 2px;
+            padding: 0 8px;
+            font-size: 12px;
+            color: #ff2828;
+            line-height: 20px;
+            margin-right: 5px
+        }
+
+        .goods-item .goods-card-price {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 38PX;
+            line-height: 38px;
+            margin-top: 10px
+        }
+
+        .price-info {
+            display: inline-block;
+            line-height: 38px;
+            vertical-align: middle;
+            height: 38px
+        }
+
+        .prodinfo-item .curr,
+        .goods-card-price .curr {
+            font-size: 18px;
+            color: #fe2e2e;
+            font-weight: 400
+        }
+
+        .prodinfo-item .price,
+        .goods-card-price .price {
+            font-size: 28px;
+            color: #fe2e2e;
+            font-weight: 700
+        }
+
+        .goods-card-price .sale {
+            display: flex;
+            font-size: 14px;
+            color: #ababab;
+            height: 38px
+        }
+
+        #login {
+            position: fixed;
+            width: 420px;
+            background: #fff;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 60px #ced0d385;
+            border-radius: 10px;
+            padding: 30px 60px;
+            border: 1px solid #f1f1f1;
+            z-index: 1000
+        }
+
+        #login .login-main {
+            position: relative
+        }
+
+        .login-main span.close {
+            position: absolute;
+            top: -37px;
+            right: -67px;
+            font-size: 18px;
+            background: #35353529;
+            border-radius: 15px;
+            width: 25px;
+            height: 25px;
+            text-align: center;
+            line-height: 25px;
+            color: #fff
+        }
+
+        #login .login-head {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 20px
+        }
+
+        .login-form-inline {
+            font-size: 13px;
+            margin-bottom: 20px;
+            width: 100%
+        }
+
+        .login-form:last-child {
+            margin-bottom: 0
+        }
+
+        .login-form-input {
+            -webkit-appearance: none;
+            background-color: #fff;
+            background-image: none;
+            border-radius: 4px;
+            border: 1px solid #DCDFE6;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            color: #606266;
+            display: inline-block;
+            font-size: inherit;
+            height: 48px;
+            line-height: 46px;
+            outline: 0;
+            padding: 0 15px;
+            -webkit-transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+            transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+            width: 100%
+        }
+
+        .login-code {
+            height: 48px;
+            margin-left: 10px;
+            width: 140px
+        }
+
+        .login-btn {
+            border-radius: 4px;
+            height: 48px;
+            line-height: 48px;
+            width: 100%;
+            font-size: 16px;
+            text-align: center;
+            background: #6464fd;
+            color: #fff;
+            border: none
+        }
+
+        .login-btn:focus {
+            border: none;
+            outline: none
+        }
+
+        .login-auto-input {
+            cursor: pointer;
+            outline: 0;
+            line-height: 19px;
+            vertical-align: middle
+        }
+
+        .login-auto-input .auto-check {
+            display: inline-block;
+            position: relative;
+            border: 1px solid #DCDFE6;
+            border-radius: 2px;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            width: 14px;
+            height: 14px;
+            background-color: #fff;
+            z-index: 1;
+            -webkit-transition: border-color .25s cubic-bezier(.71, -.46, .29, 1.46), background-color .25s cubic-bezier(.71, -.46, .29, 1.46);
+            transition: border-color .25s cubic-bezier(.71, -.46, .29, 1.46), background-color .25s cubic-bezier(.71, -.46, .29, 1.46)
+        }
+
+        .login-auto-input .auto-check::hover {
+            border: 1px solid #6464fd
+        }
+
+        .login-auto-input .login-form-check {
+            opacity: 0;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: -1;
+            outline: 0;
+            width: 14px;
+            height: 14px
+        }
+
+        .login-auto-input .auto-check:after {
+            -webkit-box-sizing: content-box;
+            box-sizing: content-box;
+            content: "";
+            border: 1px solid #FFF;
+            border-left: 0;
+            border-top: 0;
+            height: 7px;
+            left: 4px;
+            position: absolute;
+            top: 1px;
+            -webkit-transform: rotate(45deg) scaleY(0);
+            transform: rotate(45deg) scaleY(0);
+            width: 3px;
+            -webkit-transition: -webkit-transform .15s ease-in .05s;
+            transition: transform .15s ease-in .05s;
+            -webkit-transform-origin: center;
+            transform-origin: center
+        }
+
+        .login-auto-input.ischeck .auto-check:after {
+            -webkit-transform: rotate(45deg) scaleY(1);
+            transform: rotate(45deg) scaleY(1)
+        }
+
+        .login-auto-input.ischeck .auto-check {
+            border: 1px solid #6464fd;
+            background-color: #6464fd
+        }
+
+        .login-auto-text {
+            font-size: 14px;
+            line-height: 19px;
+            display: inline-block;
+            margin-left: 5px
+        }
+
+        .waimai-item {
+            width: 50%;
+            height: 150px;
+            display: inline-block;
+            float: left;
+            margin-bottom: 40px
+        }
+
+        .waimai-item:last-child {
+            margin-bottom: 20px
+        }
+
+        .waimai-item-img {
+            vertical-align: top;
+            height: 150px;
+            width: 150px
+        }
+
+        .waimai-item-right {
+            display: inline-block;
+            vertical-align: top;
+            margin-left: 20px;
+            width: 350px
+        }
+
+        .waimai-item-title {
+            height: 38px;
+            line-height: 38px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px
+        }
+
+        .waimai-item-info {
+            line-height: 28px;
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #666
+        }
+
+        .waimai-item-info span {
+            color: #000
+        }
+
+        .admin-table-default ::-webkit-scrollbar {
+            height: 6px;
+            width: 0px
+        }
+
+        .wenku-container {
+            max-width: 880px;
+            margin: 100px auto 50px
+        }
+
+        .wenku-container input {
+            border: 1px solid #f1f1f1;
+            border-radius: 5px;
+            padding: 10px
+        }
+
+        .wenku-container .input {
+            font-size: 14px;
+            width: 100%;
+            height: 48px;
+            margin: 0 auto
+        }
+
+        .wenku-container .notice {
+            color: red;
+            line-height: 32px;
+            font-size: 16px;
+            font-weight: 700
+        }
+
+        .wenku-container .input input {
+            height: 48px;
+            width: 80%;
+            box-sizing: border-box;
+            float: left
+        }
+
+        .wenku-container .input textarea {
+            width: 100%;
+            box-sizing: border-box;
+            float: left
+        }
+
+        .wenku-container textarea {
+            border: 1px solid #f1f1f1;
+            border-radius: 5px;
+            padding: 10px
+        }
+
+        .wenku-container .input button {
+            height: 48px;
+            padding: 10px;
+            width: 20%;
+            box-sizing: border-box;
+            float: left;
+            border-radius: 0 5px 5px 0;
+            background-color: #6464fd;
+            font-size: 18px;
+            color: #fff
+        }
+
+        .wenku-container .docsinfo {
+            margin-top: 28px;
+            font-size: 14px
+        }
+
+        .wenku-container .docsinfo .item {
+            line-height: 28px;
+            margin-bottom: 10px
+        }
+
+        .wenku-container .item .item-title {
+            font-weight: 700
+        }
+
+        .wenku-container .item .item-info {
+            padding: 0 10px
+        }
+
+        .wenku-container .downline {
+            height: 38px;
+            line-height: 38px;
+            font-size: 14px
+        }
+
+        .wenku-container .downline .item-title {
+            float: left;
+            margin-right: 20px;
+            font-size: 14px;
+            font-weight: 700
+        }
+
+        .downline .input-inline {
+            display: flex;
+            float: left
+        }
+
+        .wenku-container .input-inline input {
+            width: 80px
+        }
+
+        .wenku-container .downbtn {
+            float: right;
+            background: #6464fd;
+            color: #fff;
+            padding: 0 30px;
+            border-radius: 3px
+        }
+
+        .wenku-container button:disabled {
+            background: #d2d2d2
+        }
+
+        .s-top {
+            padding: 20px 0;
+            display: none
+        }
+
+        .s-top-message {
+            text-align: center;
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 2000
+        }
+
+        .s-top-verifycode {
+            text-align: center;
+            display: none;
+            position: fixed;
+            top: 45%;
+            left: 50%;
+            z-index: 1999;
+            width: 320px;
+            transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            background: #fff;
+            box-shadow: 0 0 30px 6px #d7d7d78a;
+            border-radius: 8px;
+            padding: 20px
+        }
+
+        .s-message {
+            background-color: #000a;
+            color: #fff;
+            padding: 8px 14px;
+            text-align: center;
+            font-size: 18px;
+            border-radius: 6px;
+            display: inline-block
+        }
+
+        .show {
+            display: block
+        }
+
+        .s-panel {
+            background: #fff;
+            border-radius: 12px
+        }
+
+        .s-progress-wrapper {
+            height: 24px;
+            border-radius: 12px;
+            width: 100%;
+            background-color: #eeeff3;
+            overflow: hidden;
+            margin-bottom: 12px
+        }
+
+        .s-progress {
+            background-color: #6464fd;
+            height: 24px;
+            width: 0;
+            transition: width .2s ease
+        }
+
+        .s-status {
+            display: flex;
+            font-size: 14px
+        }
+
+        .s-text {
+            flex-grow: 1;
+            color: #5f5f5f
+        }
+
+        .s-progress-text {
+            color: #6464fd;
+            font-weight: 700
+        }
+
+        .verify-item {
+            display: flex;
+            justify-content: space-around;
+            height: 38px;
+            line-height: 38px;
+            font-size: 14px
+        }
+
+        .verify-item .item-title {
+            font-size: 14px;
+            font-weight: 700;
+            display: inline-block
+        }
+
+        .verify-item .input-inline {
+            font-size: 14px;
+            display: inline-block
+        }
+
+        .s-top-verifycode .tips {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px
+        }
+
+        .s-top-verifycode img {
+            width: 180px;
+            height: 180px;
+            margin-bottom: 10px
+        }
+
+        .s-top-verifycode button {
+            margin: 20px 10px 0;
+            height: 38px;
+            line-height: 38px;
+            background: #6464fd;
+            color: #fff;
+            padding: 0 30px;
+            border-radius: 3px
+        }
+
+        body {
+            display: flex;
+            flex-direction: column
+        }
+
+        section {
+            flex: 1 0 auto
+        }
+
+        header {
+            height: 80px
+        }
+
+        .footer-content {
+            flex-shrink: 0;
+            text-align: center;
+            padding: 10px 0 20px
+        }
+
+        .mask {
+            position: relative
+        }
+
+        .mask:before,
+        .mask:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0
+        }
+
+        .mask:before {
+            background: #000000c2;
+            z-index: 1
+        }
+
+        .mask:after {
+            background: url(https://tools.mounui.com/static/img/bg.png) no-repeat center center fixed;
+            -webkit-background-size: contain;
+            -moz-background-size: contain;
+            -o-background-size: contain;
+            background-size: contain;
+            opacity: .8;
+            z-index: 2
+        }
+
+        .loader {
+            display: none;
+            max-width: 88vw;
+            min-width: 180px;
+            background: #000000a8;
+            overflow: hidden;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999
+        }
+
+        .loader-inner {
+            bottom: 0;
+            height: 60px;
+            left: 0;
+            margin: 32px auto;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 100px
+        }
+
+        .loader-line-wrap {
+            animation: spin 2s cubic-bezier(.175, .885, .32, 1.275) infinite;
+            box-sizing: border-box;
+            height: 50px;
+            left: 0;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            transform-origin: 50% 100%;
+            width: 100px
+        }
+
+        .loader-line {
+            border: 4px solid transparent;
+            border-radius: 100%;
+            box-sizing: border-box;
+            height: 100px;
+            left: 0;
+            margin: 0 auto;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 100px
+        }
+
+        .loader-line-wrap:nth-child(1) {
+            animation-delay: -50ms
+        }
+
+        .loader-line-wrap:nth-child(2) {
+            animation-delay: -.1s
+        }
+
+        .loader-line-wrap:nth-child(3) {
+            animation-delay: -.15s
+        }
+
+        .loader-line-wrap:nth-child(4) {
+            animation-delay: -.2s
+        }
+
+        .loader-line-wrap:nth-child(5) {
+            animation-delay: -.25s
+        }
+
+        .loader-line-wrap:nth-child(1) .loader-line {
+            border-color: #eb4747;
+            height: 90px;
+            width: 90px;
+            top: 7px
+        }
+
+        .loader-line-wrap:nth-child(2) .loader-line {
+            border-color: #ebeb47;
+            height: 76px;
+            width: 76px;
+            top: 14px
+        }
+
+        .loader-line-wrap:nth-child(3) .loader-line {
+            border-color: #47eb47;
+            height: 62px;
+            width: 62px;
+            top: 21px
+        }
+
+        .loader-line-wrap:nth-child(4) .loader-line {
+            border-color: #47ebeb;
+            height: 48px;
+            width: 48px;
+            top: 28px
+        }
+
+        .loader-line-wrap:nth-child(5) .loader-line {
+            border-color: #4747eb;
+            height: 34px;
+            width: 34px;
+            top: 35px
+        }
+
+        @keyframes spin {
+
+            0%,
+            15% {
+                transform: rotate(0)
+            }
+
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .loadmsg {
+            color: #fff;
+            font-size: 18px;
+            text-align: center;
+            margin: 150px 20px 20px
+        }
+
+        @media only screen and (max-width: 768px) {
+            .header {
+                height: 36px
+            }
+
+            section .card-main {
+                width: 95%;
+                margin: 0 auto;
+                padding: 1rem
+            }
+
+            .card-head .card-head-title {
+                font-size: 18px
+            }
+
+            .wenku-container {
+                margin: 3vh auto 1vh
+            }
+
+            .wenku-container .input input {
+                display: none
+            }
+
+            .wenku-container .input button {
+                width: 100%;
+                border-radius: 5px;
+                font-size: 16px;
+                color: #fff;
+                margin-top: 5vh
+            }
+
+            .downline .input-inline,
+            .wenku-container .downline .item-title {
+                display: none
+            }
+
+            .wenku-container .downline {
+                text-align: center
+            }
+
+            .wenku-container .downbtn {
+                float: none;
+                background: #49ad49;
+                width: 100%;
+                font-size: 16px;
+                padding: 3px
+            }
+
+            .wenku-container .docsinfo {
+                margin-top: 36px
+            }
+
+            .s-top {
+                padding: 25px 0 0
+            }
+
+            .wenku-container .docsinfo .item:nth-child(1) {
+                display: none
+            }
+
+            .verify-item .item-title {
+                margin: 0
+            }
+        }
+
+        @media only screen and (min-width: 481px) and (max-width: 768px) {
+            body {
+                width: 88vw;
+                margin: 0 auto;
+                padding: 1rem
+            }
+        }
+
+        @media only screen and (min-width: 769px) {
+            .wenku-container .input textarea {
+                display: none
+            }
+        }
+
+        .redbag {
+            display: none
+        }
+
+        .zfb2024 {
+            position: fixed;
+            bottom: 50px;
+            width: 300px;
+            z-index: 99999;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 0 12px 2px #0000001f
+        }
+
+        .zfb2024a {
+            left: 10px
+        }
+
+        .zfb2024b {
+            right: 10px
+        }
+
+        @media only screen and (min-width: 1280px) and (max-width: 1559px) {
+            .zfb2024 {
+                width: 200px
+            }
+
+            .zfb2024:hover {
+                width: 300px
+            }
+        }
+
+        @media only screen and (min-width: 780px) and (max-width: 1279px) {
+            .zfb2024 {
+                width: 100px
+            }
+
+            .zfb2024:hover {
+                width: 300px
+            }
+        }
+
+        @media only screen and (min-width: 481px) and (max-width: 779px) {
+            .zfb2024 {
+                position: inherit;
+                width: 50vw;
+                margin: 20px auto 0
+            }
+        }
+
+        @media only screen and (max-width: 481px) {
+            .zfb2024 {
+                position: inherit;
+                width: 80vw;
+                margin: 20px auto 0
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <div class="header-inner">
+                <div class="header">
+                    <div class="logo">
+                        <span>文档下载工具</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section>
+            <div class="wenku-container">
+                <div class="input">
+                    <input type="text" class="webv" v-model="documentLink" placeholder="请输入文档链接">
+                    <button class="bd_click" @click="showVerifyCode">获取</button>
+                </div>
+
+                <div class="input">
+                    <textarea class="mobile" placeholder="移动端输入框"></textarea>
+                </div>
+
+                <div class="docsinfo" v-if="documentInfo">
+                    <div class="item">
+                        <span class="item-title">文档ID:</span>
+                        <span class="item-info">{{ documentInfo.id }}</span>
+                    </div>
+                    <div class="item">
+                        <span class="item-title">文档名称:</span>
+                        <span class="item-info doc-title">{{ documentInfo.title }}</span>
+                    </div>
+                    <div class="item">
+                        <span class="item-title">总页数:</span>
+                        <span class="item-info">共{{ documentInfo.totalPages }}页</span>
+                        <span class="item-title">可下载页数:</span>
+                        <span class="item-info">{{ documentInfo.downloadPages }}页</span>
+                    </div>
+                    <div class="downline" v-if="documentInfo.type !== 'txt'">
+                        <label class="item-title">分批下载:</label>
+                        <div class="input-inline">
+                            <input id="start" type="number" v-model="startPage" placeholder="开始">
+                            <span style="line-height: 38px;margin: 0 10px;">-</span>
+                            <input id="end" type="number" v-model="endPage" placeholder="结束">
+                        </div>
+                        <button type="button" class="downbtn" @click="saveDocs" :disabled="downloadDisabled">下载</button>
+                    </div>
+                    <div class="downline" v-else>
+                        <button type="button" class="downbtn" @click="saveTxt">下载</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 验证码弹窗 -->
+            <div class="s-top-verifycode" :class="{ show: showVerify }">
+                <div class="tips">请输入验证码</div>
+                <img :src="verifyCodeImage" alt="验证码">
+                <div class="verify-item">
+                    <span class="item-title">验证码:</span>
+                    <div class="input-inline">
+                        <input type="text" id="code" v-model="verifyCode" maxlength="4">
+                    </div>
+                </div>
+                <button class="tj_jam" @click="getInfo">确定</button>
+                <button class="close_jam" @click="closeVerifyCode">关闭</button>
+            </div>
+
+            <!-- 消息提示 -->
+            <div class="s-top-message" :class="{ show: showMessage }">
+                <div class="s-message">{{ messageText }}</div>
+            </div>
+
+            <!-- 加载动画 -->
+            <div class="loader" :style="{ display: showLoader ? 'block' : 'none' }">
+                <div class="loader-inner">
+                    <div class="loader-line-wrap">
+                        <div class="loader-line"></div>
+                    </div>
+                    <div class="loader-line-wrap">
+                        <div class="loader-line"></div>
+                    </div>
+                    <div class="loader-line-wrap">
+                        <div class="loader-line"></div>
+                    </div>
+                    <div class="loader-line-wrap">
+                        <div class="loader-line"></div>
+                    </div>
+                    <div class="loader-line-wrap">
+                        <div class="loader-line"></div>
+                    </div>
+                </div>
+                <div class="loadmsg">{{ loaderMessage }}</div>
+            </div>
+        </section>
+
+        <div class="footer-content">
+            <p>© 2023 文档下载工具</p>
+        </div>
+    </div>
+
+    <script>
+        // MD5
+        var chrsz = 8;
+        function hex_md5(e) { return binl2hex(core_md5(str2binl(e), e.length * chrsz)) }
+        function core_md5(e, o) { e[o >> 5] |= 128 << o % 32, e[(o + 64 >>> 9 << 4) + 14] = o; for (var t = 1732584193, s = -271733879, a = -1732584194, n = 271733878, r = 0; r < e.length; r += 16) { var p = t, y = s, v = a, d = n; t = md5_ff(t, s, a, n, e[r + 0], 7, -680876936), n = md5_ff(n, t, s, a, e[r + 1], 12, -389564586), a = md5_ff(a, n, t, s, e[r + 2], 17, 606105819), s = md5_ff(s, a, n, t, e[r + 3], 22, -1044525330), t = md5_ff(t, s, a, n, e[r + 4], 7, -176418897), n = md5_ff(n, t, s, a, e[r + 5], 12, 1200080426), a = md5_ff(a, n, t, s, e[r + 6], 17, -1473231341), s = md5_ff(s, a, n, t, e[r + 7], 22, -45705983), t = md5_ff(t, s, a, n, e[r + 8], 7, 1770035416), n = md5_ff(n, t, s, a, e[r + 9], 12, -1958414417), a = md5_ff(a, n, t, s, e[r + 10], 17, -42063), s = md5_ff(s, a, n, t, e[r + 11], 22, -1990404162), t = md5_ff(t, s, a, n, e[r + 12], 7, 1804603682), n = md5_ff(n, t, s, a, e[r + 13], 12, -40341101), a = md5_ff(a, n, t, s, e[r + 14], 17, -1502002290), s = md5_ff(s, a, n, t, e[r + 15], 22, 1236535329), t = md5_gg(t, s, a, n, e[r + 1], 5, -165796510), n = md5_gg(n, t, s, a, e[r + 6], 9, -1069501632), a = md5_gg(a, n, t, s, e[r + 11], 14, 643717713), s = md5_gg(s, a, n, t, e[r + 0], 20, -373897302), t = md5_gg(t, s, a, n, e[r + 5], 5, -701558691), n = md5_gg(n, t, s, a, e[r + 10], 9, 38016083), a = md5_gg(a, n, t, s, e[r + 15], 14, -660478335), s = md5_gg(s, a, n, t, e[r + 4], 20, -405537848), t = md5_gg(t, s, a, n, e[r + 9], 5, 568446438), n = md5_gg(n, t, s, a, e[r + 14], 9, -1019803690), a = md5_gg(a, n, t, s, e[r + 3], 14, -187363961), s = md5_gg(s, a, n, t, e[r + 8], 20, 1163531501), t = md5_gg(t, s, a, n, e[r + 13], 5, -1444681467), n = md5_gg(n, t, s, a, e[r + 2], 9, -51403784), a = md5_gg(a, n, t, s, e[r + 7], 14, 1735328473), s = md5_gg(s, a, n, t, e[r + 12], 20, -1926607734), t = md5_hh(t, s, a, n, e[r + 5], 4, -378558), n = md5_hh(n, t, s, a, e[r + 8], 11, -2022574463), a = md5_hh(a, n, t, s, e[r + 11], 16, 1839030562), s = md5_hh(s, a, n, t, e[r + 14], 23, -35309556), t = md5_hh(t, s, a, n, e[r + 1], 4, -1530992060), n = md5_hh(n, t, s, a, e[r + 4], 11, 1272893353), a = md5_hh(a, n, t, s, e[r + 7], 16, -155497632), s = md5_hh(s, a, n, t, e[r + 10], 23, -1094730640), t = md5_hh(t, s, a, n, e[r + 13], 4, 681279174), n = md5_hh(n, t, s, a, e[r + 0], 11, -358537222), a = md5_hh(a, n, t, s, e[r + 3], 16, -722521979), s = md5_hh(s, a, n, t, e[r + 6], 23, 76029189), t = md5_hh(t, s, a, n, e[r + 9], 4, -640364487), n = md5_hh(n, t, s, a, e[r + 12], 11, -421815835), a = md5_hh(a, n, t, s, e[r + 15], 16, 530742520), s = md5_hh(s, a, n, t, e[r + 2], 23, -995338651), t = md5_ii(t, s, a, n, e[r + 0], 6, -198630844), n = md5_ii(n, t, s, a, e[r + 7], 10, 1126891415), a = md5_ii(a, n, t, s, e[r + 14], 15, -1416354905), s = md5_ii(s, a, n, t, e[r + 5], 21, -57434055), t = md5_ii(t, s, a, n, e[r + 12], 6, 1700485571), n = md5_ii(n, t, s, a, e[r + 3], 10, -1894986606), a = md5_ii(a, n, t, s, e[r + 10], 15, -1051523), s = md5_ii(s, a, n, t, e[r + 1], 21, -2054922799), t = md5_ii(t, s, a, n, e[r + 8], 6, 1873313359), n = md5_ii(n, t, s, a, e[r + 15], 10, -30611744), a = md5_ii(a, n, t, s, e[r + 6], 15, -1560198380), s = md5_ii(s, a, n, t, e[r + 13], 21, 1309151649), t = md5_ii(t, s, a, n, e[r + 4], 6, -145523070), n = md5_ii(n, t, s, a, e[r + 11], 10, -1120210379), a = md5_ii(a, n, t, s, e[r + 2], 15, 718787259), s = md5_ii(s, a, n, t, e[r + 9], 21, -343485551), t = safe_add(t, p), s = safe_add(s, y), a = safe_add(a, v), n = safe_add(n, d) } return Array(t, s, a, n) }
+        function md5_cmn(e, o, t, s, a, n) { return safe_add(bit_rol(safe_add(safe_add(o, e), safe_add(s, n)), a), t) }
+        function md5_ff(e, o, t, s, a, n, r) { return md5_cmn(o & t | ~o & s, e, o, a, n, r) }
+        function md5_gg(e, o, t, s, a, n, r) { return md5_cmn(o & s | t & ~s, e, o, a, n, r) }
+        function md5_hh(e, o, t, s, a, n, r) { return md5_cmn(o ^ t ^ s, e, o, a, n, r) }
+        function md5_ii(e, o, t, s, a, n, r) { return md5_cmn(t ^ (o | ~s), e, o, a, n, r) }
+        function safe_add(e, o) { var t = (e & 65535) + (o & 65535), s = (e >> 16) + (o >> 16) + (t >> 16); return s << 16 | t & 65535 }
+        function bit_rol(e, o) { return e << o | e >>> 32 - o }
+        function str2binl(e) { for (var o = Array(), t = (1 << chrsz) - 1, s = 0; s < e.length * chrsz; s += chrsz)o[s >> 5] |= (e.charCodeAt(s / chrsz) & t) << s % 32; return o }
+        function binl2hex(e) { for (var o = "0123456789abcdef", t = "", s = 0; s < e.length * 4; s++)t += o.charAt(e[s >> 2] >> s % 4 * 8 + 4 & 15) + o.charAt(e[s >> 2] >> s % 4 * 8 & 15); return t }
+
+        // URL 取 ID
+        function geturlid(e) {
+            var o = ""; e.indexOf("?") != -1 && (e = e.split("?")[0]), e.indexOf("#") != -1 && (e = e.split("#")[0]),
+                e = e.replace(/(\/*$)/g, ""); var t = e.split("/"); o = t[t.length - 1]; o = o.replace(".html", ""); return o
+        }
+
+        new Vue({
+            el: '#app',
+            data: {
+                documentLink: '',
+                showVerify: false,
+                verifyCode: '',
+                verifyCodeImage: 'https://tools.mounui.com/api/captcha?' + Date.now(),
+                showMessage: false,
+                messageText: '',
+                showLoader: false,
+                loaderMessage: '',
+                documentInfo: null,
+                startPage: '',
+                endPage: '',
+                downloadDisabled: false,
+                txtInfo: null,
+                readerInfo: null,
+                readerPages: []
+            },
+            methods: {
+                showVerifyCode() { this.showVerify = true; },
+                closeVerifyCode() { this.showVerify = false; },
+                showMessageFunc(text, duration = 3000) {
+                    this.messageText = text; this.showMessage = true;
+                    setTimeout(() => { this.showMessage = false; }, duration);
+                },
+                showLoaderFunc(message) { this.loaderMessage = message; this.showLoader = true; },
+                hideLoader() { this.showLoader = false; },
+
+                getInfo() {
+                    let link, width = window.innerWidth;
+                    width <= 768 ? link = document.querySelector(".mobile").value : link = this.documentLink;
+                    const id = geturlid(link);
+                    if (!id) { this.showMessageFunc("您还没有输入文档链接哦！"); return; }
+                    const token = hex_md5(id + "jam_mounui");
+                    if (!this.verifyCode) { this.showMessageFunc("请输入验证码"); return; }
+
+                    this.showLoaderFunc("正在获取网页数据，需要一些时间，请耐心等待...");
+                    document.querySelector(".bd_click").setAttribute("disabled", "disabled");
+
+                    // 这里可替换为你的真实接口。若使用本仓库内置静态返回，可改为 '/BDWK/api/v1/wkapi.html'
+                    const url = "/api/v1/wkapi";
+
+                    // 模拟请求（如需真实请求请替换为 fetch(url, {...})）
+                    setTimeout(() => {
+                        this.hideLoader();
+                        document.querySelector(".bd_click").removeAttribute("disabled");
+                        this.closeVerifyCode();
+
+                        // 模拟返回
+                        this.documentInfo = {
+                            id: id,
+                            title: "示例文档标题",
+                            totalPages: 50,
+                            downloadPages: 10,
+                            type: "pdf" // 或 "txt"
+                        };
+                        this.showMessageFunc("文档信息获取成功");
+                    }, 1500);
+                },
+
+                saveDocs() {
+                    this.showMessageFunc("开始下载文档...");
+                    this.downloadDisabled = true;
+                    setTimeout(() => {
+                        this.showMessageFunc("文档下载完成");
+                        this.downloadDisabled = false;
+                    }, 2000);
+                },
+
+                saveTxt() {
+                    this.showMessageFunc("开始下载文本...");
+                    setTimeout(() => {
+                        this.showMessageFunc("文本下载完成");
+                    }, 1000);
+                }
+            },
+            mounted() { /* 初始化逻辑 */ }
+        });
+    </script>
+</body>
+
+</html>

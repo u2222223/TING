@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<!-- http://127.0.0.1:5500/BDWK/index.html?url=https%3A%2F%2Fwenku.baidu.com%2Fview%2Fcbb52e13a2c7aa00b52acfc789eb172dec6399f6.html%3Ffr%3Dhp_RecentDoc%26_wkts_%3D1754900306417 -->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <meta name="referrer" content="no-referrer" />
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <title>网页转换助手</title>
+    <!-- <link rel="icon" type="image/png" sizes="16x16" href="https://res.mounui.com/info/jam_favicon_48.png"> -->
+    <link rel="preload" as="style" href="./build/assets/app-ousI-Afg.css" />
+    <link rel="modulepreload" href="./build/assets/app-oTLWkc4Z.js" />
+    <link rel="stylesheet" href="./build/assets/app-ousI-Afg.css" />
+    <script type="module" src="./build/assets/app-oTLWkc4Z.js"></script>
+    <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_3620686_jhcgofk779.css" />
+    <script src="./static/js/jquery-3.7.1.min.js"></script>
+    <script>
+        // 检查是否成功加载了jQuery
+        window.jQuery || document.write('<script src="./static/js/jquery-3.7.1.min.js"><\\/script>')
+    </script>
+    <script src="./static/js/jspdf.umd.min.js"></script>
+    <!-- <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?b7cea900b6470a53fadce6cd139c3727";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script> -->
+
+</head>
+
+<body>
+    <header class="header"></header>
+    <section>
+        <div class="card-main">
+            <div class="card-head">
+                <span class="card-head-title">
+                    网页转换助手
+                </span>
+            </div>
+            <div class="card-body">
+                <div class="wenku-container">
+                    <!-- <div class="notice">
+                        免责声明:本工具仅为方便查看在线文档和交流技术使用
+                    </div> -->
+                    <div class="input">
+                        <textarea class="mobile" placeholder="请输入BD文档链接" cols="30"
+                            rows="10">https://wenku.baidu.com/view/cbb52e13a2c7aa00b52acfc789eb172dec6399f6.html?fr=hp_RecentDoc&amp;_wkts_=1754900306417</textarea>
+                        <input id="link" class="webv"
+                            value="https://wenku.baidu.com/view/cbb52e13a2c7aa00b52acfc789eb172dec6399f6.html?fr=hp_RecentDoc&amp;_wkts_=1754900306417"
+                            autocomplete="off" type="text" placeholder="请输入BD文档链接">
+                        <button type="button" class="bd_click">获取网页数据</button>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <div class="docsinfo">
+                    </div>
+                    <div class="s-top">
+                        <div class="s-panel">
+                            <div class="s-progress-wrapper">
+                                <div class="s-progress"></div>
+                            </div>
+                            <div class="s-status">
+                                <div class="s-text">正在加载...</div>
+                                <div class="s-progress-text">0%
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="s-top-message">
+                        <div class="s-message">msg</div>
+                    </div>
+                    <div class="s-top-verifycode">
+                        <p class="tips">防止恶意请求，请输入验证码</p>
+                        <img src="https://res.mounui.com/info/wechat_jam_qrcode.jpg">
+                        <p style="font-size: 14px;color:#666;margin-bottom: 20px;">微信关注上方公众号，回复"6"获取</p>
+                        <div class="verify-item">
+                            <span class="item-title">验证码：</span>
+                            <input type="text" placeholder="请输入验证码" id="code" autocomplete="off" class="input-inline">
+                        </div>
+                        <div><button style="background:#bcbcbc;" type="button" class="close_jam">关闭</button><button
+                                type="button" class="tj_jam">提交</button></div>
+                        <div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="redbag">
+        <div class="zfb2024 zfb2024a">
+            <img src="https://doc.idjams.top/static/img/zfb202404a.png" alt="">
+        </div>
+        <div class="zfb2024 zfb2024b">
+            <img src="https://doc.idjams.top/static/img/zfb202404b.png" alt="">
+        </div>
+    </div>
+    <footer>
+        <!-- 免责声明 -->
+        <div class="footer-content">
+            <p>免责声明：本工具完全免费仅供学习和交流使用，不得用于任何商业用途，使用本工具下载的任何内容的版权归原作者所有。</p>
+        </div>
+    </footer>
+    <div class="loader">
+        <div class="loader-inner">
+            <div class="loader-line-wrap">
+                <div class="loader-line"></div>
+            </div>
+            <div class="loader-line-wrap">
+                <div class="loader-line"></div>
+            </div>
+            <div class="loader-line-wrap">
+                <div class="loader-line"></div>
+            </div>
+            <div class="loader-line-wrap">
+                <div class="loader-line"></div>
+            </div>
+            <div class="loader-line-wrap">
+                <div class="loader-line"></div>
+            </div>
+        </div>
+        <div class="loadmsg">
+            正在获取网页数据，请勿操作!
+        </div>
+    </div>
+</body>
+
+</html>
