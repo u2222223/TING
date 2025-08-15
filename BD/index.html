@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>百DU云盘-每天领下载卷</title>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/vue/2.6.14/vue.min.js"></script>
+</head>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+  }
+
+  #el {
+    display: flex;
+    justify-content: space-between;
+    min-height: 100vh;
+  }
+
+  #el>div {
+    min-height: 100vh;
+  }
+
+  .ad {
+    flex: 0 0 20%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .content {
+    flex: 1;
+    box-sizing: border-box;
+    background-color: #ffffff;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 20px;
+    background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .header h1 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 28px;
+  }
+
+  .header p {
+    margin: 10px 0 0;
+    color: #7f8c8d;
+    font-size: 16px;
+  }
+
+  .task-list {
+    display: grid;
+    padding: 10px;
+    box-sizing: border-box;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .task-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: all 0.3s ease;
+    border-left: 5px solid #3498db;
+  }
+
+  .task-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .task-card.processing {
+    border-left-color: #f39c12;
+  }
+
+  .task-card.completed {
+    border-left-color: #27ae60;
+  }
+
+  .task-card.error {
+    border-left-color: #e74c3c;
+  }
+
+  .task-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 10px 0;
+    color: #2c3e50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .task-module {
+    background-color: #ecf0f1;
+    color: #7f8c8d;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: normal;
+  }
+
+  .task-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 15px 0;
+  }
+
+  .info-item {
+    font-size: 14px;
+  }
+
+  .info-label {
+    color: #7f8c8d;
+    font-weight: 500;
+  }
+
+  .info-value {
+    color: #2c3e50;
+    font-weight: 600;
+    word-break: break-all;
+  }
+
+  .task-status {
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .status-pending {
+    background-color: #f8f9fa;
+    color: #6c757d;
+  }
+
+  .status-processing {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+
+  .status-completed {
+    background-color: #d4edda;
+    color: #155724;
+  }
+
+  .status-error {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background-color: #ecf0f1;
+    border-radius: 4px;
+    margin: 15px 0;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+  }
+
+  .loading {
+    text-align: center;
+    padding: 40px;
+    color: #7f8c8d;
+  }
+
+  .loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #7f8c8d;
+  }
+
+  .empty-state i {
+    font-size: 48px;
+    margin-bottom: 20px;
+    display: block;
+  }
+</style>
+
+<body>
+  <div id="el">
+    <div class="ad"></div>
+    <div class="content">
+      <div class="header">
+        <h1>百DU云盘-每天领下载卷</h1>
+        <p>自动领卷过程中请勿关闭页面，否则可能影响领卷~</p>
+      </div>
+
+      <div v-if="loading" class="loading">
+        <div class="loading-spinner"></div>
+        <p>正在加载可用下载卷...</p>
+      </div>
+
+      <div v-else-if="tasks.length === 0" class="empty-state">
+        <div>📋</div>
+        <h3>暂无任务</h3>
+        <p>当前没有可领取的下载卷任务</p>
+      </div>
+
+      <div v-else class="task-list">
+        <div v-for="(task, index) in tasks" :key="index" class="task-card" :class="{
+              'processing': task.status === 'processing',
+              'completed': task.status === 'completed',
+              'error': task.status === 'error'
+            }">
+          <div class="task-title">
+            <span>极速下载卷 #{{ index + 1 }}</span>
+            <span class="task-module">{{ task.taskModule || '未知模块' }}</span>
+          </div>
+
+          <div class="task-info">
+            <div class="info-item">
+              <div class="info-label">程序ID</div>
+              <div class="info-value">
+                {{ task.selectGameParams?.gameId || 'N/A' }}
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">任务ID</div>
+              <div class="info-value">{{ index + 1 }}</div>
+            </div>
+          </div>
+
+          <div class="progress-bar" v-if="task.progress">
+            <div class="progress-fill" :style="{ width: task.progress + '%' }"></div>
+          </div>
+
+          <div class="task-status" :class="{
+                'status-pending': task.status === 'pending',
+                'status-processing': task.status === 'processing',
+                'status-completed': task.status === 'completed',
+                'status-error': task.status === 'error'
+              }">
+            <span v-if="task.status === 'pending'">等待领取</span>
+            <span v-else-if="task.status === 'processing'">领取中... {{ task.progress }}%</span>
+            <span v-else-if="task.status === 'completed'">✅ 已领取，明天再来吧~</span>
+            <span v-else-if="task.status === 'error'">❌ 错误: {{ task.errorMessage }}</span>
+            <span v-else>未知状态</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ad"></div>
+  </div>
+</body>
+<script>
+  new Vue({
+    el: "#el",
+    data() {
+      return {
+        tasks: [],
+        loading: true,
+        config: {
+          // 根据频道Id获取任务数组
+          channelArr: [10066, 10065],
+          // 过滤出免费任务
+          taskModules: ["game_return_play", "new_game_play"],
+        },
+        // 状态码是否处理
+        codeChuLi: {},
+      };
+    },
+    mounted() {
+      this.check();
+      this.init();
+    },
+    methods: {
+      init() {
+        // 插件返回的事件
+        window.addEventListener("message", (event) => {
+          let eventData = event.data;
+          if (event.source !== window) return;
+
+          // 插件已启动
+          if (eventData.type === "ready") {
+            // 开始做任务
+            window.postMessage({ type: "start", config: this.config }, "*");
+          }
+
+          // 获取下载卷任务列表
+          if (eventData.type === "task_result") {
+            this.tasks = eventData.data.taskReal.map((task) => ({
+              ...task,
+              status: "pending",
+              progress: 0,
+            }));
+            this.tasks = this.tasks;
+            this.loading = false;
+          }
+
+          // 监听任务状态更新
+          if (event.data.type === "task_status_update") {
+            const taskIndex = this.tasks.findIndex((task) => {
+              return +task?.taskId === +eventData.data.taskId;
+            });
+            if (taskIndex !== -1) {
+              this.$set(this.tasks, taskIndex, {
+                ...this.tasks[taskIndex],
+                ...eventData.data,
+              });
+
+              // 处理任务的错误码
+              if (eventData.data.errorNo) {
+                if (110008 && !this.codeChuLi[110008]) {
+                  if (confirm(`您未登录，是否前往登录？`) == true) {
+                    window.location.href = "https://pan.baidu.com";
+                    this.codeChuLi[110008] = true;
+                  }
+                }
+              }
+            } else {
+              console.log(`找不到：${taskIndex}`);
+            }
+          }
+        });
+
+        // 页面销毁
+        window.addEventListener("beforeunload", function (event) {
+          if (this.codeChuLi[110008]) {
+            // 如果是未登录， 就不阻止关闭
+            return false;
+          } else {
+            event.returnValue = "关闭页面将无法领取下载卷？";
+            return "关闭页面将无法领取下载卷？";
+          }
+        });
+      },
+
+      // 检查是否和插件通信成功
+      check() {
+        let timeid = setTimeout(() => {
+          if (this.loading) {
+            this.loading = false;
+            if (confirm(`未检测到浏览器扩展，是否前往安装？`) == true) {
+              window.location.href = "/BD/word.html";
+              this.codeChuLi[110008] = true;
+            }
+          }
+          clearTimeout(timeid);
+        }, 8000);
+      },
+    },
+  });
+</script>
+
+</html>
