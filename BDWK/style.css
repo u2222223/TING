@@ -24,6 +24,10 @@ select {
     padding: 0
 }
 
+button {
+    cursor: pointer;
+}
+
 * {
     box-sizing: border-box
 }
@@ -882,6 +886,10 @@ section .card-main {
     background-color: #6464fd;
     height: 24px;
     width: 0;
+    color: #FFF !important;
+    font-weight: bold;
+    line-height: 24px;
+    padding-left: 10px;
     transition: width .2s ease
 }
 
@@ -1095,10 +1103,12 @@ header {
 }
 
 @keyframes spin {
+
     0%,
     15% {
         transform: rotate(0)
     }
+
     to {
         transform: rotate(360deg)
     }
@@ -1115,20 +1125,25 @@ header {
     .header {
         height: 36px
     }
+
     section .card-main {
         width: 95%;
         margin: 0 auto;
         padding: 1rem
     }
+
     .card-head .card-head-title {
         font-size: 18px
     }
+
     .wenku-container {
         margin: 3vh auto 1vh
     }
+
     .wenku-container .input input {
         display: none
     }
+
     .wenku-container .input button {
         width: 100%;
         border-radius: 5px;
@@ -1136,13 +1151,16 @@ header {
         color: #fff;
         margin-top: 5vh
     }
+
     .downline .input-inline,
     .wenku-container .downline .item-title {
         display: none
     }
+
     .wenku-container .downline {
         text-align: center
     }
+
     .wenku-container .downbtn {
         float: none;
         background: #49ad49;
@@ -1150,15 +1168,19 @@ header {
         font-size: 16px;
         padding: 3px
     }
+
     .wenku-container .docsinfo {
         margin-top: 36px
     }
+
     .s-top {
         padding: 25px 0 0
     }
+
     .wenku-container .docsinfo .item:nth-child(1) {
         display: none
     }
+
     .verify-item .item-title {
         margin: 0
     }
@@ -1204,6 +1226,7 @@ header {
     .zfb2024 {
         width: 200px
     }
+
     .zfb2024:hover {
         width: 300px
     }
@@ -1213,6 +1236,7 @@ header {
     .zfb2024 {
         width: 100px
     }
+
     .zfb2024:hover {
         width: 300px
     }
