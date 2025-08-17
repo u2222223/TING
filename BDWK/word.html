@@ -19,6 +19,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="百DU网盘下载卷脚本使用教程 | TING 软件科技" />
   <meta name="twitter:description" content="最详细的百DU网盘下载卷脚本使用教程，支持多种浏览器，助你轻松领取百度网盘下载券。" />
+  <script src="/config.js"></script>
   <style>
     body {
       font-family: "Microsoft YaHei", Arial, sans-serif;
@@ -162,6 +163,52 @@
         font-size: 1.3rem;
       }
     }
+
+    .contact-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      background: #ff9800;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 30px;
+      box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .contact-float:hover {
+      background: #f57c00;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(255, 152, 0, 0.4);
+    }
+
+    .contact-float::before {
+      content: "💬";
+      font-size: 18px;
+    }
+
+    @media (max-width: 700px) {
+      .container {
+        padding: 12px;
+      }
+
+      h1 {
+        font-size: 1.3rem;
+      }
+
+      .contact-float {
+        bottom: 15px;
+        right: 15px;
+        padding: 10px 16px;
+        font-size: 14px;
+      }
+    }
   </style>
   <script>
     function openCenteredWindow(url) {
@@ -174,6 +221,9 @@
         "_blank",
         `width=${width},height=${height},left=${left},top=${top}`
       );
+    }
+    function openQQ(url) {
+      window.open(`https://jq.qq.com/?_wv=1027&k=${window.$tingConfig.qq}`, "_blank");
     }
   </script>
 </head>
@@ -228,18 +278,17 @@
           </div>
         </div>
         <div class="step">
-          <h2>六、点击下载</h2>
+          <h2>六、点击下载，如果下载失败，请联系开发者</h2>
           <div class="image-placeholder" style="flex-direction: row">
             <a href="./static/img/6.png" onclick="openCenteredWindow(this.href); return false;">
               <img src="./static/img/6.png" />
             </a>
           </div>
         </div>
-    </div>
-    </section>
-
+      </section>
     </div>
   </main>
+  <a href="javascript:void(0)" onclick="openQQ()" class="contact-float">联系开发者 QQ群: 882776749</a>
 </body>
 
 </html>
