@@ -158,13 +158,6 @@ function createVerifyCodeModal() {
         modal.classList.remove('show');
     });
 
-    // 点击模态框外部关闭弹窗
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.classList.remove('show');
-        }
-    });
-
     // 返回操作对象
     return {
         show: () => modal.classList.add('show'),
