@@ -1,14 +1,23 @@
 /* 全局变量 - 简约大气配色 */
 :root {
-    --primary-color: #2563eb;        /* 主蓝色 */
-    --secondary-color: #1e40af;      /* 深蓝 */
-    --background-color: #f1f5f9;     /* 浅灰背景 */
-    --card-bg: #ffffff;              /* 卡片背景 */
-    --text-primary: #1e293b;         /* 主文字色 */
-    --text-secondary: #64748b;       /* 次要文字色 */
-    --border-color: #e2e8f0;         /* 边框色 */
-    --success-color: #10b981;        /* 成功色 */
-    --warning-color: #ef4444;        /* 警告色 */
+    --primary-color: #2563eb;
+    /* 主蓝色 */
+    --secondary-color: #1e40af;
+    /* 深蓝 */
+    --background-color: #f1f5f9;
+    /* 浅灰背景 */
+    --card-bg: #ffffff;
+    /* 卡片背景 */
+    --text-primary: #1e293b;
+    /* 主文字色 */
+    --text-secondary: #64748b;
+    /* 次要文字色 */
+    --border-color: #e2e8f0;
+    /* 边框色 */
+    --success-color: #10b981;
+    /* 成功色 */
+    --warning-color: #ef4444;
+    /* 警告色 */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -733,8 +742,7 @@ section .card-main {
 /* 文档容器样式 */
 .wenku-container {
     max-width: 800px;
-    margin: 100px auto 50px;
-    padding: 30px;
+    margin: 50px auto;
     background: var(--card-bg);
     border-radius: var(--radius-md);
 }
@@ -1189,9 +1197,12 @@ header {
 }
 
 @keyframes spin {
-    0%, 15% {
+
+    0%,
+    15% {
         transform: rotate(0);
     }
+
     100% {
         transform: rotate(360deg);
     }
