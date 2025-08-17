@@ -101,14 +101,7 @@ function createVerifyCodeModal() {
         }
 
         .close_jam {
-            position: absolute;
-            top: 10px;
-            right: 10px;
             background: #bcbcbc;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            color: #999;
         }
 
         /* 移动端适配 */
