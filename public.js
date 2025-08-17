@@ -101,7 +101,7 @@ function createVerifyCodeModal() {
         }
 
         .close_jam {
-            background: #bcbcbc;
+            background: #bcbcbc !important;
         }
 
         /* 移动端适配 */
