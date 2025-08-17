@@ -30,7 +30,7 @@ function createVerifyCodeModal() {
             top: 45%;
             left: 50%;
             z-index: 1999;
-            width: 320px;
+            width: 276px;
             transform: translate(-50%, -50%);
             -moz-transform: translate(-50%, -50%);
             -ms-transform: translate(-50%, -50%);
@@ -76,8 +76,13 @@ function createVerifyCodeModal() {
         .verify-item .input-inline {
             font-size: 14px;
             display: inline-block;
+            border: 1px solid #f1f1f1;
+            border-radius: 5px;
+            padding: 10px
         }
-
+        button {
+            cursor: pointer;
+        }
         .s-top-verifycode button {
             margin: 10px 5px 0;
             height: 38px;
@@ -99,7 +104,7 @@ function createVerifyCodeModal() {
             position: absolute;
             top: 10px;
             right: 10px;
-            background: none;
+            background: #bcbcbc;
             border: none;
             font-size: 20px;
             cursor: pointer;
@@ -133,15 +138,14 @@ function createVerifyCodeModal() {
     // 创建弹窗HTML结构
     const modalHTML = `
         <div class="s-top-verifycode">
-            <button type="button" class="close_jam">&times;</button>
-            <p class="tips">防止恶意请求，请输入验证码</p>
+            <p class="tips">防止恶意请求，扫码获取免费验证码</p>
             <img src="https://res.mounui.com/info/wechat_jam_qrcode.jpg" alt="验证码图片">
-            <p style="font-size: 14px;color:#666;margin-bottom: 20px;">微信关注上方公众号，回复"6"获取</p>
             <div class="verify-item">
                 <span class="item-title">验证码：</span>
                 <input type="text" placeholder="请输入验证码" id="code" autocomplete="off" class="input-inline">
             </div>
             <div>
+                <button type="button" class="close_jam">关闭</button>
                 <button type="button" class="tj_jam">提交</button>
             </div>
         </div>
