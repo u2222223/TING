@@ -1,8 +1,14 @@
 const config = {
     qq: "882776749"
 }
-
 window.$tingConfig = config
+
+window.$baiDuYunLingJuanConfig = {
+    // 根据频道Id获取任务数组
+    channelArr: [10066, 10065],
+    // 过滤出免费任务
+    taskModules: ["game_return_play", "new_game_play"],
+}
 
 // QQ
 window.$openQQ = function () {
