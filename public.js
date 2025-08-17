@@ -30,7 +30,7 @@ function createVerifyCodeModal() {
             top: 45%;
             left: 50%;
             z-index: 1999;
-            width: 276px;
+            width: 290px;
             transform: translate(-50%, -50%);
             -moz-transform: translate(-50%, -50%);
             -ms-transform: translate(-50%, -50%);
