@@ -186,3 +186,14 @@ verifyModal.onSubmit(() => {
     // 处理验证码提交逻辑
     console.log('验证码:', code);
 });
+
+
+window.$showEWM = function () {
+    // 打开二维码页面链接，居中显示
+    const url = "https://u2233.vip/getQrcode.html";
+    const width = 400;
+    const height = 400;
+    const left = (window.innerWidth - width) / 2;
+    const top = (window.innerHeight - height) / 2;
+    window.open(url, "二维码", `width=${width},height=${height},left=${left},top=${top}`);
+}
