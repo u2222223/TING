@@ -180,10 +180,15 @@ function createVerifyCodeModal() {
         }
     };
 }
-const verifyModal = createVerifyCodeModal();
-window.$showEWM = verifyModal.show;
-verifyModal.onSubmit(() => {
-    const code = verifyModal.getCode();
-    // 处理验证码提交逻辑
-    console.log('验证码:', code);
+
+
+// 页面加载完成
+window.addEventListener('load', () => {
+    const verifyModal = createVerifyCodeModal();
+    window.$showEWM = verifyModal.show;
+    verifyModal.onSubmit(() => {
+        const code = verifyModal.getCode();
+        // 处理验证码提交逻辑
+        console.log('验证码:', code);
+    });
 });
