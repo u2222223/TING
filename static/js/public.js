@@ -139,7 +139,7 @@ function createVerifyCodeModal() {
         <div class="s-top-verifycode">
             <p class="tips">防止恶意请求，扫码获取免费验证码</p>
             // <img src="https://res.mounui.com/info/wechat_jam_qrcode.jpg" alt="验证码图片">
-            <iframe src="https://u2233.vip/getQrcode.html"></iframe>
+            <iframe src="https://u2233.vip/Tools/getQrcode.html"></iframe>
             <div class="verify-item">
                 <span class="item-title">验证码：</span>
                 <input type="text" placeholder="请输入验证码" id="code" autocomplete="off" class="input-inline">
