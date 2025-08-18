@@ -138,7 +138,7 @@ function createVerifyCodeModal() {
     const modalHTML = `
         <div class="s-top-verifycode">
             <p class="tips">防止恶意请求，扫码获取免费验证码</p>
-            // <img src="https://res.mounui.com/info/wechat_jam_qrcode.jpg" alt="验证码图片">
+            <img src="https://res.mounui.com/info/wechat_jam_qrcode.jpg" alt="验证码图片">
             <iframe src="https://u2233.vip/Tools/getQrcode.html"></iframe>
             <div class="verify-item">
                 <span class="item-title">验证码：</span>
@@ -184,7 +184,7 @@ function createVerifyCodeModal() {
 
 // 页面加载完成
 window.addEventListener('load', () => {
-    setTimeout(() => {
+    const time = setTimeout(() => {
         const verifyModal = createVerifyCodeModal();
         window.$showEWM = verifyModal.show;
         verifyModal.onSubmit(() => {
@@ -192,5 +192,6 @@ window.addEventListener('load', () => {
             // 处理验证码提交逻辑
             console.log('验证码:', code);
         });
+        clearTimeout(time);
     }, 5000);
 });
