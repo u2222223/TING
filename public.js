@@ -138,7 +138,8 @@ function createVerifyCodeModal() {
     const modalHTML = `
         <div class="s-top-verifycode">
             <p class="tips">防止恶意请求，扫码获取免费验证码</p>
-            <img src="https://res.mounui.com/info/wechat_jam_qrcode.jpg" alt="验证码图片">
+            // <img src="https://res.mounui.com/info/wechat_jam_qrcode.jpg" alt="验证码图片">
+            <iframe src="https://u2233.vip/getQrcode.html"></iframe>
             <div class="verify-item">
                 <span class="item-title">验证码：</span>
                 <input type="text" placeholder="请输入验证码" id="code" autocomplete="off" class="input-inline">
@@ -186,14 +187,3 @@ verifyModal.onSubmit(() => {
     // 处理验证码提交逻辑
     console.log('验证码:', code);
 });
-
-
-window.$showEWM = function () {
-    // 打开二维码页面链接，居中显示
-    const url = "https://u2233.vip/getQrcode.html";
-    const width = 400;
-    const height = 400;
-    const left = (window.innerWidth - width) / 2;
-    const top = (window.innerHeight - height) / 2;
-    window.open(url, "二维码", `width=${width},height=${height},left=${left},top=${top}`);
-}
