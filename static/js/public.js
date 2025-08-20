@@ -16,12 +16,54 @@ window.$openQQ = function () {
 }
 
 // 打开验证码
-function createVerifyCodeModal() {
-    // 检查是否已经存在验证码弹窗
-    if (!document.querySelector('.s-top-verifycode')) {
+// 打开验证码 - 使用单例模式
+const createVerifyCodeModal = (function () {
+    let instance = null;
+    let submitHandler = null;
+    let closeHandler = null;
 
-        // 动态添加样式到页面
-        const styles = `<style>
+    return function (onConfirm, onCancel, onClose) {
+        // 如果实例已存在，更新回调函数并返回实例
+        if (instance) {
+            // 更新事件回调
+            if (onConfirm || onCancel || onClose) {
+                const modal = document.querySelector('.s-top-verifycode');
+                const closeBtn = modal.querySelector('.close_jam');
+                const submitBtn = modal.querySelector('.tj_jam');
+                const codeInput = document.getElementById('code');
+
+                // 移除旧的事件监听器
+                if (submitHandler) {
+                    submitBtn.removeEventListener('click', submitHandler);
+                }
+                if (closeHandler) {
+                    closeBtn.removeEventListener('click', closeHandler);
+                }
+
+                // 创建新的事件处理函数
+                submitHandler = function () {
+                    const code = codeInput.value.trim();
+                    if (onConfirm) onConfirm(code);
+                };
+
+                closeHandler = function () {
+                    modal.classList.remove('show');
+                    if (onClose) onClose();
+                    if (onCancel) onCancel();
+                };
+
+                // 绑定新的事件监听器
+                submitBtn.addEventListener('click', submitHandler);
+                closeBtn.addEventListener('click', closeHandler);
+            }
+
+            return instance;
+        }
+
+        // 检查是否已经存在验证码弹窗
+        if (!document.querySelector('.s-top-verifycode')) {
+            // 动态添加样式到页面
+            const styles = `<style>
     .s-top-verifycode {
         text-align: center;
         display: none;
@@ -124,11 +166,11 @@ function createVerifyCodeModal() {
     }
         </style>`;
 
-        // 将样式添加到页面头部
-        document.head.insertAdjacentHTML('beforeend', styles);
+            // 将样式添加到页面头部
+            document.head.insertAdjacentHTML('beforeend', styles);
 
-        // 创建弹窗HTML结构
-        const modalHTML = `<div class="s-top-verifycode">
+            // 创建弹窗HTML结构
+            const modalHTML = `<div class="s-top-verifycode">
             <iframe src="https://u2233.vip/Tools/getQrcode.html" style="width: 340px;height: 440px;"></iframe>
             <div class="verify-item">
                 <span class="item-title">验证码：</span>
@@ -140,51 +182,56 @@ function createVerifyCodeModal() {
             </div>
         </div>`;
 
-        // 将弹窗添加到页面中
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
-    }
-
-    // 获取弹窗元素和按钮
-    const modal = document.querySelector('.s-top-verifycode');
-    const closeBtn = modal.querySelector('.close_jam');
-    const submitBtn = modal.querySelector('.tj_jam');
-    const codeInput = document.getElementById('code');
-
-    // 绑定关闭事件
-    closeBtn.addEventListener('click', () => {
-        modal.classList.remove('show');
-    });
-
-    // 返回操作对象
-    return {
-        show: () => modal.classList.add('show'),
-        hide: () => modal.classList.remove('show'),
-        getCode: () => codeInput.value,
-        setCode: (code) => { codeInput.value = code; },
-        clearCode: () => { codeInput.value = ''; },
-        onSubmit: (callback) => {
-            submitBtn.addEventListener('click', callback);
-        },
-        onClose: (callback) => {
-            closeBtn.addEventListener('click', callback);
+            // 将弹窗添加到页面中
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
         }
+
+        // 获取弹窗元素和按钮
+        const modal = document.querySelector('.s-top-verifycode');
+        const closeBtn = modal.querySelector('.close_jam');
+        const submitBtn = modal.querySelector('.tj_jam');
+        const codeInput = document.getElementById('code');
+
+        // 创建事件处理函数
+        submitHandler = function () {
+            const code = codeInput.value.trim();
+            if (onConfirm) onConfirm(code);
+        };
+
+        closeHandler = function () {
+            modal.classList.remove('show');
+            if (onClose) onClose();
+            if (onCancel) onCancel();
+        };
+
+        // 绑定事件监听器
+        submitBtn.addEventListener('click', submitHandler);
+        closeBtn.addEventListener('click', closeHandler);
+
+        // ESC键关闭
+        document.addEventListener('keydown', function escHandler(e) {
+            if (e.key === 'Escape' && modal.classList.contains('show')) {
+                modal.classList.remove('show');
+                if (onClose) onClose();
+                if (onCancel) onCancel();
+                document.removeEventListener('keydown', escHandler);
+            }
+        });
+
+        // 保存实例
+        instance = {
+            show: () => modal.classList.add('show'),
+            hide: () => modal.classList.remove('show'),
+            getCode: () => codeInput.value,
+            setCode: (code) => { codeInput.value = code; },
+            clearCode: () => { codeInput.value = ''; }
+        };
+
+        return instance;
     };
-}
+})();
 
-function loaded() {
-    const verifyModal = createVerifyCodeModal();
-    window.$showEWM = verifyModal.show;
-    verifyModal.onSubmit(() => {
-        const code = verifyModal.getCode();
-        // 处理验证码提交逻辑
-        if (!code) {
-            alert('请输入验证码');
-            return;
-        } else if (code.length !== 6) {
-            alert('验证码长度为6位');
-            return;
-        }
-        console.log('验证码:', code);
-    });
-}
-loaded();
+window.showDialog = function (onConfirm, onCancel, onClose) {
+    const modal = createVerifyCodeModal(onConfirm, onCancel, onClose);
+    modal.show();
+};
