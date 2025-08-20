@@ -134,9 +134,10 @@
                 correctLevel: QRCode.CorrectLevel.H
             });
         }
-        setTimeout(() => {
+        // 页面加载完成后生成二维码
+        window.addEventListener('load', () => {
             generateQRCode();
-        }, 500);
+        });
     </script>
 </body>
 
