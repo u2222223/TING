@@ -155,16 +155,16 @@
 <body>
   <div class="container">
     <div class="content">
-      <button class="ad-button" onclick="showAd()">
-        <span class="button-text">观看广告获取验证码</span>
-      </button>
+      <!-- <button class="ad-button" onclick="showAd()">
+        <span class="button-text">获取验证码</span>
+      </button> -->
 
       <div class="code-section" id="codeSection">
         <div class="code-header">
           <span class="code-title">您的验证码</span>
         </div>
         <div class="code-display">
-          <div class="code-text" id="codeText">123456</div>
+          <div class="code-text" id="codeText"></div>
           <button class="copy-button" onclick="copyCode()">
             <span class="copy-text">复制</span>
           </button>
@@ -183,12 +183,14 @@
     let verificationCode = '';
     let loading = false;
 
-    function showAd() {
-      const confirmed = confirm('此处将显示广告，观看完广告后将自动获取验证码');
-      if (confirmed) {
-        getVerificationCode();
-      }
-    }
+    // function showAd() {
+    //   const confirmed = confirm('此处将显示广告，观看完广告后将自动获取验证码');
+    //   if (confirmed) {
+    //   }
+    // }
+    setTimeout(() => {
+      getVerificationCode();
+    }, 500);
 
     function getVerificationCode() {
       const codeSection = document.getElementById('codeSection');
@@ -222,7 +224,6 @@
         .finally(() => {
           loading = false;
           loadingElement.style.display = 'none';
-          alert('验证码已生成');
         });
     }
 
