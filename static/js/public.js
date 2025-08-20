@@ -261,6 +261,7 @@ window.$httpRequest = function (options) {
                 }
             },
             onerror: function (error) {
+                alert(`失败，请联系管理员，qq群${window.$tingConfig.qq}`);
                 reject(error);
             },
             ...options // 允许覆盖默认配置
