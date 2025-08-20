@@ -79,6 +79,10 @@ const createVerifyCodeModal = (function () {
         box-shadow: 0 0 30px 6px #d7d7d78a;
         border-radius: 8px;
         padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     .s-top-verifycode.show {
