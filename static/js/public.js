@@ -195,6 +195,10 @@ const createVerifyCodeModal = (function () {
         // 创建事件处理函数
         submitHandler = function () {
             const code = codeInput.value.trim();
+            if (!code) {
+                alert('请输入验证码！');
+                return;
+            }
             if (onConfirm) onConfirm(code);
         };
 
@@ -207,16 +211,6 @@ const createVerifyCodeModal = (function () {
         // 绑定事件监听器
         submitBtn.addEventListener('click', submitHandler);
         closeBtn.addEventListener('click', closeHandler);
-
-        // ESC键关闭
-        document.addEventListener('keydown', function escHandler(e) {
-            if (e.key === 'Escape' && modal.classList.contains('show')) {
-                modal.classList.remove('show');
-                if (onClose) onClose();
-                if (onCancel) onCancel();
-                document.removeEventListener('keydown', escHandler);
-            }
-        });
 
         // 保存实例
         instance = {
