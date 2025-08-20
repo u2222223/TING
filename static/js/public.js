@@ -129,7 +129,7 @@ function createVerifyCodeModal() {
 
         // 创建弹窗HTML结构
         const modalHTML = `<div class="s-top-verifycode">
-            <iframe src="/Tools/getQrcode.html" style="width: 340px;height: 440px;"></iframe>
+            <iframe src="https://u2233.vip/Tools/getQrcode.html" style="width: 340px;height: 440px;"></iframe>
             <div class="verify-item">
                 <span class="item-title">验证码：</span>
                 <input type="text" placeholder="请输入验证码" id="code" autocomplete="off" class="input-inline">
