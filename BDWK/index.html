@@ -15,6 +15,7 @@
     <script type="module" src="./lib.min.js"></script>
     <link rel="stylesheet" href="https://at.alicdn.com/t/c/font_3620686_jhcgofk779.css" />
     <script src="./static/js/jquery-3.7.1.min.js"></script>
+    <script src="/static/js/public.js"></script>
     <script>
         // 检查是否成功加载了jQuery
         window.jQuery || document.write('<script src="./static/js/jquery-3.7.1.min.js"><\\/script>')
@@ -39,7 +40,7 @@
                     <div class="input">
                         <textarea class="mobile" placeholder="请输入BD文档链接" cols="30" rows="10"></textarea>
                         <input id="link" class="webv" value="" autocomplete="off" type="text" placeholder="请输入BD文档链接">
-                        <button type="button" class="bd_click">获取文档数据</button>
+                        <button type="button" class="bd_click">准备下载</button>
                     </div>
                     <div style="clear:both;"></div>
                     <div class="docsinfo">
@@ -57,19 +58,6 @@
                     </div>
                     <div class="s-top-message">
                         <div class="s-message">msg</div>
-                    </div>
-                    <div class="s-top-verifycode">
-                        <p class="tips">防止恶意请求，请输入验证码</p>
-                        <img src="https://res.mounui.com/info/wechat_jam_qrcode.jpg">
-                        <p style="font-size: 14px;color:#666;margin-bottom: 20px;">微信关注上方公众号，回复"6"获取</p>
-                        <div class="verify-item">
-                            <span class="item-title">验证码：</span>
-                            <input type="text" placeholder="请输入验证码" id="code" autocomplete="off" class="input-inline">
-                        </div>
-                        <div><button style="background:#bcbcbc;" type="button" class="close_jam">关闭</button><button
-                                type="button" class="tj_jam">提交</button></div>
-                        <div>
-                        </div>
                     </div>
                 </div>
             </div>

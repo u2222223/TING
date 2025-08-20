@@ -4,22 +4,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TING 软件科技 | 智能自考答题助手、百DU云盘下载卷</title>
-  <meta name="keywords" content="TING,软件科技,自考答题助手,百DU云盘,下载卷,AI,工具,企业软件,插件,百度网盘,极速下载" />
-  <meta name="description" content="TING 软件科技，专注于智能自考答题助手、百DU云盘下载卷等高效工具开发，助力企业与个人提升效率，安全可靠，支持多平台。" />
+  <title>TING 软件科技 | 智能自考答题助手、百DU网盘下载卷</title>
+  <meta name="keywords" content="TING,软件科技,自考答题助手,百DU网盘,下载卷,AI,工具,企业软件,插件,百度网盘,极速下载" />
+  <meta name="description" content="TING 软件科技，专注于智能自考答题助手、百DU网盘下载卷等高效工具开发，助力企业与个人提升效率，安全可靠，支持多平台。" />
   <meta name="author" content="TING 软件科技" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="canonical" href="https://u2233.vip/" />
   <!-- Open Graph -->
-  <meta property="og:title" content="TING 软件科技 | 智能自考答题助手、百DU云盘下载卷" />
-  <meta property="og:description" content="TING 软件科技，专注于智能自考答题助手、百DU云盘下载卷等高效工具开发，助力企业与个人提升效率，安全可靠，支持多平台。" />
+  <meta property="og:title" content="TING 软件科技 | 智能自考答题助手、百DU网盘下载卷" />
+  <meta property="og:description" content="TING 软件科技，专注于智能自考答题助手、百DU网盘下载卷等高效工具开发，助力企业与个人提升效率，安全可靠，支持多平台。" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://u2233.vip/" />
   <meta property="og:image" content="https://u2233.vip/BD/static/cover.png" />
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="TING 软件科技 | 智能自考答题助手、百DU云盘下载卷" />
-  <meta name="twitter:description" content="TING 软件科技，专注于智能自考答题助手、百DU云盘下载卷等高效工具开发，助力企业与个人提升效率，安全可靠，支持多平台。" />
+  <meta name="twitter:title" content="TING 软件科技 | 智能自考答题助手、百DU网盘下载卷" />
+  <meta name="twitter:description" content="TING 软件科技，专注于智能自考答题助手、百DU网盘下载卷等高效工具开发，助力企业与个人提升效率，安全可靠，支持多平台。" />
   <!-- 结构化数据（JSON-LD） -->
   <script type="application/ld+json">
       {
@@ -28,7 +28,7 @@
         "name": "TING 软件科技",
         "url": "https://u2233.vip/",
         "logo": "https://u2233.vip/favicon.ico",
-        "description": "TING 软件科技，专注于智能自考答题助手、百DU云盘下载卷等高效工具开发，助力企业与个人提升效率，安全可靠，支持多平台。",
+        "description": "TING 软件科技，专注于智能自考答题助手、百DU网盘下载卷等高效工具开发，助力企业与个人提升效率，安全可靠，支持多平台。",
         "sameAs": ["https://u2233.vip/"]
       }
     </script>
@@ -94,6 +94,7 @@
       padding: 0;
       margin: 0;
     }
+
     .product-card {
       width: 100%;
       box-sizing: border-box;
@@ -105,7 +106,6 @@
       box-shadow: 0 2px 12px rgba(66, 103, 178, 0.07);
       padding: 28px 24px;
       box-sizing: border-box;
-      transition: box-shadow 0.2s, background 0.2s, transform 0.2s;
       display: flex;
       flex-direction: column;
       flex-wrap: nowrap;
@@ -115,7 +115,6 @@
     }
 
     .product-card:hover {
-      transform: scale(1.03);
       box-shadow: 0 8px 32px rgba(66, 103, 178, 0.18);
       background: linear-gradient(120deg, #e3ebf7 60%, #f7faff 100%);
     }
@@ -154,9 +153,10 @@
       border-radius: 6px;
       cursor: pointer;
       font-size: 1rem;
-      transition: background 0.2s, box-shadow 0.2s;
+      transition: box-shadow 0.2s, background 0.2s, transform 0.2s;
       box-shadow: 0 2px 8px rgba(66, 103, 178, 0.1);
       font-weight: 500;
+      user-select: none;
       letter-spacing: 1px;
     }
 
@@ -164,6 +164,10 @@
     .btn:hover {
       background: linear-gradient(90deg, #23395d 60%, #4267b2 100%);
       box-shadow: 0 4px 16px rgba(66, 103, 178, 0.18);
+    }
+
+    .btn:hover {
+      transform: scale(1.1);
     }
 
     .buttonBox {
@@ -228,22 +232,19 @@
             id: 1,
             name: "365 | 自考答题助手",
             desc: "专注于自考答题的AI系统，智能识别试题，自动生成答案，提升自考效率。",
-            url: "/AI/index.html",
-            download: "",
+            url: "/AI/word.html",
           },
           {
             id: 2,
-            name: "百DU云盘 | 每天领下载卷",
-            desc: "每天领取百DU云盘极速下载卷，让下载更轻松，支持主流浏览器扩展。",
+            name: "百DU网盘 | 每天领下载卷",
+            desc: "每天领取百DU网盘极速下载卷，让下载更轻松，支持主流浏览器扩展。",
             url: "/BD/word.html",
-            download: "",
           },
           {
             id: 3,
             name: "百DU文库 | 免费下载VIP文档",
             desc: "免费下载百DU文库VIP文档。",
             url: "/BDWK/word.html",
-            download: "",
           },
         ],
       },
