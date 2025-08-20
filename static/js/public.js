@@ -199,6 +199,10 @@ const createVerifyCodeModal = (function () {
                 alert('请输入验证码！');
                 return;
             }
+            if (code.length !== 6) {
+                alert('验证码长度错误！请重新输入！');
+                return;
+            }
             if (onConfirm) onConfirm(code);
         };
 
