@@ -29,7 +29,7 @@ function createVerifyCodeModal() {
         top: 45%;
         left: 50%;
         z-index: 1999;
-        width: 290px;
+        width: 420px;
         transform: translate(-50%, -50%);
         -moz-transform: translate(-50%, -50%);
         -ms-transform: translate(-50%, -50%);
@@ -70,12 +70,13 @@ function createVerifyCodeModal() {
         font-size: 14px;
         font-weight: 700;
         display: inline-block;
+        color: red;
     }
 
     .verify-item .input-inline {
         font-size: 14px;
         display: inline-block;
-        border: 1px solid #f1f1f1;
+        border: 1px solid red;
         border-radius: 5px;
         padding: 10px
     }
@@ -128,16 +129,15 @@ function createVerifyCodeModal() {
 
         // 创建弹窗HTML结构
         const modalHTML = `<div class="s-top-verifycode">
-        <p class="tips">防止恶意请求，扫码获取免费验证码</p>
-        <iframe src="https://u2233.vip/Tools/getQrcode.html"></iframe>
-        <div class="verify-item">
-            <span class="item-title">验证码：</span>
-            <input type="text" placeholder="请输入验证码" id="code" autocomplete="off" class="input-inline">
-        </div>
-        <div>
-            <button type="button" class="close_jam">关闭</button>
-            <button type="button" class="tj_jam">提交</button>
-        </div>
+            <iframe src="/Tools/getQrcode.html" style="width: 340px;height: 440px;"></iframe>
+            <div class="verify-item">
+                <span class="item-title">验证码：</span>
+                <input type="text" placeholder="请输入验证码" id="code" autocomplete="off" class="input-inline">
+            </div>
+            <div>
+                <button type="button" class="close_jam">关闭</button>
+                <button type="button" class="tj_jam">提交</button>
+            </div>
         </div>`;
 
         // 将弹窗添加到页面中
@@ -170,12 +170,21 @@ function createVerifyCodeModal() {
         }
     };
 }
-document.addEventListener('DOMContentLoaded', function () {
+
+function loaded() {
     const verifyModal = createVerifyCodeModal();
     window.$showEWM = verifyModal.show;
     verifyModal.onSubmit(() => {
         const code = verifyModal.getCode();
         // 处理验证码提交逻辑
+        if (!code) {
+            alert('请输入验证码');
+            return;
+        } else if (code.length !== 6) {
+            alert('验证码长度为6位');
+            return;
+        }
         console.log('验证码:', code);
     });
-});
+}
+loaded();

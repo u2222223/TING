@@ -329,8 +329,8 @@ a.top-menu-item:hover {
 
 /* 卡片样式 */
 section .card-main {
-    width: 1140px;
     height: auto;
+    width: 70vw;
     margin: 0 auto 30px;
     padding: 2rem;
     border-radius: var(--radius-md);
@@ -911,21 +911,6 @@ section .card-main {
     z-index: 2000;
 }
 
-.s-top-verifycode {
-    text-align: center;
-    display: none;
-    position: fixed;
-    top: 45%;
-    left: 50%;
-    z-index: 1999;
-    width: 320px;
-    transform: translate(-50%, -50%);
-    background: var(--card-bg);
-    box-shadow: var(--shadow-lg);
-    border-radius: var(--radius-md);
-    padding: 25px;
-}
-
 .s-message {
     background-color: rgba(0, 0, 0, 0.85);
     color: white;
@@ -982,26 +967,6 @@ section .card-main {
 .s-progress-text {
     color: var(--primary-color);
     font-weight: 500;
-}
-
-.verify-item {
-    display: flex;
-    justify-content: space-around;
-    height: 38px;
-    line-height: 38px;
-    font-size: 14px;
-}
-
-.verify-item .item-title {
-    font-size: 14px;
-    font-weight: 500;
-    display: inline-block;
-    color: var(--text-secondary);
-}
-
-.verify-item .input-inline {
-    font-size: 14px;
-    display: inline-block;
 }
 
 .s-top-verifycode .tips {
@@ -1222,7 +1187,7 @@ header {
     }
 
     section .card-main {
-        width: 95%;
+        width: 100%;
         margin: 0 auto;
         padding: 1.2rem;
     }
@@ -1275,10 +1240,6 @@ header {
 
     .wenku-container .docsinfo .item:nth-child(1) {
         display: none;
-    }
-
-    .verify-item .item-title {
-        margin: 0;
     }
 }
 
