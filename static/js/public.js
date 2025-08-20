@@ -240,7 +240,7 @@ window.$createVerifyCodeModal = createVerifyCodeModal;
  * @param {string|Object} options.body - 请求体
  * @returns {Promise} 返回Promise对象
  */
-function httpRequest(options) {
+window.$httpRequest = function (options) {
     return new Promise((resolve, reject) => {
         // 标准化请求配置
         const config = {
