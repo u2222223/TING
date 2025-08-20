@@ -233,5 +233,6 @@ const createVerifyCodeModal = (function () {
 
 window.showDialog = function (onConfirm, onCancel, onClose) {
     const modal = createVerifyCodeModal(onConfirm, onCancel, onClose);
+    window.$dialogInstance = modal;
     modal.show();
 };
