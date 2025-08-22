@@ -259,6 +259,7 @@ window.$httpRequest = function (options) {
             const fetchOptions = {
                 method: config.method,
                 headers: config.headers,
+                credentials: 'include'
             };
 
             // 添加请求体（仅对非GET请求）
