@@ -251,9 +251,9 @@ window.$httpRequest = function (options) {
             ...options // 允许覆盖默认配置
         };
 
-        if (window.tingMonkeyAPI.GM_xmlhttpRequest) {
+        if (window.GM_xmlhttpRequest) {
             // 油猴环境使用 GM_xmlhttpRequest
-            window.tingMonkeyAPI.GM_xmlhttpRequest(config);
+            window.GM_xmlhttpRequest(config);
         } else if (typeof fetch !== 'undefined') {
             // 浏览器环境使用 fetch
             const fetchOptions = {
