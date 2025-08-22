@@ -228,6 +228,17 @@
           loading = false;
           loadingElement.style.display = 'none';
         });
+
+      $httpRequest({
+        url: 'https://dl-test.infiniteworlds.com.cn/TING/captcha/generate',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(res => {
+        console.log(res);
+
+      })
     }
 
     function copyCode() {
