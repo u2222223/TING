@@ -270,6 +270,7 @@ window.$httpRequest = function (options) {
                     fetchOptions.body = config.body;
                 }
             }
+            console.log(config.url, fetchOptions);
 
             fetch(config.url, fetchOptions)
                 .then(async (response) => {
