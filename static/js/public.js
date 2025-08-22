@@ -70,7 +70,6 @@ const createVerifyCodeModal = (function () {
         top: 45%;
         left: 50%;
         z-index: 1999;
-        width: 420px;
         transform: translate(-50%, -50%);
         -moz-transform: translate(-50%, -50%);
         -ms-transform: translate(-50%, -50%);
