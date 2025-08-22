@@ -251,10 +251,10 @@ window.$httpRequest = function (options) {
             ...options // 允许覆盖默认配置
         };
 
-        // 判断是否在油猴环境中
-        if (typeof GM_xmlhttpRequest !== 'undefined') {
-            // 油猴环境使用 GM_xmlhttpRequest
-            GM_xmlhttpRequest(config);
+        // 判断是否在油猴环境中，优先检查 window.GM_xmlhttpRequest
+        if (typeof window.GM_xmlhttpRequest !== 'undefined') {
+            // 使用 window 上的 GM_xmlhttpRequest
+            window.GM_xmlhttpRequest(config);
         } else if (typeof fetch !== 'undefined') {
             // 浏览器环境使用 fetch
             const fetchOptions = {
