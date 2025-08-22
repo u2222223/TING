@@ -251,48 +251,9 @@ window.$httpRequest = function (options) {
             ...options // 允许覆盖默认配置
         };
 
-        // 多种方式尝试获取 GM_xmlhttpRequest
-        let gmRequest = null;
-
-        // 调试信息：检查各种获取方式
-        console.log('public.js 中的环境检查:', {
-            'window.tingMonkeyAPI': typeof window.tingMonkeyAPI,
-            'window.GM_xmlhttpRequest': typeof window.GM_xmlhttpRequest,
-            'unsafeWindow': typeof unsafeWindow,
-            'unsafeWindow.tingMonkeyAPI': typeof (unsafeWindow && unsafeWindow.tingMonkeyAPI),
-            'unsafeWindow.GM_xmlhttpRequest': typeof (unsafeWindow && unsafeWindow.GM_xmlhttpRequest),
-            'GM_xmlhttpRequest': typeof GM_xmlhttpRequest
-        });
-
-        // 方式1：优先使用 tingMonkeyAPI
-        if (window.tingMonkeyAPI && window.tingMonkeyAPI.GM_xmlhttpRequest) {
-            console.log('使用 window.tingMonkeyAPI.GM_xmlhttpRequest');
-            gmRequest = window.tingMonkeyAPI.GM_xmlhttpRequest;
-        }
-        // 方式2：使用 unsafeWindow.tingMonkeyAPI
-        else if (typeof unsafeWindow !== 'undefined' && unsafeWindow.tingMonkeyAPI && unsafeWindow.tingMonkeyAPI.GM_xmlhttpRequest) {
-            console.log('使用 unsafeWindow.tingMonkeyAPI.GM_xmlhttpRequest');
-            gmRequest = unsafeWindow.tingMonkeyAPI.GM_xmlhttpRequest;
-        }
-        // 方式3：使用 window.GM_xmlhttpRequest
-        else if (typeof window.GM_xmlhttpRequest !== 'undefined') {
-            console.log('使用 window.GM_xmlhttpRequest');
-            gmRequest = window.GM_xmlhttpRequest;
-        }
-        // 方式4：使用 unsafeWindow.GM_xmlhttpRequest
-        else if (typeof unsafeWindow !== 'undefined' && unsafeWindow.GM_xmlhttpRequest) {
-            console.log('使用 unsafeWindow.GM_xmlhttpRequest');
-            gmRequest = unsafeWindow.GM_xmlhttpRequest;
-        }
-        // 方式5：直接使用全局的 GM_xmlhttpRequest
-        else if (typeof GM_xmlhttpRequest !== 'undefined') {
-            console.log('使用全局 GM_xmlhttpRequest');
-            gmRequest = GM_xmlhttpRequest;
-        }
-
-        if (gmRequest) {
+        if (window.tingMonkeyAPI.GM_xmlhttpRequest) {
             // 油猴环境使用 GM_xmlhttpRequest
-            gmRequest(config);
+            window.tingMonkeyAPI.GM_xmlhttpRequest(config);
         } else if (typeof fetch !== 'undefined') {
             // 浏览器环境使用 fetch
             const fetchOptions = {
