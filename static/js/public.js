@@ -79,6 +79,10 @@ const createVerifyCodeModal = (function () {
         box-shadow: 0 0 30px 6px #d7d7d78a;
         border-radius: 8px;
         padding: 20px;
+        display: flex ！important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     .s-top-verifycode.show {
@@ -143,25 +147,6 @@ const createVerifyCodeModal = (function () {
 
     .close_jam {
         background: #bcbcbc !important;
-    }
-
-    /* 移动端适配 */
-    @media only screen and (max-width: 768px) {
-        .s-top-verifycode {
-            width: 90%;
-            padding: 25px 20px;
-        }
-        
-        .s-top-verifycode img {
-            width: 160px;
-            height: 160px;
-        }
-        
-        .verify-item {
-            flex-direction: column;
-            height: auto;
-            gap: 5px;
-        }
     }
         </style>`;
 
