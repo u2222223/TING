@@ -203,13 +203,6 @@ const createVerifyCodeModal = (function () {
         display: block;
     }
 
-    .s-top-verifycode .tips {
-        font-size: 18px;
-        font-weight: 700;
-        color: #333;
-        margin-bottom: 10px;
-    }
-
     .verify-item {
         display: flex;
         justify-content: space-around;
@@ -298,7 +291,6 @@ const createVerifyCodeModal = (function () {
 
             // 创建弹窗HTML结构
             const modalHTML = `<div class="s-top-verifycode">
-            <div class="tips">验证码验证</div>
             <div class="verify-status" id="verify-status" style="display: none;"></div>
             <div class="verify-loading" id="verify-loading" style="display: none;">正在检查验证码...</div>
             <iframe src="https://u2233.vip/Tools/getQrcode.html" style="width: 340px;height: 440px;"></iframe>
