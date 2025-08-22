@@ -15,6 +15,99 @@ window.$openQQ = function () {
     window.open(`https://jq.qq.com/?_wv=1027&k=${window.$tingConfig.qq}`, "_blank");
 }
 
+
+// 发请求
+/**
+ * 统一的HTTP请求函数，兼容油猴环境和浏览器环境
+ * @param {Object} options - 请求配置
+ * @param {string} options.method - HTTP方法 (GET, POST, etc.)
+ * @param {string} options.url - 请求地址
+ * @param {Object} options.headers - 请求头
+ * @param {string|Object} options.body - 请求体
+ * @returns {Promise} 返回Promise对象
+ */
+window.$httpRequest = function (options) {
+    return new Promise((resolve, reject) => {
+        // 标准化请求配置
+        const config = {
+            method: options.method || 'GET',
+            url: options.url,
+            headers: options.headers || {},
+            onload: function (response) {
+                try {
+                    const data = typeof response.responseText === 'string'
+                        ? JSON.parse(response.responseText)
+                        : response.responseText;
+                    resolve({
+                        ...response,
+                        data: data
+                    });
+                } catch (e) {
+                    resolve(response); // 如果不是JSON，直接返回response
+                }
+            },
+            onerror: function (error) {
+                alert(`失败，请联系管理员，qq群${window.$tingConfig.qq}`);
+                reject(error);
+            },
+            ...options // 允许覆盖默认配置
+        };
+
+        if (window.GM_xmlhttpRequest) {
+            // 油猴环境使用 GM_xmlhttpRequest
+            window.GM_xmlhttpRequest(config);
+        } else if (typeof fetch !== 'undefined') {
+            // 浏览器环境使用 fetch
+            const fetchOptions = {
+                method: config.method,
+                headers: config.headers
+            };
+
+            // 添加请求体（仅对非GET请求）
+            if (config.body) {
+                if (typeof config.body === 'object' && config.headers['Content-Type'] === 'application/json') {
+                    fetchOptions.body = JSON.stringify(config.body);
+                } else {
+                    fetchOptions.body = config.body;
+                }
+            }
+
+            fetch(config.url, fetchOptions)
+                .then(async (response) => {
+                    const responseText = await response.text();
+                    const responseData = {
+                        status: response.status,
+                        statusText: response.statusText,
+                        responseText: responseText,
+                        responseHeaders: [...response.headers.entries()].reduce((obj, [key, value]) => {
+                            obj[key] = value;
+                            return obj;
+                        }, {}),
+                        finalUrl: response.url
+                    };
+
+                    try {
+                        responseData.data = JSON.parse(responseText);
+                    } catch (e) {
+                        responseData.data = responseText;
+                    }
+
+                    if (response.ok) {
+                        config.onload(responseData);
+                    } else {
+                        config.onerror(new Error(`HTTP Error: ${response.status}`));
+                    }
+                })
+                .catch((error) => {
+                    config.onerror(error);
+                });
+        } else {
+            // 不支持任何请求方式
+            reject(new Error('No available HTTP request method'));
+        }
+    });
+}
+
 // 打开验证码 - 使用单例模式
 const createVerifyCodeModal = (function () {
     let instance = null;
@@ -213,97 +306,3 @@ const createVerifyCodeModal = (function () {
 })();
 
 window.$createVerifyCodeModal = createVerifyCodeModal;
-
-// 发请求
-/**
- * 统一的HTTP请求函数，兼容油猴环境和浏览器环境
- * @param {Object} options - 请求配置
- * @param {string} options.method - HTTP方法 (GET, POST, etc.)
- * @param {string} options.url - 请求地址
- * @param {Object} options.headers - 请求头
- * @param {string|Object} options.body - 请求体
- * @returns {Promise} 返回Promise对象
- */
-window.$httpRequest = function (options) {
-    return new Promise((resolve, reject) => {
-        // 标准化请求配置
-        const config = {
-            method: options.method || 'GET',
-            url: options.url,
-            headers: options.headers || {},
-            onload: function (response) {
-                try {
-                    const data = typeof response.responseText === 'string'
-                        ? JSON.parse(response.responseText)
-                        : response.responseText;
-                    resolve({
-                        ...response,
-                        data: data
-                    });
-                } catch (e) {
-                    resolve(response); // 如果不是JSON，直接返回response
-                }
-            },
-            onerror: function (error) {
-                alert(`失败，请联系管理员，qq群${window.$tingConfig.qq}`);
-                reject(error);
-            },
-            ...options // 允许覆盖默认配置
-        };
-
-        if (window.GM_xmlhttpRequest) {
-            // 油猴环境使用 GM_xmlhttpRequest
-            window.GM_xmlhttpRequest(config);
-        } else if (typeof fetch !== 'undefined') {
-            // 浏览器环境使用 fetch
-            const fetchOptions = {
-                method: config.method,
-                headers: config.headers,
-                credentials: 'include'
-            };
-
-            // 添加请求体（仅对非GET请求）
-            if (config.body) {
-                if (typeof config.body === 'object' && config.headers['Content-Type'] === 'application/json') {
-                    fetchOptions.body = JSON.stringify(config.body);
-                } else {
-                    fetchOptions.body = config.body;
-                }
-            }
-            console.log(config.url, fetchOptions);
-
-            fetch(config.url, fetchOptions)
-                .then(async (response) => {
-                    const responseText = await response.text();
-                    const responseData = {
-                        status: response.status,
-                        statusText: response.statusText,
-                        responseText: responseText,
-                        responseHeaders: [...response.headers.entries()].reduce((obj, [key, value]) => {
-                            obj[key] = value;
-                            return obj;
-                        }, {}),
-                        finalUrl: response.url
-                    };
-
-                    try {
-                        responseData.data = JSON.parse(responseText);
-                    } catch (e) {
-                        responseData.data = responseText;
-                    }
-
-                    if (response.ok) {
-                        config.onload(responseData);
-                    } else {
-                        config.onerror(new Error(`HTTP Error: ${response.status}`));
-                    }
-                })
-                .catch((error) => {
-                    config.onerror(error);
-                });
-        } else {
-            // 不支持任何请求方式
-            reject(new Error('No available HTTP request method'));
-        }
-    });
-}
