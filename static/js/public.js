@@ -157,7 +157,7 @@ const createVerifyCodeModal = (function () {
 
             const response = await window.$httpRequest({
                 method: 'GET',
-                url: `https://dl-test.infiniteworlds.com.cn/大角牛/checkCaptcha?captcha=${captcha}`,
+                url: `https://dl-test.infiniteworlds.com.cn/TING/checkCaptcha?captcha=${captcha}`,
                 headers: {
                     'Content-Type': 'application/json'
                 }
