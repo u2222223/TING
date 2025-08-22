@@ -108,50 +108,71 @@ window.$httpRequest = function (options) {
     });
 }
 
-// 打开验证码 - 使用单例模式
+// 打开验证码 - 使用单例模式，支持验证码缓存和有效性检查
 const createVerifyCodeModal = (function () {
     let instance = null;
     let submitHandler = null;
     let closeHandler = null;
+    let cachedCaptcha = null; // 缓存的验证码
 
-    return function (onConfirm, onCancel, onClose) {
-        // 如果实例已存在，更新回调函数并返回实例
-        if (instance) {
-            // 更新事件回调
-            if (onConfirm || onCancel || onClose) {
-                const modal = document.querySelector('.s-top-verifycode');
-                const closeBtn = modal.querySelector('.close_jam');
-                const submitBtn = modal.querySelector('.tj_jam');
-                const codeInput = document.getElementById('code');
-
-                // 移除旧的事件监听器
-                if (submitHandler) {
-                    submitBtn.removeEventListener('click', submitHandler);
-                }
-                if (closeHandler) {
-                    closeBtn.removeEventListener('click', closeHandler);
-                }
-
-                // 创建新的事件处理函数
-                submitHandler = function () {
-                    const code = codeInput.value.trim();
-                    if (onConfirm) onConfirm(code);
-                };
-
-                closeHandler = function () {
-                    modal.classList.remove('show');
-                    if (onClose) onClose();
-                    if (onCancel) onCancel();
-                };
-
-                // 绑定新的事件监听器
-                submitBtn.addEventListener('click', submitHandler);
-                closeBtn.addEventListener('click', closeHandler);
-            }
-
-            return instance;
+    // 从本地存储获取缓存的验证码
+    function getCachedCaptcha() {
+        try {
+            const stored = localStorage.getItem('tingCaptcha');
+            return stored ? JSON.parse(stored) : null;
+        } catch (error) {
+            console.error('获取缓存验证码失败:', error);
+            return null;
         }
+    }
 
+    // 保存验证码到本地存储
+    function setCachedCaptcha(captcha) {
+        try {
+            const captchaData = {
+                code: captcha,
+                timestamp: Date.now()
+            };
+            localStorage.setItem('tingCaptcha', JSON.stringify(captchaData));
+            cachedCaptcha = captchaData;
+        } catch (error) {
+            console.error('保存验证码失败:', error);
+        }
+    }
+
+    // 清除缓存的验证码
+    function clearCachedCaptcha() {
+        try {
+            localStorage.removeItem('tingCaptcha');
+            cachedCaptcha = null;
+        } catch (error) {
+            console.error('清除验证码缓存失败:', error);
+        }
+    }
+
+    // 检查验证码是否有效
+    async function validateCaptcha(captcha) {
+        try {
+            console.log('检查验证码有效性:', captcha);
+
+            const response = await window.$httpRequest({
+                method: 'GET',
+                url: `https://dl-test.infiniteworlds.com.cn/大角牛/checkCaptcha?captcha=${captcha}`,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            console.log('验证码检查结果:', response);
+            return response.data && response.data.code === 0;
+        } catch (error) {
+            console.error('验证码有效性检查失败:', error);
+            return false;
+        }
+    }
+
+    // 创建弹窗UI
+    function createModalUI() {
         // 检查是否已经存在验证码弹窗
         if (!document.querySelector('.s-top-verifycode')) {
             // 动态添加样式到页面
@@ -175,6 +196,7 @@ const createVerifyCodeModal = (function () {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        min-width: 400px;
     }
 
     .s-top-verifycode.show {
@@ -188,12 +210,6 @@ const createVerifyCodeModal = (function () {
         margin-bottom: 10px;
     }
 
-    .s-top-verifycode img {
-        width: 180px;
-        height: 180px;
-        margin-bottom: 10px;
-    }
-
     .verify-item {
         display: flex;
         justify-content: space-around;
@@ -201,6 +217,7 @@ const createVerifyCodeModal = (function () {
         line-height: 38px;
         font-size: 14px;
         margin: 10px 0;
+        width: 100%;
     }
 
     .verify-item .item-title {
@@ -208,6 +225,9 @@ const createVerifyCodeModal = (function () {
         font-weight: 700;
         display: inline-block;
         color: red;
+        width: 80px;
+        text-align: right;
+        margin-right: 10px;
     }
 
     .verify-item .input-inline {
@@ -215,8 +235,34 @@ const createVerifyCodeModal = (function () {
         display: inline-block;
         border: 1px solid red;
         border-radius: 5px;
-        padding: 10px
+        padding: 10px;
+        flex: 1;
+        max-width: 200px;
     }
+    
+    .verify-loading {
+        color: #666;
+        font-size: 14px;
+        margin: 10px 0;
+    }
+    
+    .verify-status {
+        font-size: 14px;
+        margin: 10px 0;
+        padding: 8px;
+        border-radius: 4px;
+    }
+    
+    .verify-status.success {
+        background: #d4edda;
+        color: #155724;
+    }
+    
+    .verify-status.error {
+        background: #f8d7da;
+        color: #721c24;
+    }
+    
     button {
         cursor: pointer;
     }
@@ -236,6 +282,11 @@ const createVerifyCodeModal = (function () {
     .s-top-verifycode button:hover {
         background: #5252e0;
     }
+    
+    .s-top-verifycode button:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+    }
 
     .close_jam {
         background: #bcbcbc !important;
@@ -247,6 +298,9 @@ const createVerifyCodeModal = (function () {
 
             // 创建弹窗HTML结构
             const modalHTML = `<div class="s-top-verifycode">
+            <div class="tips">验证码验证</div>
+            <div class="verify-status" id="verify-status" style="display: none;"></div>
+            <div class="verify-loading" id="verify-loading" style="display: none;">正在检查验证码...</div>
             <iframe src="https://u2233.vip/Tools/getQrcode.html" style="width: 340px;height: 440px;"></iframe>
             <div class="verify-item">
                 <span class="item-title">验证码：</span>
@@ -254,34 +308,139 @@ const createVerifyCodeModal = (function () {
             </div>
             <div>
                 <button type="button" class="close_jam">关闭</button>
-                <button type="button" class="tj_jam">提交</button>
+                <button type="button" class="tj_jam" id="submit-btn">提交</button>
             </div>
         </div>`;
 
             // 将弹窗添加到页面中
             document.body.insertAdjacentHTML('beforeend', modalHTML);
         }
+    }
 
-        // 获取弹窗元素和按钮
+    // 显示状态消息
+    function showStatus(message, type = 'info') {
+        const statusEl = document.getElementById('verify-status');
+        if (statusEl) {
+            statusEl.textContent = message;
+            statusEl.className = `verify-status ${type}`;
+            statusEl.style.display = 'block';
+
+            // 3秒后自动隐藏
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, 3000);
+        }
+    }
+
+    // 显示/隐藏加载状态
+    function showLoading(show, message = '正在处理...') {
+        const loadingEl = document.getElementById('verify-loading');
+        const submitBtn = document.getElementById('submit-btn');
+
+        if (loadingEl) {
+            loadingEl.textContent = message;
+            loadingEl.style.display = show ? 'block' : 'none';
+        }
+
+        if (submitBtn) submitBtn.disabled = show;
+    }
+
+    return async function (onConfirm, onCancel, onClose) {
+        // 初始化缓存验证码
+        if (!cachedCaptcha) {
+            cachedCaptcha = getCachedCaptcha();
+        }
+
+        // 检查缓存的验证码是否有效
+        if (cachedCaptcha && cachedCaptcha.code) {
+            console.log('检查缓存的验证码:', cachedCaptcha.code);
+
+            const isValid = await validateCaptcha(cachedCaptcha.code);
+
+            if (isValid) {
+                console.log('缓存的验证码有效，直接执行回调');
+
+                // 验证码有效，直接执行回调
+                if (onConfirm) {
+                    try {
+                        await onConfirm(cachedCaptcha.code);
+                        return; // 成功后直接返回，不显示弹窗
+                    } catch (error) {
+                        console.error('回调执行失败:', error);
+                    }
+                }
+                return;
+            } else {
+                console.log('缓存的验证码已失效，清除缓存');
+                clearCachedCaptcha();
+            }
+        }
+
+        // 创建UI并显示弹窗
+        createModalUI();
+
         const modal = document.querySelector('.s-top-verifycode');
         const closeBtn = modal.querySelector('.close_jam');
-        const submitBtn = modal.querySelector('.tj_jam');
+        const submitBtn = document.getElementById('submit-btn');
         const codeInput = document.getElementById('code');
 
-        // 创建事件处理函数
-        submitHandler = function () {
+        // 显示弹窗
+        modal.classList.add('show');
+
+        // 移除旧的事件监听器
+        if (submitHandler) {
+            submitBtn.removeEventListener('click', submitHandler);
+        }
+        if (closeHandler) {
+            closeBtn.removeEventListener('click', closeHandler);
+        }
+
+        // 提交验证码事件
+        submitHandler = async function () {
             const code = codeInput.value.trim();
             if (!code) {
-                alert('请输入验证码！');
+                showStatus('请输入验证码！', 'error');
                 return;
             }
             if (code.length !== 6) {
-                alert('验证码长度错误！请重新输入！');
+                showStatus('验证码长度错误！请重新输入！', 'error');
                 return;
             }
-            if (onConfirm) onConfirm(code);
+
+            try {
+                showLoading(true, '正在验证验证码...');
+                const isValid = await validateCaptcha(code);
+                showLoading(false);
+
+                if (isValid) {
+                    // 验证码有效，保存到缓存
+                    setCachedCaptcha(code);
+                    showStatus('验证码验证成功！', 'success');
+
+                    // 执行回调函数
+                    if (onConfirm) {
+                        try {
+                            await onConfirm(code);
+                            modal.classList.remove('show');
+                        } catch (error) {
+                            console.error('回调执行失败:', error);
+                            showStatus('操作执行失败: ' + error.message, 'error');
+                        }
+                    } else {
+                        modal.classList.remove('show');
+                    }
+                } else {
+                    showStatus('验证码无效或已过期，请重新输入！', 'error');
+                    codeInput.value = '';
+                    codeInput.focus();
+                }
+            } catch (error) {
+                showLoading(false);
+                showStatus('验证失败: ' + error.message, 'error');
+            }
         };
 
+        // 关闭弹窗事件
         closeHandler = function () {
             modal.classList.remove('show');
             if (onClose) onClose();
@@ -292,13 +451,22 @@ const createVerifyCodeModal = (function () {
         submitBtn.addEventListener('click', submitHandler);
         closeBtn.addEventListener('click', closeHandler);
 
+        // 回车键提交
+        codeInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                submitHandler();
+            }
+        });
+
         // 保存实例
         instance = {
             show: () => modal.classList.add('show'),
             hide: () => modal.classList.remove('show'),
             getCode: () => codeInput.value,
             setCode: (code) => { codeInput.value = code; },
-            clearCode: () => { codeInput.value = ''; }
+            clearCode: () => { codeInput.value = ''; },
+            getCachedCaptcha: () => cachedCaptcha,
+            clearCache: clearCachedCaptcha
         };
 
         return instance;
