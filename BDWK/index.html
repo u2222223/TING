@@ -92,5 +92,23 @@
         </div>
     </div>
 </body>
+<script>
+    // 获取url参数，并将参数赋值给class 为mobile、webv的元素
+    function getUrlParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+    const linkParam = getUrlParam("url");
+    if (linkParam) {
+        const mobileElement = document.querySelector(".mobile");
+        const webvElement = document.querySelector(".webv");
+        if (mobileElement) {
+            mobileElement.value = decodeURIComponent(linkParam);
+        }
+        if (webvElement) {
+            webvElement.value = decodeURIComponent(linkParam);
+        }
+    }
+</script>
 
 </html>
