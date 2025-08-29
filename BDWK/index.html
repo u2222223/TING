@@ -21,6 +21,53 @@
         window.jQuery || document.write('<script src="./static/js/jquery-3.7.1.min.js"><\\/script>')
     </script>
     <script src="./static/js/jspdf.umd.min.js"></script>
+    <style>
+        .contact-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            background: #ff9800;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-float:hover {
+            background: #f57c00;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 152, 0, 0.4);
+        }
+
+        .contact-float::before {
+            content: "💬";
+            font-size: 18px;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 12px;
+            }
+
+            h1 {
+                font-size: 1.3rem;
+            }
+
+            .contact-float {
+                bottom: 15px;
+                right: 15px;
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -94,6 +141,7 @@
             正在获取文档数据，请勿操作!
         </div>
     </div>
+    <a href="javascript:void(0)" onclick="$openQQ()" class="contact-float">联系开发者 QQ群: 882776749</a>
 </body>
 <script>
     // 获取url参数，并将参数赋值给class 为mobile、webv的元素
