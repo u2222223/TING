@@ -1,0 +1,9 @@
+原文件
+https://doc.idjams.top/build/assets/app-oTLWkc4Z.js
+
+
+1、新增fetchDocument函数
+2、调用fetchDocument，其他地方没有修改
+$(".bd_click").click(function () {
+    fetchDocument()
+});
