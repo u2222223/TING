@@ -254,10 +254,10 @@
             ${product.desc}
           </p>
           <div class="buttonBox">
+            ${product.useUrl ? `<a class="btn" href="${product.useUrl}" itemprop="downloadUrl">前往使用</a>` : ''}
             <div class="btn" onclick="viewProduct('${product.url}')" aria-label="查看${product.name}">
               使用教程
             </div>
-            ${product.useUrl ? `<a class="btn" href="${product.useUrl}" itemprop="downloadUrl">前往使用</a>` : ''}
           </div>
         `;
 
