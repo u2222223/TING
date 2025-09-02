@@ -171,6 +171,7 @@
     .buttonBox {
       display: flex;
       align-items: center;
+      gap: 16px;
     }
   </style>
 </head>
@@ -212,6 +213,7 @@
         desc: "专注于自考答题的AI系统，智能识别试题，自动生成答案，提升自考效率。",
         icon: "fas fa-robot",
         url: "/AI/word.html",
+        useUrl: "/AI/index.html",
       },
       {
         id: 2,
@@ -219,6 +221,7 @@
         desc: "每天领取百DU网盘极速下载卷，让下载更轻松，支持主流浏览器扩展。",
         icon: "fas fa-cloud-download-alt",
         url: "/BDWP/word.html",
+        useUrl: "https://gf.qytechs.cn/zh-CN/scripts/544796",
       },
       {
         id: 3,
@@ -226,6 +229,7 @@
         desc: "免费下载百DU文库VIP文档。",
         icon: "fas fa-book",
         url: "/BDWK/word.html",
+        useUrl: "/BDWK/index.html",
       },
     ];
 
@@ -253,7 +257,7 @@
             <div class="btn" onclick="viewProduct('${product.url}')" aria-label="查看${product.name}">
               使用教程
             </div>
-            ${product.download ? `<a class="btn" href="${product.download}" download aria-label="下载${product.name}" itemprop="downloadUrl">下载软件</a>` : ''}
+            ${product.useUrl ? `<a class="btn" href="${product.useUrl}" itemprop="downloadUrl">前往使用</a>` : ''}
           </div>
         `;
 
