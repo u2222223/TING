@@ -31,7 +31,6 @@
         "sameAs": ["https://u2233.vip/"]
       }
     </script>
-  <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/vue/2.6.14/vue.min.js"></script>
   <style>
     body {
       font-family: "Segoe UI", "PingFang SC", Arial, sans-serif;
@@ -197,61 +196,79 @@
             ">
           <i class="fas fa-cubes" aria-hidden="true"></i> 我们的产品
         </h2>
-        <div class="product-list">
-          <article class="product-card" v-for="product in products" :key="product.id" itemscope
-            itemtype="https://schema.org/SoftwareApplication">
-            <div class="product-icon-wrapper">
-              <div class="product-icon">
-                <i :class="product.icon" aria-hidden="true"></i>
-              </div>
-              <strong itemprop="name">{{ product.name }}</strong>
-            </div>
-            <p style="margin-top: 10px" itemprop="description">
-              {{ product.desc }}
-            </p>
-            <div class="buttonBox">
-              <div class="btn" v-if="product.url" @click="viewProduct(product)" :aria-label="'查看' + product.name">
-                使用教程
-              </div>
-              <a class="btn" :href="product.download" download v-if="product.download" :aria-label="'下载' + product.name"
-                itemprop="downloadUrl">下载软件
-              </a>
-            </div>
-          </article>
+        <div class="product-list" id="productList">
+          <!-- 产品卡片将通过JavaScript动态生成 -->
         </div>
       </section>
     </main>
   </div>
+
   <script>
-    new Vue({
-      el: "#app",
-      data: {
-        products: [
-          {
-            id: 1,
-            name: "365 | 自考答题助手",
-            desc: "专注于自考答题的AI系统，智能识别试题，自动生成答案，提升自考效率。",
-            url: "/AI/word.html",
-          },
-          {
-            id: 2,
-            name: "百DU网盘 | 每天领下载卷",
-            desc: "每天领取百DU网盘极速下载卷，让下载更轻松，支持主流浏览器扩展。",
-            url: "/BDWP/word.html",
-          },
-          {
-            id: 3,
-            name: "百DU文库 | 免费下载VIP文档",
-            desc: "免费下载百DU文库VIP文档。",
-            url: "/BDWK/word.html",
-          },
-        ],
+    // 产品数据
+    const products = [
+      {
+        id: 1,
+        name: "AI - 自考答题助手",
+        desc: "专注于自考答题的AI系统，智能识别试题，自动生成答案，提升自考效率。",
+        icon: "fas fa-robot",
+        url: "/AI/word.html",
       },
-      methods: {
-        viewProduct(product) {
-          window.open(product.url);
-        },
+      {
+        id: 2,
+        name: "百DU网盘 - 每天领下载卷",
+        desc: "每天领取百DU网盘极速下载卷，让下载更轻松，支持主流浏览器扩展。",
+        icon: "fas fa-cloud-download-alt",
+        url: "/BDWP/word.html",
       },
+      {
+        id: 3,
+        name: "百DU文库 - 免费下载VIP文档",
+        desc: "免费下载百DU文库VIP文档。",
+        icon: "fas fa-book",
+        url: "/BDWK/word.html",
+      },
+    ];
+
+    // 渲染产品列表
+    function renderProducts() {
+      const productList = document.getElementById('productList');
+
+      products.forEach(product => {
+        const productCard = document.createElement('article');
+        productCard.className = 'product-card';
+        productCard.setAttribute('itemscope', '');
+        productCard.setAttribute('itemtype', 'https://schema.org/SoftwareApplication');
+
+        productCard.innerHTML = `
+          <div class="product-icon-wrapper">
+            <div class="product-icon">
+              <i class="${product.icon}" aria-hidden="true"></i>
+            </div>
+            <strong itemprop="name">${product.name}</strong>
+          </div>
+          <p style="margin-top: 10px" itemprop="description">
+            ${product.desc}
+          </p>
+          <div class="buttonBox">
+            <div class="btn" onclick="viewProduct('${product.url}')" aria-label="查看${product.name}">
+              使用教程
+            </div>
+            ${product.download ? `<a class="btn" href="${product.download}" download aria-label="下载${product.name}" itemprop="downloadUrl">下载软件</a>` : ''}
+          </div>
+        `;
+
+        productList.appendChild(productCard);
+      });
+    }
+
+    // 查看产品方法
+    function viewProduct(url) {
+      window.open(url);
+    }
+
+    // 页面加载完成后渲染产品
+    document.addEventListener('DOMContentLoaded', function () {
+      renderProducts();
     });
   </script>
 </body>

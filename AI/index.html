@@ -252,6 +252,7 @@
       border: 1px solid var(--border-color);
       transition: opacity 0.3s ease, visibility 0.3s ease;
       text-align: center;
+      display: none;
     }
 
     .qrcode-tooltip img {
@@ -323,7 +324,6 @@
       -webkit-user-modify: read-write-plaintext-only;
     }
   </style>
-  <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/vue/2.6.14/vue.min.js"></script>
   <script src="static/sweetalert.js"></script>
 </head>
 
@@ -332,24 +332,24 @@
     <div class="loading-spinner"></div>
     <div class="loading-text">加载中...</div>
   </div>
-  <div id="app" @click="showEWM = false">
+  <div id="app">
     <div class="container">
       <header>
         <h1 class="logo">大角牛-自考答题助手</h1>
-        <div class="floating-btn" @click.stop>
+        <div class="floating-btn">
           <!-- 客服二维码悬浮模块 -->
           <div class="floating-qrcode">
-            <div class="qrcode-tooltip" v-if="showEWM">
+            <div class="qrcode-tooltip">
               <img alt="大角牛自考答题助手客服二维码" src="static/qrcode.jpg" />
               <p class="qrcode-tip-text">扫码联系客服</p>
             </div>
-            <div class="qrcode-icon" @click.stop="showEWM = !showEWM">
+            <div class="qrcode-icon">
               <i class="fas fa-comment-dots"></i>
               客服
             </div>
           </div>
           <div class="floating-qrcode" style="margin-left: 10px;">
-            <div class="qrcode-icon" @click.stop="window.open('/AI/word.html')">
+            <div class="qrcode-icon">
               <i class="fas fa-comment-dots"></i>
               使用手册
             </div>
@@ -360,25 +360,23 @@
         <div class="answer-card" id="answerCard">
           <div style="overflow-y: auto; height: calc(100% - 40px)">
             <div class="answer-content" id="answerContent">
-              <p v-if="!fileContentData" class="tip">
+              <p class="tip">
                 上传题目后，答案将显示在此处
               </p>
-              <div style="white-space: pre-wrap; word-wrap: break-word" class="fileContentDisplay"
-                ref="fileContentDisplay"></div>
+              <div style="white-space: pre-wrap; word-wrap: break-word" class="fileContentDisplay"></div>
             </div>
           </div>
-          <div class="status" id="status">{{ status }}</div>
+          <div class="status" id="status"></div>
         </div>
         <div class="input-container">
           <div class="upload-container">
-            <div class="upload-area" @click="triggerFileInput">
+            <div class="upload-area">
               <i class="fas fa-cloud-upload-alt upload-icon"></i>
-              <span class="upload-text">{{ uploadText }}</span>
+              <span class="upload-text">点击选择题目</span>
             </div>
           </div>
           <!-- 隐藏的题目输入 -->
-          <input type="file" id="fileInput" accept=".html" style="display: none" @change="handleFileChange"
-            ref="fileInput" />
+          <input type="file" id="fileInput" accept=".html" style="display: none" />
         </div>
       </div>
       <footer style="

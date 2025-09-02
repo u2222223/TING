@@ -21,6 +21,53 @@
         window.jQuery || document.write('<script src="./static/js/jquery-3.7.1.min.js"><\\/script>')
     </script>
     <script src="./static/js/jspdf.umd.min.js"></script>
+    <style>
+        .contact-float {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            z-index: 999;
+            background: #ff9800;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-float:hover {
+            background: #f57c00;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 152, 0, 0.4);
+        }
+
+        .contact-float::before {
+            content: "💬";
+            font-size: 18px;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 12px;
+            }
+
+            h1 {
+                font-size: 1.3rem;
+            }
+
+            .contact-float {
+                bottom: 15px;
+                right: 15px;
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -31,18 +78,19 @@
                 <span class="card-head-title">
                     大角牛下载助手
                 </span>
+                <a href="./word.html" target="_blank" rel="noopener noreferrer">&#x1F4A1;使用手册</a>
             </div>
             <div class="card-body">
                 <div class="wenku-container">
                     <div class="notice">
-                        免责声明:本工具仅为方便查看在线文档和交流技术使用
+                        请输入BD文档链接，例如：https://wenku.baidu.com/view/de0b82420329bd64783e0912a216147916117eeb.html?fr=homeRank&_wkts_=1756178704796
                     </div>
                     <div class="input">
                         <textarea class="mobile"
                             placeholder="请输入BD文档链接，例如：https://wenku.baidu.com/view/de0b82420329bd64783e0912a216147916117eeb.html?fr=homeRank&_wkts_=1756178704796"
                             cols="30" rows="10"></textarea>
                         <input id="link" class="webv" value="" autocomplete="off" type="text"
-                            placeholder="请输入BD文档链接，例如：https://wenku.baidu.com/view/de0b82420329bd64783e0912a216147916117eeb.html?fr=homeRank&_wkts_=1756178704796">
+                            placeholder="请输入BD文档链接">
                         <button type="button" class="bd_click">准备下载</button>
                     </div>
                     <div style="clear:both;"></div>
@@ -94,6 +142,7 @@
             正在获取文档数据，请勿操作!
         </div>
     </div>
+    <a href="javascript:void(0)" onclick="$openQQ()" class="contact-float">联系开发者 QQ群: 882776749</a>
 </body>
 <script>
     // 获取url参数，并将参数赋值给class 为mobile、webv的元素
