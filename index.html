@@ -32,176 +32,378 @@
       }
     </script>
   <style>
-    body {
-      font-family: "Segoe UI", "PingFang SC", Arial, sans-serif;
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: ghostwhite;
+      color: #333;
+      line-height: 1.6;
       min-height: 100vh;
-      background: linear-gradient(120deg, #e3ebf7 0%, #f5f7fa 100%);
-      color: #23395d;
+      user-select: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
 
-    .nav {
-      background: linear-gradient(90deg, #23395d 60%, #4267b2 100%);
-      color: #fff;
-      padding: 32px 0 24px 0;
-      text-align: center;
-      box-shadow: 0 2px 12px rgba(66, 103, 178, 0.1);
-      border-bottom: 1px solid #e3e6ef;
-    }
-
-    a {
-      text-decoration: none;
-    }
-
-    .nav h1 {
-      margin: 0;
-      font-size: 2.2rem;
-      letter-spacing: 2px;
-      font-weight: 700;
+    #app {
+      width: 100%;
       display: flex;
-      align-items: center;
       justify-content: center;
-      gap: 12px;
-    }
-
-    .nav p {
-      margin: 8px 0 0 0;
-      font-size: 1.1rem;
-      color: #e3ebf7;
-      letter-spacing: 1px;
+      padding: 40px;
     }
 
     .container {
-      width: 1200px;
-      margin: 40px auto;
-      padding: 32px;
-      padding-bottom: 50px;
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 4px 32px rgba(66, 103, 178, 0.08);
-      border: 1px solid #e3e6ef;
+      width: 100%;
+      max-width: 1600px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      overflow: hidden;
+    }
+
+    header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 50px 30px;
+      text-align: center;
+      position: relative;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+    }
+
+    .header-subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      font-weight: 400;
+    }
+
+    .floating-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .floating-qrcode .qrcode-icon {
+      width: 55px;
+      height: 55px;
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 11px;
+      flex-direction: column;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .floating-qrcode .qrcode-icon:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: scale(1.15);
+      border-color: rgba(255, 255, 255, 0.6);
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+    }
+
+    .floating-qrcode .qrcode-icon i,
+    .floating-qrcode .qrcode-icon span {
+      font-size: 1.3rem;
+      margin-bottom: 3px;
+      line-height: 1;
+    }
+
+    .floating-qrcode .qrcode-tooltip {
+      position: absolute;
+      top: 60px;
+      right: 0;
+      width: 250px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      padding: 15px;
+      display: none;
+      z-index: 1000;
+    }
+
+    .qrcode-tooltip img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .qrcode-tip-text {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: #666;
+      text-align: center;
+    }
+
+    .main-content {
+      padding: 50px 30px;
+    }
+
+    .products-title {
+      color: #667eea;
+      letter-spacing: 1px;
+      font-weight: 700;
+      margin-bottom: 40px;
+      font-size: 1.8rem;
+      text-align: center;
     }
 
     .product-list {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
-      justify-items: stretch;
-      align-items: stretch;
-      padding: 0;
-      margin: 0;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 35px;
+      margin-bottom: 40px;
     }
 
     .product-card {
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    .product-card {
-      background: linear-gradient(120deg, #f7faff 60%, #e3ebf7 100%);
-      border-radius: 14px;
-      box-shadow: 0 2px 12px rgba(66, 103, 178, 0.07);
-      padding: 28px 24px;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      flex-wrap: nowrap;
-      align-items: flex-start;
-      border: 1px solid #e3e6ef;
+      background: white;
+      border-radius: 16px;
+      border: 1px solid #e9ecef;
+      padding: 35px;
+      transition: all 0.3s ease;
       position: relative;
+      overflow: hidden;
+    }
+
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
 
     .product-card:hover {
-      box-shadow: 0 8px 32px rgba(66, 103, 178, 0.18);
-      background: linear-gradient(120deg, #e3ebf7 60%, #f7faff 100%);
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(102, 126, 234, 0.15);
+      border-color: #667eea;
     }
 
-    .product-icon-wrapper {
-      height: 40px;
+    .product-header {
       display: flex;
       align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
     }
 
     .product-icon {
-      font-size: 2.2rem;
-      color: #4267b2;
-      margin-bottom: 12px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.8rem;
+      flex-shrink: 0;
     }
 
-    .product-card strong {
-      font-size: 1.55rem;
-      color: #23395d;
-      margin-bottom: 8px;
+    .product-title {
+      font-size: 1.5rem;
       font-weight: 600;
-      letter-spacing: 1px;
+      color: #495057;
+      margin: 0;
     }
 
-    .product-card p {
-      margin: 0 0 18px 0;
-      color: #4267b2;
-      font-size: 1rem;
+    .product-desc {
+      color: #6c757d;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 25px;
+      height: 60px;
+    }
+
+    .product-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     .btn {
-      background: linear-gradient(90deg, #4267b2 60%, #23395d 100%);
-      color: #fff;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
       border: none;
-      padding: 8px 18px;
-      border-radius: 6px;
-      cursor: pointer;
+      padding: 12px 25px;
+      border-radius: 10px;
       font-size: 1rem;
-      transition: box-shadow 0.2s, background 0.2s, transform 0.2s;
-      box-shadow: 0 2px 8px rgba(66, 103, 178, 0.1);
       font-weight: 500;
-      user-select: none;
-      letter-spacing: 1px;
-    }
-
-    .btn:active,
-    .btn:hover {
-      background: linear-gradient(90deg, #23395d 60%, #4267b2 100%);
-      box-shadow: 0 4px 16px rgba(66, 103, 178, 0.18);
-    }
-
-    .btn:hover {
-      transform: scale(1.1);
-    }
-
-    .buttonBox {
-      display: flex;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
       align-items: center;
-      gap: 16px;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      background: #f8f9fa;
+      color: #495057;
+      border: 1px solid #e9ecef;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-secondary:hover {
+      background: #e9ecef;
+      color: #495057;
+    }
+
+    footer {
+      background: #f8f9fa;
+      padding: 30px;
+      text-align: center;
+      color: #6c757d;
+      font-size: 16px;
+      border-top: 1px solid #e9ecef;
+    }
+
+    .disclaimer {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      border-radius: 8px;
+      padding: 15px 20px;
+      margin: 20px;
+      box-sizing: border-box;
+      color: #856404;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .disclaimer-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #856404;
+    }
+
+    .disclaimer-content {
+      text-align: justify;
+    }
+
+    .disclaimer-content p {
+      margin-bottom: 6px;
+    }
+
+    .disclaimer-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      #app {
+        padding: 20px;
+      }
+
+      .container {
+        border-radius: 12px;
+      }
+
+      header {
+        padding: 30px 20px;
+      }
+
+      .logo {
+        font-size: 2rem;
+      }
+
+      .floating-btn {
+        position: static;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      .main-content {
+        padding: 30px 20px;
+      }
+
+      .product-list {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+
+      .product-card {
+        padding: 25px;
+      }
+
+      .product-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+      }
+
+      .product-actions {
+        justify-content: center;
+      }
+
+      .disclaimer {
+        margin: 20px 0;
+        padding: 15px 20px;
+        font-size: 14px;
+      }
+
+      .disclaimer-title {
+        font-size: 15px;
+      }
     }
   </style>
 </head>
 
 <body>
   <div id="app">
-    <header class="nav" role="banner">
-      <h1>
-        <i class="fas fa-robot" aria-label="大角牛 Logo"></i>
-        大角牛软件科技
-      </h1>
-      <p>智能工具 · 高效办公 · 安全可靠</p>
-    </header>
-    <main class="container" role="main">
-      <section aria-labelledby="products-title">
-        <h2 id="products-title" style="
-              color: #23395d;
-              letter-spacing: 1px;
-              font-weight: bolder;
-              margin-bottom: 28px;
-              margin-top: 0;
-              font-size: 24px;
-            ">
-          <i class="fas fa-cubes" aria-hidden="true"></i> 我们的产品
+    <div class="container">
+      <header>
+        <h1 class="logo">广州大角牛软件科技有限公司</h1>
+        <p class="header-subtitle">智能工具 · 高效办公 · 安全可靠</p>
+        <div class="floating-btn">
+          <div class="floating-qrcode">
+            <div class="qrcode-tooltip">
+              <img alt="大角牛软件科技客服二维码" src="/AI/static/qrcode.jpg" />
+              <p class="qrcode-tip-text">扫码联系客服</p>
+            </div>
+            <div class="qrcode-icon">
+              <span style="font-size: 1.2rem; margin-bottom: 2px;">💬</span>
+              客服
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="main-content">
+        <h2 class="products-title">
+          <span style="margin-right: 8px;">🚀</span>我们的产品
         </h2>
         <div class="product-list" id="productList">
           <!-- 产品卡片将通过JavaScript动态生成 -->
         </div>
-      </section>
-    </main>
+      </div>
+
+      <footer>
+        © 2025 大角牛软件科技 | 官方客服微信：cxy_xiaohua
+      </footer>
+    </div>
   </div>
 
   <script>
@@ -211,7 +413,7 @@
         id: 1,
         name: "AI - 自考答题助手",
         desc: "专注于自考答题的AI系统，智能识别试题，自动生成答案，提升自考效率。",
-        icon: "fas fa-robot",
+        icon: "🤖",
         url: "/AI/word.html",
         useUrl: "/AI/index.html",
       },
@@ -219,15 +421,15 @@
         id: 2,
         name: "百DU网盘 - 每天领下载卷",
         desc: "每天领取百DU网盘极速下载卷，让下载更轻松，支持主流浏览器扩展。",
-        icon: "fas fa-cloud-download-alt",
+        icon: "☁️",
         url: "/BDWP/word.html",
         useUrl: "https://gf.qytechs.cn/zh-CN/scripts/544796",
       },
       {
         id: 3,
         name: "百DU文库 - 免费下载VIP文档",
-        desc: "免费下载百DU文库VIP文档。",
-        icon: "fas fa-book",
+        desc: "免费下载百DU文库VIP文档，支持多种格式文档下载。",
+        icon: "📚",
         url: "/BDWK/word.html",
         useUrl: "/BDWK/index.html",
       },
@@ -244,20 +446,22 @@
         productCard.setAttribute('itemtype', 'https://schema.org/SoftwareApplication');
 
         productCard.innerHTML = `
-          <div class="product-icon-wrapper">
+          <div class="product-header">
             <div class="product-icon">
-              <i class="${product.icon}" aria-hidden="true"></i>
+              <span>${product.icon}</span>
             </div>
-            <strong itemprop="name">${product.name}</strong>
+            <h3 class="product-title" itemprop="name">${product.name}</h3>
           </div>
-          <p style="margin-top: 10px" itemprop="description">
+          <p class="product-desc" itemprop="description">
             ${product.desc}
           </p>
-          <div class="buttonBox">
-            ${product.useUrl ? `<a class="btn" href="${product.useUrl}" itemprop="downloadUrl">前往使用</a>` : ''}
-            <div class="btn" onclick="viewProduct('${product.url}')" aria-label="查看${product.name}">
-              使用教程
-            </div>
+          <div class="product-actions">
+            ${product.useUrl ? `<a class="btn" href="${product.useUrl}" itemprop="downloadUrl">
+              <span>🎯</span>前往使用
+            </a>` : ''}
+            <button class="btn btn-secondary" onclick="viewProduct('${product.url}')" aria-label="查看${product.name}">
+              <span>📖</span>使用教程
+            </button>
           </div>
         `;
 
@@ -274,6 +478,29 @@
     // 页面加载完成后渲染产品
     document.addEventListener('DOMContentLoaded', function () {
       renderProducts();
+
+      // 客服二维码点击事件
+      const qrcodeIcon = document.querySelector('.qrcode-icon');
+      let showEWM = false;
+
+      qrcodeIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showEWM = !showEWM;
+        updateQRCodeDisplay();
+      });
+
+      // 页面点击关闭二维码
+      document.getElementById('app').addEventListener('click', () => {
+        showEWM = false;
+        updateQRCodeDisplay();
+      });
+
+      function updateQRCodeDisplay() {
+        const qrcodeTooltip = document.querySelector('.qrcode-tooltip');
+        if (qrcodeTooltip) {
+          qrcodeTooltip.style.display = showEWM ? 'block' : 'none';
+        }
+      }
     });
   </script>
 </body>
