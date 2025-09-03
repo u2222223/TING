@@ -456,7 +456,7 @@
             ${product.desc}
           </p>
           <div class="product-actions">
-            ${product.useUrl ? `<a class="btn" href="${product.useUrl}" itemprop="downloadUrl">
+            ${product.useUrl ? `<a class="btn" href="${product.useUrl}" target="_blank" itemprop="downloadUrl">
               <span>🎯</span>前往使用
             </a>` : ''}
             <button class="btn btn-secondary" onclick="viewProduct('${product.url}')" aria-label="查看${product.name}">
