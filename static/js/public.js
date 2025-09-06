@@ -152,9 +152,8 @@ const createVerifyCodeModal = (function () {
 
     // 检查验证码是否有效
     async function validateCaptcha(captcha) {
+        return true;
         try {
-            console.log('检查验证码有效性:', captcha);
-
             const response = await window.$httpRequest({
                 method: 'GET',
                 url: `https://dl-test.infiniteworlds.com.cn/TING/checkCaptcha?captcha=${captcha}`,
@@ -162,8 +161,6 @@ const createVerifyCodeModal = (function () {
                     'Content-Type': 'application/json'
                 }
             });
-
-            console.log('验证码检查结果:', response);
             return response.data && response.data.code === 0;
         } catch (error) {
             console.error('验证码有效性检查失败:', error);
@@ -294,6 +291,7 @@ const createVerifyCodeModal = (function () {
             <div class="verify-status" id="verify-status" style="display: none;"></div>
             <div class="verify-loading" id="verify-loading" style="display: none;">正在检查验证码...</div>
             <iframe src="https://u2233.vip/Tools/getQrcode.html" style="height: 440px;"></iframe>
+            <div style="color: red;">服务升级中，请输入任意6位数字验证码</div>
             <div class="verify-item">
                 <span class="item-title">验证码：</span>
                 <input type="text" placeholder="请输入验证码" id="code" autocomplete="off" class="input-inline">
@@ -345,12 +343,10 @@ const createVerifyCodeModal = (function () {
 
         // 检查缓存的验证码是否有效
         if (cachedCaptcha && cachedCaptcha.code) {
-            console.log('检查缓存的验证码:', cachedCaptcha.code);
 
             const isValid = await validateCaptcha(cachedCaptcha.code);
 
             if (isValid) {
-                console.log('缓存的验证码有效，直接执行回调');
 
                 // 验证码有效，直接执行回调
                 if (onConfirm) {
@@ -363,7 +359,6 @@ const createVerifyCodeModal = (function () {
                 }
                 return;
             } else {
-                console.log('缓存的验证码已失效，清除缓存');
                 clearCachedCaptcha();
             }
         }
