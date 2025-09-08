@@ -152,7 +152,6 @@ const createVerifyCodeModal = (function () {
 
     // 检查验证码是否有效
     async function validateCaptcha(captcha) {
-        return true;
         try {
             const response = await window.$httpRequest({
                 method: 'GET',
@@ -286,12 +285,12 @@ const createVerifyCodeModal = (function () {
             // 将样式添加到页面头部
             document.head.insertAdjacentHTML('beforeend', styles);
 
+            // <div style="color: red;">服务升级中，请输入任意6位数字验证码</div>
             // 创建弹窗HTML结构
             const modalHTML = `<div class="s-top-verifycode">
             <div class="verify-status" id="verify-status" style="display: none;"></div>
             <div class="verify-loading" id="verify-loading" style="display: none;">正在检查验证码...</div>
             <iframe src="https://u2233.vip/Tools/getQrcode.html" style="height: 440px;"></iframe>
-            <div style="color: red;">服务升级中，请输入任意6位数字验证码</div>
             <div class="verify-item">
                 <span class="item-title">验证码：</span>
                 <input type="text" placeholder="请输入验证码" id="code" autocomplete="off" class="input-inline">
