@@ -1,5 +1,5 @@
 const config = {
-    qq: "882776749"
+    qq: "685904930"
 }
 window.$tingConfig = config
 
