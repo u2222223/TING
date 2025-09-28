@@ -1,0 +1,257 @@
+{
+    "code": 200,
+    "msg": "成功",
+    "data": {
+        "major_info": {
+            "id": 3879,
+            "tzid": 0,
+            "type": 1,
+            "title": "播音与主持艺术",
+            "major_code": "130309",
+            "cate_id": 10,
+            "area_id": 44,
+            "grade": 2
+        },
+        "subject_info": null,
+        "currPage": 2,
+        "all_subject": [
+            {
+                "ggzyk": 1,
+                "major_id": 3879,
+                "subject_id": 1,
+                "subject_title": "中国近现代史纲要",
+                "subject_code": "15043/03708"
+            },
+            {
+                "ggzyk": 1,
+                "major_id": 3879,
+                "subject_id": 2,
+                "subject_title": "马克思主义基本原理(概论)",
+                "subject_code": "15044/03709"
+            },
+            {
+                "ggzyk": 1,
+                "major_id": 3879,
+                "subject_id": 6112,
+                "subject_title": "英语(专升本)",
+                "subject_code": "13000"
+            },
+            {
+                "ggzyk": 1,
+                "major_id": 3879,
+                "subject_id": 60719,
+                "subject_title": "习近平新时代中国特色社会主义思想概论",
+                "subject_code": "15040"
+            },
+            {
+                "ggzyk": 2,
+                "major_id": 3879,
+                "subject_id": 2970,
+                "subject_title": "广播播音主持",
+                "subject_code": "07180"
+            },
+            {
+                "ggzyk": 2,
+                "major_id": 3879,
+                "subject_id": 11651,
+                "subject_title": "普通话语音与发声",
+                "subject_code": "14062"
+            },
+            {
+                "ggzyk": 2,
+                "major_id": 3879,
+                "subject_id": 2969,
+                "subject_title": "电视播音主持",
+                "subject_code": "07182"
+            },
+            {
+                "ggzyk": 2,
+                "major_id": 3879,
+                "subject_id": 2607,
+                "subject_title": "即兴口语表达",
+                "subject_code": "07176"
+            },
+            {
+                "ggzyk": 2,
+                "major_id": 3879,
+                "subject_id": 6514,
+                "subject_title": "手机媒体概论",
+                "subject_code": "14237"
+            },
+            {
+                "ggzyk": 2,
+                "major_id": 3879,
+                "subject_id": 11869,
+                "subject_title": "广播电视写作",
+                "subject_code": "13686"
+            }
+        ],
+        "all_goods": [
+            {
+                "id": 509,
+                "title": "15043中国近现代史纲要历年真题",
+                "subject_id": 1,
+                "classify": "历年真题",
+                "price": "19.90",
+                "source_price": "30.00",
+                "logo": "https://cdn.zikaosw.cn/uploads/images/20190904/5eeb83307c97ee3391009c814c1bdcf0.jpg",
+                "subject_code": "15043/03708",
+                "subject_title": "中国近现代史纲要"
+            },
+            {
+                "id": 400,
+                "title": "15043中国近现代史纲要模拟试题",
+                "subject_id": 1,
+                "classify": "模拟试题",
+                "price": "19.90",
+                "source_price": "30.00",
+                "logo": "https://cdn.zikaosw.cn/uploads/images/20190529/90f716a8cd291fe85617f53f3982cbd3.jpg",
+                "subject_code": "15043/03708",
+                "subject_title": "中国近现代史纲要"
+            },
+            {
+                "id": 284,
+                "title": "15043中国近现代史纲要复习资料",
+                "subject_id": 1,
+                "classify": "复习资料",
+                "price": "19.90",
+                "source_price": "30.00",
+                "logo": "https://cdn.zikaosw.cn/uploads/images/20250225/8b7fd540174e8947ff4b2edde7d029c9.jpg",
+                "subject_code": "15043/03708",
+                "subject_title": "中国近现代史纲要"
+            },
+            {
+                "id": 151098,
+                "title": "15043/03708中国近现代史纲要自考考前押题",
+                "subject_id": 1,
+                "classify": "考前押密",
+                "price": "138.00",
+                "source_price": "168.00",
+                "logo": "https://cdn.zikaosw.cn/uploads/images/sytfm.jpg",
+                "subject_code": "15043/03708",
+                "subject_title": "中国近现代史纲要"
+            },
+            {
+                "id": 90151,
+                "title": "03708中国近现代史纲要自考题库",
+                "subject_id": 1,
+                "classify": "在线题库",
+                "price": "39.90",
+                "source_price": "50.00",
+                "logo": "https://cdn.zikaosw.cn/uploads/images/sctiku/1.jpg",
+                "subject_code": "15043/03708",
+                "subject_title": "中国近现代史纲要"
+            },
+            {
+                "id": 97307,
+                "title": "03708中国近现代史纲要自考精讲网课",
+                "subject_id": 1,
+                "classify": "教材精讲课",
+                "price": "198.00",
+                "source_price": "298.00",
+                "logo": "https://cdn.zikaosw.cn/uploads/images/scwk/1.jpg",
+                "subject_code": "15043/03708",
+                "subject_title": "中国近现代史纲要"
+            },
+            {
+                "id": 119574,
+                "title": "03708中国近现代史纲要自考串讲网课",
+                "subject_id": 1,
+                "classify": "章节串讲课",
+                "price": "98.00",
+                "source_price": "198.00",
+                "logo": "https://cdn.zikaosw.cn/uploads/images/scwk/sccjbg.jpg",
+                "subject_code": "15043/03708",
+                "subject_title": "中国近现代史纲要"
+            },
+            {
+                "id": 156755,
+                "title": "15043（原03708）中国近现代史纲要课件教案",
+                "subject_id": 1,
+                "classify": "课件教案",
+                "price": "39.90",
+                "source_price": "69.90",
+                "logo": "https://cdn.zikaosw.cn/uploads/images/20250227/237c1714565db9ca776ce2eb4ec29530.jpg",
+                "subject_code": "15043/03708",
+                "subject_title": "中国近现代史纲要"
+            },
+            {
+                "id": 511,
+                "title": "15044马克思主义基本原理历年真题",
+                "subject_id": 2,
+                "classify": "历年真题",
+                "price": "19.90",
+                "source_price": "30.00",
+                "logo": "https://cdn.zikaosw.cn/uploads/images/20190829/cf728717115caf58033ec8b6ac4fe2a3.jpg",
+                "subject_code": "15044/03709",
+                "subject_title": "马克思主义基本原理(概论)"
+            },
+            {
+                "id": 401,
+                "title": "15044马克思主义基本原理模拟试题",
+                "subject_id": 2,
+                "classify": "模拟试题",
+                "price": "19.90",
+                "source_price": "30.00",
+                "logo": "https://cdn.zikaosw.cn/uploads/images/20190529/134d04a653f225a360ad090800051eb3.jpg",
+                "subject_code": "15044/03709",
+                "subject_title": "马克思主义基本原理(概论)"
+            },
+            {
+                "id": 286,
+                "title": "15044马克思主义基本原理复习资料",
+                "subject_id": 2,
+                "classify": "复习资料",
+                "price": "19.90",
+                "source_price": "30.00",
+                "logo": "https://cdn.zikaosw.cn/uploads/images/20250225/32d8314ef7462e6711aed8e7bdd8942b.jpg",
+                "subject_code": "15044/03709",
+                "subject_title": "马克思主义基本原理(概论)"
+            },
+            {
+                "id": 151067,
+                "title": "15044/03709马克思主义基本原理(原马克思主义基本原理概论)自考考前押题",
+                "subject_id": 2,
+                "classify": "考前押密",
+                "price": "138.00",
+                "source_price": "168.00",
+                "logo": "https://cdn.zikaosw.cn/uploads/images/sytfm.jpg",
+                "subject_code": "15044/03709",
+                "subject_title": "马克思主义基本原理(概论)"
+            },
+            {
+                "id": 90152,
+                "title": "03709马克思主义基本原理概论自考题库",
+                "subject_id": 2,
+                "classify": "在线题库",
+                "price": "39.90",
+                "source_price": "50.00",
+                "logo": "https://cdn.zikaosw.cn/uploads/images/sctiku/2.jpg",
+                "subject_code": "15044/03709",
+                "subject_title": "马克思主义基本原理(概论)"
+            },
+            {
+                "id": 97277,
+                "title": "03709马克思主义基本原理概论自考精讲网课",
+                "subject_id": 2,
+                "classify": "教材精讲课",
+                "price": "198.00",
+                "source_price": "298.00",
+                "logo": "https://cdn.zikaosw.cn/uploads/images/scwk/2.jpg",
+                "subject_code": "15044/03709",
+                "subject_title": "马克思主义基本原理(概论)"
+            },
+            {
+                "id": 119652,
+                "title": "03709马克思主义基本原理概论自考串讲网课",
+                "subject_id": 2,
+                "classify": "章节串讲课",
+                "price": "98.00",
+                "source_price": "198.00",
+                "logo": "https://cdn.zikaosw.cn/uploads/images/scwk/sccjbg.jpg",
+                "subject_code": "15044/03709",
+                "subject_title": "马克思主义基本原理(概论)"
+            }
+        ]
+    }
+}

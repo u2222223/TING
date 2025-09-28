@@ -1,0 +1,318 @@
+{
+  "code": 200,
+  "msg": "success",
+  "data": {
+    "all_area": [
+      {
+        "id": 11,
+        "name": "北京",
+        "pid": 1,
+        "orderby": 1,
+        "status": 1,
+        "out_id": "110000",
+        "create_time": "2018-01-17 18:59:19",
+        "update_time": "2019-03-09 11:42:42"
+      },
+      {
+        "id": 12,
+        "name": "天津",
+        "pid": 1,
+        "orderby": 2,
+        "status": 1,
+        "out_id": "120000",
+        "create_time": "2018-01-17 19:05:36",
+        "update_time": "2018-01-17 19:05:36"
+      },
+      {
+        "id": 13,
+        "name": "河北",
+        "pid": 1,
+        "orderby": 3,
+        "status": 1,
+        "out_id": "130000",
+        "create_time": "2018-01-17 19:07:00",
+        "update_time": "2018-01-17 19:07:00"
+      },
+      {
+        "id": 14,
+        "name": "山西",
+        "pid": 1,
+        "orderby": 4,
+        "status": 1,
+        "out_id": "140000",
+        "create_time": "2018-01-17 19:11:26",
+        "update_time": "2018-01-17 19:11:26"
+      },
+      {
+        "id": 21,
+        "name": "辽宁",
+        "pid": 1,
+        "orderby": 6,
+        "status": 1,
+        "out_id": "210000",
+        "create_time": "2018-01-17 19:08:08",
+        "update_time": "2018-01-17 19:08:08"
+      },
+      {
+        "id": 22,
+        "name": "吉林",
+        "pid": 1,
+        "orderby": 7,
+        "status": 1,
+        "out_id": "220000",
+        "create_time": "2018-01-17 19:08:30",
+        "update_time": "2018-01-17 19:08:30"
+      },
+      {
+        "id": 23,
+        "name": "黑龙江",
+        "pid": 1,
+        "orderby": 8,
+        "status": 1,
+        "out_id": "230000",
+        "create_time": "2018-01-17 19:08:46",
+        "update_time": "2018-01-17 19:08:46"
+      },
+      {
+        "id": 31,
+        "name": "上海",
+        "pid": 1,
+        "orderby": 9,
+        "status": 1,
+        "out_id": "310000",
+        "create_time": "2018-01-17 19:05:26",
+        "update_time": "2018-01-17 19:05:26"
+      },
+      {
+        "id": 32,
+        "name": "江苏",
+        "pid": 1,
+        "orderby": 10,
+        "status": 1,
+        "out_id": "320000",
+        "create_time": "2018-01-17 19:07:56",
+        "update_time": "2018-01-17 19:07:56"
+      },
+      {
+        "id": 33,
+        "name": "浙江",
+        "pid": 1,
+        "orderby": 11,
+        "status": 1,
+        "out_id": "330000",
+        "create_time": "2018-01-17 19:06:06",
+        "update_time": "2018-03-22 16:00:37"
+      },
+      {
+        "id": 34,
+        "name": "安徽",
+        "pid": 1,
+        "orderby": 12,
+        "status": 1,
+        "out_id": "340000",
+        "create_time": "2018-01-17 19:07:41",
+        "update_time": "2018-01-17 19:07:41"
+      },
+      {
+        "id": 35,
+        "name": "福建",
+        "pid": 1,
+        "orderby": 13,
+        "status": 1,
+        "out_id": "350000",
+        "create_time": "2018-01-17 19:06:35",
+        "update_time": "2018-01-17 19:06:35"
+      },
+      {
+        "id": 36,
+        "name": "江西",
+        "pid": 1,
+        "orderby": 14,
+        "status": 1,
+        "out_id": "360000",
+        "create_time": "2018-01-17 19:08:17",
+        "update_time": "2018-01-17 19:08:17"
+      },
+      {
+        "id": 37,
+        "name": "山东",
+        "pid": 1,
+        "orderby": 15,
+        "status": 1,
+        "out_id": "370000",
+        "create_time": "2018-01-17 19:07:29",
+        "update_time": "2018-01-17 19:07:29"
+      },
+      {
+        "id": 41,
+        "name": "河南",
+        "pid": 1,
+        "orderby": 16,
+        "status": 1,
+        "out_id": "410000",
+        "create_time": "2018-01-17 19:09:35",
+        "update_time": "2018-01-17 19:09:35"
+      },
+      {
+        "id": 43,
+        "name": "湖南",
+        "pid": 1,
+        "orderby": 17,
+        "status": 1,
+        "out_id": "430000",
+        "create_time": "2018-01-17 19:06:16",
+        "update_time": "2018-01-27 14:54:28"
+      },
+      {
+        "id": 42,
+        "name": "湖北",
+        "pid": 1,
+        "orderby": 18,
+        "status": 1,
+        "out_id": "420000",
+        "create_time": "2018-01-17 19:06:50",
+        "update_time": "2018-01-17 19:06:50"
+      },
+      {
+        "id": 44,
+        "name": "广东",
+        "pid": 1,
+        "orderby": 19,
+        "status": 1,
+        "out_id": "440000",
+        "create_time": "2018-01-17 19:05:56",
+        "update_time": "2018-01-17 19:05:56"
+      },
+      {
+        "id": 45,
+        "name": "广西",
+        "pid": 1,
+        "orderby": 20,
+        "status": 1,
+        "out_id": "450000",
+        "create_time": "2018-01-17 19:10:55",
+        "update_time": "2018-01-17 19:10:55"
+      },
+      {
+        "id": 46,
+        "name": "海南",
+        "pid": 1,
+        "orderby": 21,
+        "status": 1,
+        "out_id": "460000",
+        "create_time": "2018-01-17 19:10:23",
+        "update_time": "2018-01-17 19:10:23"
+      },
+      {
+        "id": 50,
+        "name": "重庆",
+        "pid": 1,
+        "orderby": 22,
+        "status": 1,
+        "out_id": "500000",
+        "create_time": "2018-01-17 19:09:06",
+        "update_time": "2018-01-17 19:09:06"
+      },
+      {
+        "id": 51,
+        "name": "四川",
+        "pid": 1,
+        "orderby": 23,
+        "status": 1,
+        "out_id": "510000",
+        "create_time": "2018-01-17 19:09:21",
+        "update_time": "2018-01-17 19:09:21"
+      },
+      {
+        "id": 52,
+        "name": "贵州",
+        "pid": 1,
+        "orderby": 24,
+        "status": 1,
+        "out_id": "520000",
+        "create_time": "2018-01-17 19:10:08",
+        "update_time": "2018-01-17 19:10:08"
+      },
+      {
+        "id": 53,
+        "name": "云南",
+        "pid": 1,
+        "orderby": 25,
+        "status": 1,
+        "out_id": "530000",
+        "create_time": "2018-01-17 19:09:47",
+        "update_time": "2018-01-17 19:09:47"
+      },
+      {
+        "id": 54,
+        "name": "西藏",
+        "pid": 1,
+        "orderby": 26,
+        "status": 1,
+        "out_id": "540000",
+        "create_time": "2018-01-17 19:11:16",
+        "update_time": "2018-01-17 19:11:16"
+      },
+      {
+        "id": 61,
+        "name": "陕西",
+        "pid": 1,
+        "orderby": 27,
+        "status": 1,
+        "out_id": "610000",
+        "create_time": "2018-01-17 19:09:59",
+        "update_time": "2018-01-17 19:09:59"
+      },
+      {
+        "id": 62,
+        "name": "甘肃",
+        "pid": 1,
+        "orderby": 28,
+        "status": 1,
+        "out_id": "620000",
+        "create_time": "2018-01-17 19:10:32",
+        "update_time": "2018-01-17 19:10:32"
+      },
+      {
+        "id": 63,
+        "name": "青海",
+        "pid": 1,
+        "orderby": 29,
+        "status": 1,
+        "out_id": "630000",
+        "create_time": "2018-01-17 19:11:06",
+        "update_time": "2018-01-17 19:11:06"
+      },
+      {
+        "id": 64,
+        "name": "宁夏",
+        "pid": 1,
+        "orderby": 30,
+        "status": 1,
+        "out_id": "640000",
+        "create_time": "2018-01-17 19:08:57",
+        "update_time": "2018-01-17 19:08:57"
+      },
+      {
+        "id": 65,
+        "name": "新疆",
+        "pid": 1,
+        "orderby": 31,
+        "status": 1,
+        "out_id": "650000",
+        "create_time": "2018-01-17 19:10:43",
+        "update_time": "2018-01-17 19:10:43"
+      },
+      {
+        "id": 15,
+        "name": "内蒙古",
+        "pid": 1,
+        "orderby": 100,
+        "status": 1,
+        "out_id": "150000",
+        "create_time": "2018-01-17 19:11:37",
+        "update_time": "2018-01-17 19:11:37"
+      }
+    ]
+  }
+}

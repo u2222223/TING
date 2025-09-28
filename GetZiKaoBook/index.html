@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自考资料</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f8fafc;
+            min-height: 100vh;
+            padding: 20px;
+            color: #334155;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            text-align: center;
+            padding: 32px 20px;
+        }
+
+        .header h1 {
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 28px;
+            letter-spacing: -0.025em;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .main-content {
+            padding: 32px;
+        }
+
+        .search-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section {
+            padding: 24px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section h2 {
+            color: #1e293b;
+            margin-bottom: 16px;
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+            letter-spacing: -0.025em;
+        }
+
+        .item-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+
+        .item-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .item-id {
+            display: none;
+        }
+
+        .item-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        }
+
+        .item-card.selected {
+            border-color: #dc2626;
+            background: #fef2f2;
+            color: #dc2626;
+            border-width: 2px;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
+        }
+
+        .item-card h3 {
+            font-size: 14px;
+            font-weight: 500;
+            color: inherit;
+            line-height: 1.2;
+        }
+
+        .item-card .item-info {
+            font-size: 14px;
+            margin: 0;
+            line-height: 1.0;
+            display: inline;
+        }
+
+        .item-card .item-category {
+            color: #999;
+            font-size: 0.7em;
+            margin: 0;
+            font-style: italic;
+            display: inline;
+            margin-left: 8px;
+        }
+
+
+
+        .loading {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 20px;
+        }
+
+        .error {
+            text-align: center;
+            color: #e74c3c;
+            padding: 20px;
+            background: #fdf2f2;
+            border-radius: 8px;
+            border: 1px solid #fecaca;
+        }
+
+        .majors-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-auto-flow: row;
+            grid-auto-columns: 1fr;
+            gap: 10px;
+        }
+
+
+        .item-card .price {
+            color: #e74c3c;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .original-price {
+            color: #999;
+            font-size: 0.8em;
+            text-decoration: line-through;
+            margin-left: 8px;
+        }
+
+        .detail-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .detail-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            font-weight: 600;
+            padding-bottom: 10px;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .detail-item {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+        }
+
+        .detail-item strong {
+            color: #333;
+            margin-right: 8px;
+        }
+
+        .description-section,
+        .discount-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .description-section h4,
+        .discount-section h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .description-content,
+        .discount-content {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            line-height: 1.6;
+        }
+
+        .coupon-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .coupon-item {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .coupon-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 8px;
+        }
+
+        .disclaimer-section {
+            margin-top: 32px;
+            padding: 24px 0;
+        }
+
+        .disclaimer-content {
+            margin: 0 auto;
+            background: #fef7f7;
+            border: 1px solid #fecaca;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .disclaimer-content h3 {
+            color: #dc2626;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .disclaimer-text {
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        .disclaimer-text p {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .disclaimer-text p:first-child {
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .disclaimer-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 下载相关样式 */
+        .btn-view-download {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-view-download:hover {
+            background: #2563eb;
+        }
+
+        #download-url {
+            margin-top: 8px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        #download-link-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            background: #f9fafb;
+        }
+
+        .btn-copy {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-copy:hover {
+            background: #059669;
+        }
+
+        /* 右下角使用信息样式 */
+        .usage-info-fixed {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            min-width: 200px;
+        }
+
+        .usage-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .usage-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .usage-label {
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .usage-value {
+            font-size: 14px;
+            color: #1f2937;
+            font-weight: 600;
+        }
+
+        .usage-value.expired {
+            color: #dc2626;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .usage-info-fixed {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+                min-width: auto;
+            }
+        }
+
+        .wangpan-link {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .wangpan-link:hover {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+
+        .coupon-desc {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .coupon-value {
+            color: #856404;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .coupon-code {
+            background: #667eea;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            display: inline-block;
+        }
+
+        .wangpan-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .wangpan-link:hover {
+            text-decoration: underline;
+        }
+
+        .no-download-info {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+
+        .no-download {
+            color: #666;
+            font-style: italic;
+            font-size: 1.1em;
+        }
+
+        .no-download a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .no-download a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>自考资料 | 大角牛</h1>
+        </div>
+
+        <div class="main-content">
+            <div class="search-container">
+                <!-- 省份选择 -->
+                <div class="section">
+                    <h2>🏛️ 选择自考的省份</h2>
+                    <div id="province-loading" class="loading">正在获取省份信息...</div>
+                    <div id="province-list" class="item-grid"></div>
+                </div>
+
+                <!-- 专业选择 -->
+                <div class="section" id="major-section" style="display: none;">
+                    <h2>📚 选择自考的专业</h2>
+                    <div id="major-loading" class="loading">正在获取专业信息...</div>
+                    <div id="major-list"></div>
+                </div>
+
+                <!-- 科目选择 -->
+                <div class="section" id="subject-section" style="display: none;">
+                    <h2>📖 选择考试科目</h2>
+                    <div id="subject-loading" class="loading">正在获取考试科目...</div>
+                    <div id="subject-list" class="item-grid"></div>
+                </div>
+
+                <!-- 资料显示 -->
+                <div class="section" id="books-section" style="display: none;">
+                    <h2>📚 学习资料</h2>
+                    <div id="books-loading" class="loading">正在获取学习资料...</div>
+                    <div id="books-list" class="item-grid"></div>
+                </div>
+
+                <!-- 资料详情 -->
+                <div class="section" id="detail-section" style="display: none;">
+                    <h2>📄 资料详情</h2>
+                    <div id="detail-loading" class="loading">正在获取资料详情...</div>
+                    <div id="detail-content"></div>
+                </div>
+
+                <!-- 免责声明 -->
+                <div class="disclaimer-section">
+                    <div class="disclaimer-content">
+                        <h3>⚠️ 免责声明</h3>
+                        <div class="disclaimer-text">
+                            <p><strong>本系统仅供学习和交流使用，不得用于任何商业用途。</strong></p>
+                            <p>• 所有学习资料版权归原作者所有</p>
+                            <p>• 请遵守相关法律法规，尊重知识产权</p>
+                            <p>• 下载的资料仅限个人学习使用</p>
+                            <p>• 如涉及版权问题，请联系原作者处理</p>
+                            <p>• 使用本系统产生的任何后果，开发者不承担责任</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 右下角使用信息显示 -->
+    <div id="usage-info" class="usage-info-fixed">
+        <div class="usage-item">
+            <span class="usage-label">剩余次数：</span>
+            <span class="usage-value">-</span>
+        </div>
+        <div class="usage-item">
+            <span class="usage-label">过期时间：</span>
+            <span class="usage-value">-</span>
+        </div>
+    </div>
+
+    <!-- 引入CryptoJS库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="./lib.min.js"></script>
+</body>
+
+</html>
