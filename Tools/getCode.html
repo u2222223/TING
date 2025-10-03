@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>验证码生成器</title>
+  <style>
+    :root {
+      --primary-color: #667eea;
+      --secondary-color: #764ba2;
+      --bg-color: #f8f9ff;
+      --card-bg: #ffffff;
+      --text-color: #333;
+      --light-text: #666;
+      --border-color: #e9ecef;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      --gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+    }
+
+    .header {
+      background: var(--gradient);
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .content {
+      padding: 30px 20px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 20px;
+      background: var(--gradient);
+      border-radius: 2px;
+    }
+
+    .captcha-section {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .captcha-form {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      font-size: 14px;
+      color: var(--light-text);
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .radio-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 10px;
+    }
+
+    .radio-option {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .radio-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .radio-option label {
+      display: block;
+      padding: 10px;
+      text-align: center;
+      background: white;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-color);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .radio-option input[type="radio"]:checked+label {
+      background: var(--gradient);
+      color: white;
+      border-color: transparent;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    .radio-option label:hover {
+      border-color: var(--primary-color);
+      transform: translateY(-1px);
+    }
+
+    .quick-select {
+      background: #f0f2ff;
+      border: 2px solid var(--primary-color);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      margin-top: 16px;
+    }
+
+    .quick-select-title {
+      font-size: 16px;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .quick-select-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 12px;
+    }
+
+    .quick-btn {
+      padding: 12px 16px;
+      background: white;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-color);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .quick-btn:hover {
+      border-color: var(--primary-color);
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .quick-btn.active {
+      background: var(--gradient);
+      color: white;
+      border-color: transparent;
+    }
+
+    .btn {
+      background: white;
+      color: var(--text-color);
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px 20px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:hover {
+      border-color: var(--primary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.15);
+    }
+
+    .btn.primary {
+      background: var(--gradient);
+      color: white;
+      border-color: transparent;
+      font-size: 18px;
+      padding: 20px 30px;
+      width: 100%;
+      margin: 0 auto;
+      margin-top: 20px;
+      display: block;
+    }
+
+    .btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .captcha-result {
+      background: white;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 15px;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .captcha-result.show {
+      display: flex;
+    }
+
+    .captcha-code {
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--primary-color);
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 6px;
+      text-align: center;
+      margin-bottom: 10px;
+      word-break: break-all;
+      line-height: 1.4;
+    }
+
+    .captcha-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: var(--light-text);
+      width: 100%;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(50, 50, 50, 0.9);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 24px;
+      font-size: 14px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 1000;
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+
+    .loading {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        margin: 10px;
+      }
+
+      .quick-select-buttons {
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+        gap: 8px;
+      }
+
+      .quick-btn {
+        padding: 10px 12px;
+        font-size: 14px;
+      }
+
+      .radio-group {
+        grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+        gap: 8px;
+      }
+
+      .radio-option label {
+        padding: 8px;
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>验证码生成器</h1>
+      <p>生成增强验证码</p>
+    </div>
+
+    <div class="content">
+      <!-- 增强验证码生成 -->
+      <div class="section">
+        <div class="section-title">生成增强验证码</div>
+        <div class="captcha-section">
+          <div class="captcha-form">
+            <div class="form-group">
+              <label>最大使用次数</label>
+              <div class="radio-group">
+                <div class="radio-option">
+                  <input type="radio" id="usage6" name="maxUsage" value="6" checked>
+                  <label for="usage6">6次</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="usage12" name="maxUsage" value="12">
+                  <label for="usage12">12次</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="usage18" name="maxUsage" value="18">
+                  <label for="usage18">18次</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="usage24" name="maxUsage" value="24">
+                  <label for="usage24">24次</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="usage30" name="maxUsage" value="30">
+                  <label for="usage30">30次</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="usage36" name="maxUsage" value="36">
+                  <label for="usage36">36次</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="usage42" name="maxUsage" value="42">
+                  <label for="usage42">42次</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="usage48" name="maxUsage" value="48">
+                  <label for="usage48">48次</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>过期时间</label>
+              <div class="radio-group">
+                <div class="radio-option">
+                  <input type="radio" id="time1" name="expireTime" value="3600" checked>
+                  <label for="time1">1小时</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="time2" name="expireTime" value="7200">
+                  <label for="time2">2小时</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="time3" name="expireTime" value="10800">
+                  <label for="time3">3小时</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="time4" name="expireTime" value="14400">
+                  <label for="time4">4小时</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="time5" name="expireTime" value="18000">
+                  <label for="time5">5小时</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="time6" name="expireTime" value="21600">
+                  <label for="time6">6小时</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="time7" name="expireTime" value="25200">
+                  <label for="time7">7小时</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="time8" name="expireTime" value="28800">
+                  <label for="time8">8小时</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="captchaResult" class="captcha-result">
+            <div id="captchaCode" class="captcha-code"></div>
+            <div class="captcha-info">
+              <span id="captchaUsage"></span>
+              <span id="captchaExpire"></span>
+            </div>
+            <div style="margin-top: 10px; font-size: 12px; color: var(--light-text); text-align: center;">
+              点击对应按钮后，相应页面的链接及说明信息将自动复制到剪贴板
+            </div>
+          </div>
+
+          <!-- 快捷选择 -->
+          <div class="quick-select">
+            <div class="quick-select-title">快捷选择</div>
+            <div class="quick-select-buttons">
+              <button class="quick-btn" onclick="quickSelect(1)">1</button>
+              <button class="quick-btn" onclick="quickSelect(2)">2</button>
+              <button class="quick-btn" onclick="quickSelect(3)">3</button>
+              <button class="quick-btn" onclick="quickSelect(4)">4</button>
+              <button class="quick-btn" onclick="quickSelect(5)">5</button>
+              <button class="quick-btn" onclick="quickSelect(6)">6</button>
+              <button class="quick-btn" onclick="quickSelect(7)">7</button>
+              <button class="quick-btn" onclick="quickSelect(8)">8</button>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px;">
+            <button class="btn primary" onclick="generateEnhancedCaptcha()" style="flex: 1;">
+              <span id="generateBtnText">生成AI验证码</span>
+            </button>
+            <button class="btn primary" onclick="generateZiKaoBookCaptcha()" style="flex: 1;">
+              <span id="generateZiKaoBtnText">生成自考验证码</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 提示框 -->
+  <div id="toast" class="toast">已复制到剪贴板</div>
+
+  <script>
+    // 快捷选择功能
+    function quickSelect(number) {
+      // 清除所有快捷按钮的active状态
+      document.querySelectorAll('.quick-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      // 设置当前按钮为active状态
+      event.target.classList.add('active');
+
+      // 根据数字选择对应的使用次数和过期时间
+      const usageValues = ['6', '12', '18', '24', '30', '36', '42', '48'];
+      const timeValues = ['3600', '7200', '10800', '14400', '18000', '21600', '25200', '28800'];
+
+      if (number >= 1 && number <= 8) {
+        // 选择使用次数
+        const usageRadio = document.querySelector(`input[name="maxUsage"][value="${usageValues[number - 1]}"]`);
+        if (usageRadio) {
+          usageRadio.checked = true;
+        }
+
+        // 选择过期时间
+        const timeRadio = document.querySelector(`input[name="expireTime"][value="${timeValues[number - 1]}"]`);
+        if (timeRadio) {
+          timeRadio.checked = true;
+        }
+      }
+    }
+
+    // 生成自考验证码
+    async function generateZiKaoBookCaptcha() {
+      const maxUsage = document.querySelector('input[name="maxUsage"]:checked').value;
+      const expireTime = document.querySelector('input[name="expireTime"]:checked').value;
+      const btn = document.querySelector('.btn.primary:nth-child(2)');
+      const btnText = document.getElementById('generateZiKaoBtnText');
+
+      // 显示加载状态
+      btn.disabled = true;
+      btnText.innerHTML = '<span class="loading"></span>生成中...';
+
+      try {
+        const response = await fetch('https://dl-test.infiniteworlds.com.cn/TING/captcha/generate-enhanced', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            maxUsage: parseInt(maxUsage),
+            expireTime: parseInt(expireTime)
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.code === 0) {
+          // 显示结果
+          document.getElementById('captchaCode').textContent = result.data.captcha;
+          document.getElementById('captchaUsage').textContent = `最大使用: ${result.data.maxUsage}次`;
+          document.getElementById('captchaExpire').textContent = `过期时间: ${Math.floor(result.data.expireTime / 3600)}小时`;
+          document.getElementById('captchaResult').classList.add('show');
+
+          // 只生成GetZiKaoBook链接并复制
+          const zikaobookUrl = `https://u2233.vip/GetZiKaoBook/index.html?captcha=${result.data.captcha}`;
+          const usageInfo = `最大使用: ${result.data.maxUsage}次`;
+          const expireInfo = `过期时间: ${Math.floor(result.data.expireTime / 3600)}小时`;
+          const copyText = `GetZiKaoBook链接:\n${zikaobookUrl}\n\n${usageInfo}\n${expireInfo}`;
+          copyTextToClipboard(copyText);
+          showSuccessToast('GetZiKaoBook链接已复制到剪贴板');
+        } else {
+          showSuccessToast('生成失败: ' + result.message);
+        }
+      } catch (error) {
+        console.error('生成验证码失败:', error);
+        showSuccessToast('生成失败，请检查网络连接');
+      } finally {
+        // 恢复按钮状态
+        btn.disabled = false;
+        btnText.textContent = '生成自考验证码';
+      }
+    }
+
+    // 生成增强验证码
+    async function generateEnhancedCaptcha() {
+      const maxUsage = document.querySelector('input[name="maxUsage"]:checked').value;
+      const expireTime = document.querySelector('input[name="expireTime"]:checked').value;
+      const btn = document.querySelector('.btn.primary');
+      const btnText = document.getElementById('generateBtnText');
+
+      // 显示加载状态
+      btn.disabled = true;
+      btnText.innerHTML = '<span class="loading"></span>生成中...';
+
+      try {
+        const response = await fetch('https://dl-test.infiniteworlds.com.cn/TING/captcha/generate-enhanced', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            maxUsage: parseInt(maxUsage),
+            expireTime: parseInt(expireTime)
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.code === 0) {
+          // 显示结果
+          document.getElementById('captchaCode').textContent = result.data.captcha;
+          document.getElementById('captchaUsage').textContent = `最大使用: ${result.data.maxUsage}次`;
+          document.getElementById('captchaExpire').textContent = `过期时间: ${Math.floor(result.data.expireTime / 3600)}小时`;
+          document.getElementById('captchaResult').classList.add('show');
+
+          // 只生成AI链接并复制
+          const aiUrl = `https://u2233.vip/AI/index.html?captcha=${result.data.captcha}`;
+          const usageInfo = `最大使用: ${result.data.maxUsage}次`;
+          const expireInfo = `过期时间: ${Math.floor(result.data.expireTime / 3600)}小时`;
+          const copyText = `AI页面链接:\n${aiUrl}\n\n${usageInfo}\n${expireInfo}`;
+          copyTextToClipboard(copyText);
+          showSuccessToast('AI页面链接已复制到剪贴板');
+        } else {
+          showSuccessToast('生成失败: ' + result.message);
+        }
+      } catch (error) {
+        console.error('生成验证码失败:', error);
+        showSuccessToast('生成失败，请检查网络连接');
+      } finally {
+        // 恢复按钮状态
+        btn.disabled = false;
+        btnText.textContent = '生成AI验证码';
+      }
+    }
+
+    function copyTextToClipboard(text) {
+      // 创建一个可选区域
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.opacity = "0";
+      document.body.appendChild(textArea);
+
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard
+            .writeText(text)
+            .then(() => {
+              showSuccessToast(`复制成功`);
+            })
+            .catch((err) => {
+              alert("复制失败，请手动复制");
+            });
+        } else {
+          textArea.select();
+          const successful = document.execCommand("copy");
+          if (successful) {
+            showSuccessToast(`复制成功`);
+          } else {
+            alert("复制失败，请手动复制");
+          }
+        }
+      } catch (err) {
+        alert("复制失败，请手动复制");
+      } finally {
+        document.body.removeChild(textArea);
+      }
+    }
+
+    function copyText(text) {
+      // 创建一个可选区域
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.opacity = "0";
+      document.body.appendChild(textArea);
+
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard
+            .writeText(text)
+            .then(() => {
+              showSuccessToast(`复制成功`);
+            })
+            .catch((err) => {
+              alert("复制失败，请手动复制");
+            });
+        } else {
+          textArea.select();
+          const successful = document.execCommand("copy");
+          if (successful) {
+            showSuccessToast(`复制成功`);
+          } else {
+            alert("复制失败，请手动复制");
+          }
+        }
+      } catch (err) {
+        alert("复制失败，请手动复制");
+      } finally {
+        document.body.removeChild(textArea);
+      }
+    }
+
+    function showSuccessToast(message = "已复制") {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2000);
+    }
+  </script>
+</body>
+
+</html>
