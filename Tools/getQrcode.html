@@ -104,7 +104,7 @@
     <div class="container">
         <h1>微信扫码 获取验证码</h1>
         <!-- <div id="qrcode"></div> -->
-        <img src="../static/img/qrcode.jpg" id="qrcode">
+        <!-- <img src="../static/img/qrcode.jpg" id="qrcode"> -->
         <div class="instructions">
             <h3>使用说明</h3>
             <ul>
@@ -124,7 +124,7 @@
                     if (parentUrl.includes(targetUrl)) {
                         messageContent.innerHTML = `
                         <span style="color: red">
-                            您当前版本太低，<a
+                            您当前版本太低，已暂停维护，<a
                                 href="https://share.note.youdao.com/s/8gYD5DD0"
                                 target="_blank"
                                 style="color:blue">点击更新</a>，有问题请加qq群 1067269125
@@ -133,7 +133,7 @@
                     } else {
                         messageContent.innerHTML = `
                         <span style="color: red">
-                            您当前版本太低，<a
+                            您当前版本太低，已暂停维护，<a
                                 href="https://share.note.youdao.com/s/8gYD5DD0"
                                 target="_blank"
                                 style="color:blue">点击更新</a>，有问题请加qq群 1067269125
@@ -144,7 +144,7 @@
             } catch (error) {
                 messageContent.innerHTML = `
                         <span style="color: red">
-                            用户您好，您当前版本太低 <a
+                            您当前版本太低，已暂停维护， <a
                                 href="https://share.note.youdao.com/s/8gYD5DD0"
                                 target="_blank"
                                 style="color:blue">点击更新</a>，有问题请加qq群 1067269125
